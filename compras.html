@@ -19,7 +19,17 @@
       ><link rel="stylesheet" href="assets/css/noscript.css"
     /></noscript>
   </head>
-  <body class="is-preload">
+  <body
+    class="is-preload"
+    style="
+      background-image: linear-gradient(
+          to top,
+          rgba(46, 49, 65, 0.8),
+          rgba(46, 49, 65, 0.8)
+        ),
+        url(images/bigcho.jpg);
+    "
+  >
     <!-- Page Wrapper -->
     <div id="page-wrapper">
       <!-- Header -->
@@ -44,16 +54,7 @@
 
       <!-- Wrapper -->
       <section id="wrapper">
-        <header
-          style="
-            background-image: linear-gradient(
-                to top,
-                rgba(46, 49, 65, 0.8),
-                rgba(46, 49, 65, 0.8)
-              ),
-              url(images/bigcho.jpg);
-          "
-        >
+        <header id="compras-header">
           <div class="inner">
             <h2>ANALYZING URUGUAYAN GOVERNMENT PURCHASES</h2>
           </div>
@@ -87,15 +88,103 @@
                 not), will reveal some misuse of government funds.
               </p>
 
-              <h3 class="major">The data:</h3>
+              <h3 class="major">inspiration</h3>
               <p>
-                There are many datasets containing information of patients with
-                this desease that can be worked on to achieve our objective,
-                predict chronic kidney disease. In this case we are going to use
-                the dataset provided by the UCI repository. Looking at the
-                description of the dataset and the data itself we can define the
-                types and roles of the attributes:
+                While looking for a interesting dataset to demonstrate my ML
+                skills, i came across the website
+                <a href="http://cuentasclaras.uy/#/home">Cuentas claras</a> . In
+                there, the owners try to reveal fraudulent purchases and misuse
+                of government founds by applying a "function", which analyzes
+                certain parameters and returns a value, in their case, "red
+                flags". This idea of "red flags" is not new, and as we can see
+                in the
+                <a
+                  href="https://www.open-contracting.org/2016/11/30/red-flags-integrity-giving-green-light-open-data-solutions/"
+                  >OCDS website</a
+                >, this was already attempted by a few countries, and there are
+                guides to work the OCDS data looking for these red flags.
+                <br />
               </p>
+              <div class="col-12">
+                <span class="image fit"
+                  ><img src="images/claras.png" alt="" />
+                  <p><i>Cuentas claras website</i></p></span
+                >
+              </div>
+              <p>
+                I strongly reccomend taking a look into the website and explore
+                it. As you can see in the image above, they have succesfully
+                processed and classified purchases of many public government
+                organizations, marking them with the famous "red flags". Also
+                there are some interesting statistics to explore.
+                <br />
+                <br />
+                Sadly the "Cuentas claras" proyect does not provide the
+                processed data along with the "red flags", and after some failed
+                attempts in contacting the owners, it seems to be abandoned or
+                in standby state.
+                <br />
+                <br />
+                This is not good news. In order to train a predicting model wee
+                need already labelled data, luckily, the folks at "cuentas
+                claras" <i>kind of</i> described the process they took to flag
+                the organisms in
+                <a href="http://cuentasclaras.uy/#/documentation"
+                  >these documents</a
+                >. Taking this into account, there are two possible paths to
+                continue working on this. We either "manually" label the data by
+                processing it with a similar function to the one used by cuentas
+                claras, or we try to apply clustering algorithms to identify
+                patterns and groupings, and then see if we can notice any odd
+                patterns that may indicate suspicious activity. <br />
+                Or, we may try both approaches.
+              </p>
+              <h3 class="major">Manually labelling the data</h3>
+              <p>
+                The idea of labelling the data with a function seems a little
+                odd. Why would we use AI to predict this if we can just use a
+                simple function?
+              </p>
+              <h3 class="major">Applying clustering algorithms</h3>
+              <p>WIP ⚠️</p>
+              <h3 class="major">Interesting sites with useful info:</h3>
+              <b
+                ><a
+                  href="https://docs.google.com/presentation/d/1Fss7T0BcSkq-XnTvSya57R0ul5WvMPaJcyUtKHZg-f4/edit#slide=id.g77e095da88_0_403"
+                  >PPT with interesting info about red flags and how to use OCDS
+                  to find them</a
+                ></b
+              >
+              <br />
+              <b
+                ><a
+                  href="https://docs.google.com/spreadsheets/d/12PFkUlQH09jQvcnORjcbh9-8d-NnIuk4mAQwdGiXeSM/edit#gid=2027439485"
+                  >Excel file with definitions of red flags,
+                  <i>really useful!</i></a
+                ></b
+              >
+              <b
+                ><a href="https://www.open-contracting.org/data/data-use/#tools"
+                  >Videos from the open contracting.org explaining how to
+                  calculate red flags</a
+                ></b
+              >
+              <br />
+              <b
+                ><a
+                  href="http://redflags.govtransparency.eu/wp-content/uploads/2019/09/RedFlagFAQs.pdf"
+                  >Frequently asked questions about red flags</a
+                ></b
+              >
+              <br />
+              <b
+                ><a
+                  href="https://www.open-contracting.org/wp-content/uploads/2016/11/Red-flags-for-integrity-Giving-the-green-light-to-open-data-solutions-shared.pdf"
+                  >A really long document explainig the usage of OCDS and red
+                  flags in depth</a
+                ></b
+              >
+              <br />
             </section>
           </div>
         </div>
