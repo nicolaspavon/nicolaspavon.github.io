@@ -250,6 +250,10 @@ input, select, textarea {
 		margin: 0 0 2em 0;
 	}
 
+		p.justified {
+			text-align: justify;
+		}
+
 	h1, h2, h3, h4, h5, h6 {
 		color: #ffffff;
 		font-family: Raleway, Helvetica, sans-serif;
@@ -348,6 +352,16 @@ input, select, textarea {
 			padding: 1em 1.5em;
 			overflow-x: auto;
 		}
+
+			pre code img {
+				border-radius: 5px;
+			}
+
+			pre code .centered {
+				display: flexbox;
+				text-align: center;
+				justify-content: center;
+			}
 
 	hr {
 		border: 0;
@@ -2463,6 +2477,11 @@ input, select, textarea {
 				width: 100%;
 			}
 
+	.circle-image {
+		aspect-ratio: 1;
+		object-fit: cover;
+	}
+
 /* List */
 
 	ol {
@@ -2977,6 +2996,13 @@ input, select, textarea {
 			opacity: 0.25;
 		}
 
+		button.custom {
+			font-size: 32px;
+			padding: 0.2em;
+			line-height: 0;
+			height: 1.3em;
+		}
+
 		@media screen and (max-width: 480px) {
 
 			input[type="submit"],
@@ -3115,6 +3141,9 @@ input, select, textarea {
 			text-transform: uppercase;
 			top: 0.7em;
 		}
+			#header nav.custom {
+				vertical-align: super;
+			}
 
 			#header nav a {
 				border: 0;
@@ -3580,12 +3609,16 @@ input, select, textarea {
 			}
 
 		#compras-header {
-				background-image: linear-gradient(to top, rgba(46, 49, 65, 0.8), rgba(46, 49, 65, 0.8)), url("../../images/bigcho.jpg");
+				background-image: linear-gradient(to top, rgba(46, 49, 65, 0.8), rgba(46, 49, 65, 0.8)), url("../../images/compras/bigcho.jpg");
 			}
 		
 		#kidney-header {
-				background-image: linear-gradient(to top, rgba(46, 49, 65, 0.8), rgba(46, 49, 65, 0.8)), url("../../images/bigney.jpg");
+				background-image: linear-gradient(to top, rgba(46, 49, 65, 0.8), rgba(46, 49, 65, 0.8)), url("../../images/rm/bigney.jpg");
 			}
+
+		#titanic-header {
+			background-image: linear-gradient(to top, rgba(46, 49, 65, 0.8), rgba(46, 49, 65, 0.8)), url("../../images/titanic_survivors//titanic-bell.jpg");
+		}
 
 		#wrapper > header {
 			padding: 9em 0 6.25em 0 ;

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<!--
+	Solid State by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+  <head>
+    <title>State purchases</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+      charset="UTF-8"
+    />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript
+      ><link rel="stylesheet" href="assets/css/noscript.css"
+    /></noscript>
+    <link rel="icon" href="images/icon.webp" type="image/x-icon" />
+  </head>
+  <body
+    class="is-preload"
+    style="
+      background-image: linear-gradient(
+          to top,
+          rgba(46, 49, 65, 0.8),
+          rgba(46, 49, 65, 0.8)
+        ),
+        url(images/compras/bigcho.jpg);
+    "
+  >
+    <!-- Page Wrapper -->
+    <div id="page-wrapper">
+      <!-- Header -->
+      <header id="header">
+        <h1>Nicolás Pavón</h1>
+        <nav>
+          <a href="compras.html">ESP</a>
+          <a href="#menu">Menu</a>
+        </nav>
+      </header>
+
+      <!-- Menu -->
+      <nav id="menu"></nav>
+
+      <!-- Wrapper -->
+      <section id="wrapper">
+        <header id="compras-header">
+          <div class="inner">
+            <h2>ANALYZING GOVERNMENT PURCHASES</h2>
+          </div>
+        </header>
+
+        <!-- Content -->
+        <div class="wrapper">
+          <div class="inner">
+            <section>
+              <h3 class="major">It's all about money</h3>
+              <p>
+                In today's world, corruption is an issue that affects every
+                country. Therefore, having a standard to store government
+                purchases, like the
+
+                <a href="https://standard.open-contracting.org/latest/en/"
+                  >Open Contracting Data Standard (OCDS).</a
+                >, plays a vital role in uncovering fraudulent activities and
+                financial misuse by the government. Luckily, in my home country,
+                Uruguay, this standard has been used since 2015 to store a wide
+                range of government purchases, and this data is publicly
+                available for free use on the
+                <a
+                  href="https://catalogodatos.gub.uy/dataset/arce-datos-historicos-de-compras"
+                  >Datos Abiertos</a
+                >.
+                <br />
+                <br />
+                In this case study, we will analyze this data in search of
+                interesting patterns and characteristics, which hopefully (or
+                not), will reveal some misuse of government funds.
+              </p>
+
+              <h3 class="major">inspiration</h3>
+              <p>
+                While looking for a interesting dataset to demonstrate my ML
+                skills, i came across the website
+                <a href="http://cuentasclaras.uy/#/home">Cuentas claras</a> . In
+                there, the owners try to reveal fraudulent purchases and misuse
+                of government founds by applying a "function", which analyzes
+                certain parameters and returns a value, in their case, "red
+                flags". This idea of "red flags" is not new, and as we can see
+                in the
+                <a
+                  href="https://www.open-contracting.org/2016/11/30/red-flags-integrity-giving-green-light-open-data-solutions/"
+                  >>OCDS website</a
+                >, this was already attempted by a few countries, and there are
+                guides to work the OCDS data looking for these red flags.
+              </p>
+              <div class="col-12">
+                <span class="image fit"
+                  ><img src="images/compras/claras.png" alt="" />
+                  <p><i>Cuentas claras website</i></p></span
+                >
+              </div>
+              <p>
+                I strongly reccomend taking a look into the website and explore
+                it. As you can see in the image above, they have succesfully
+                processed and classified purchases of many public government
+                organizations, marking them with the famous "red flags". Also
+                there are some interesting statistics to explore.
+                <br />
+                <br />
+                Sadly the "Cuentas claras" proyect does not provide the
+                processed data along with the "red flags", and after some failed
+                attempts in contacting the owners, it seems to be abandoned or
+                in standby state.
+                <br />
+                <br />
+                This is not good news. In order to train a predicting model wee
+                need already labelled data, luckily, the folks at "cuentas
+                claras" <i>kind of</i> described the process they took to flag
+                the organisms in
+                <a href="http://cuentasclaras.uy/#/documentation"
+                  >these documents</a
+                >. Taking this into account, there are two possible paths to
+                continue working on this. We either "manually" label the data by
+                processing it with a similar function to the one used by cuentas
+                claras, or we try to apply clustering algorithms to identify
+                patterns and groupings, and then see if we can notice any odd
+                patterns that may indicate suspicious activity. <br />
+                Or, we may try both approaches.
+              </p>
+              <h3 class="major">Manually labeling the data</h3>
+              <p>
+                Using
+                <a
+                  href="https://docs.google.com/spreadsheets/d/12PFkUlQH09jQvcnORjcbh9-8d-NnIuk4mAQwdGiXeSM/edit#gid=245962708"
+                >
+                  this guide
+                </a>
+                provided by the
+                <a
+                  href="https://docs.google.com/spreadsheets/d/12PFkUlQH09jQvcnORjcbh9-8d-NnIuk4mAQwdGiXeSM/edit#gid=245962708"
+                  >Open Contracting Partnership</a
+                >
+                organization it should be possible (in theory) to determine if a
+                certain purchase was 'suspicious,' as it provides a list with
+                possible 'red flags,' indicating the conditions that a purchase
+                must meet to raise suspicions.
+                <br />
+                After a brief investigation, we reached the conclusion that
+                determining that case by case is not a good idea for two
+                reasons:
+              </p>
+              <ul>
+                <li>
+                  We are not qualified to analyze purchases and determine
+                  suspicious activities, since despite having that guide, we
+                  could never know with precision if it was truly a fraudulent
+                  purchase due to lack of context
+                </li>
+                <li>Labeling all that data is a very arduous and slow task.</li>
+              </ul>
+              <h3 class="major">Applying clustering</h3>
+              <p>
+                Although it wasn't the initial idea, by using clustering
+                algorithms, we can study the information in different ways and
+                eventually extract interesting conclusions. We might even be
+                able to highlight certain purchases with interesting patterns...
+                outliers.
+              </p>
+              <h4 class="major">Standard OCDS</h4>
+              <p>
+                The OCDS standard aims to store government procurement
+                information in a clear, concise, and detailed manner. To achieve
+                this, it provides a series of guides available on its website:
+              </p>
+              <ul>
+                <li>
+                  <a href="https://www.open-contracting.org/es/data-standard/"
+                    >Introduction to the standard</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://standard.open-contracting.org/latest/es/schema/release/"
+                    >Useful guide for understanding the data schema</a
+                  >
+                </li>
+              </ul>
+              <p>
+                After further investigation of the standard, we concluded that a
+                procurement process is broadly composed of:
+              </p>
+              <ul>
+                <li>
+                  <b>A planning stage (Planning)</b>
+                  <ul>
+                    <li>
+                      Information about the planning phase of the procurement
+                      process. This includes information related to the process
+                      of deciding what to contract, when, and how.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <b>A bidding stage (Tender)</b>
+                  <ul>
+                    <li>The activities carried out to award a contract.</li>
+                  </ul>
+                </li>
+                <li>
+                  <b>An awarding stage (Awards)</b>
+                  <ul>
+                    <li>
+                      Information about the awarding phase of the procurement
+                      process. There may be more than one award per procurement
+                      process; for example, because the contract is divided
+                      among different suppliers, or because it is an ongoing
+                      offer.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <b>A contracting stage(Contracts)</b>
+                  <ul>
+                    <li>
+                      Information about the contract creation phase in the
+                      procurement process.
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <p>
+                As you can see, this is not a simple process. It consists of
+                several stages that we won't delve into deeply for practical
+                reasons, but in an ideal scenario, we can conclude that the
+                standard seeks to be thorough and comprehensive when managing
+                this information.
+              </p>
+              <h4 class="major">Red flags</h4>
+              <p>
+                After studying and understanding the standard, we further
+                investigated the famous 'red flags', where we found
+                <a
+                  href="https://docs.google.com/spreadsheets/d/12PFkUlQH09jQvcnORjcbh9-8d-NnIuk4mAQwdGiXeSM/edit#gid=2027439485"
+                  >a useful guide to understanding the data schema</a
+                >
+                which explains in detail several possible cases of fraudulent
+                activities
+              </p>
+              <p>From this guide, we highlight some examples.:</p>
+              <ul>
+                <li>
+                  The available time to apply for the tender is very short (less
+                  than 2 days)
+                </li>
+                <li>
+                  The tender does not have a clear criterion for selecting the
+                  applicant nor key information such as dates, budget, etc.
+                </li>
+                <li>The tender is by invitation only.</li>
+              </ul>
+              <p>
+                These are the clearest examples we can observe, but there are a
+                total of 64 possible red flags 🤯
+              </p>
+              <p>
+                Taking these red flags into account along with the data
+                available in the standard, we make a pre-selection of the data
+                that interests us. This list can be seen in detail in the team's
+                repository
+              </p>
+              <h4 class="major">¿What about N-1 relations?</h4>
+              <p>
+                Considering that RapidMiner works (initially) with CSV files,
+                where all the information about a purchase is in one row, it
+                would not be possible to process purchases that contain N-1
+                relationships, where, for example, there are several bidders
+                with different data for each one. So to study this problem, it's
+                best to start with the simple path, selecting examples that can
+                be processed using RapidMiner. To deal with this, we have
+                developed a script that iterates over all purchases in an
+                OCDS-formatted file, summarizing the relevant information from
+                purchases that are good candidates for processing.
+              </p>
+              <p>
+                This was not a simple task, as we first had to define what
+                information about a purchase is relevant based on the red flags
+                definitions by OCDS, and then deal with the schema to
+                successfully extract it, resolving different conflicts along the
+                way such as the use of different currencies to indicate prices,
+                among other issues. Feel free to contact me for more details
+                about it.
+              </p>
+              <h4 class="major">Uruguayan data</h4>
+              <p>
+                Once we've assembled a script to condense the data into a CSV
+                with relevant information, we process the available data from
+                the Uruguay site and observe the worst... while data has been
+                stored in quantity since 2002, this data is incomplete,
+                containing only information on the quantity of items purchased
+                and their unit price.
+              </p>
+              <h4 class="major">Buenos Aires data</h4>
+              <p>
+                Although this seemed like the end of the project, we remembered
+                that this is an international standard and many countries follow
+                it. After conducting a brief investigation, we found on their
+                website
+                <a href="https://www.open-contracting.org/worldwide/#/">
+                  a map with the countries adhering to the standard</a
+                >, where we observe Argentina. We enter the Argentine data
+                website, download the dataset, and after processing it, we
+                observe that it contains many more data points than the
+                Uruguayan dataset.
+              </p>
+              <br />
+              <p>But... is it enough?</p>
+              <div class="col-12">
+                <span class="image fit"
+                  ><img src="images/compras/cluster.png" alt="" />
+                  <p>
+                    <i>Duration of the bidding period vs. acquisition method</i>
+                  </p></span
+                >
+              </div>
+              <h3 class="major">Conclusion</h3>
+              After applying clustering algorithms, we obtain somewhat
+              discouraging results. We understand that patterns are detected,
+              but nothing that strikes us as interesting at first glance.
+              Although it is not the result we expected, we highlight that it is
+              a great tool, and with more knowledge of the problem and quality
+              data, it would be possible to find anomalies in the procurement
+              processes of countries.
+
+              <br />
+              <br />
+              <h3 class="major">Future of the project</h3>
+              One potential direction to further develop this project is by
+              generating mock data. Thanks to the comprehensive work carried out
+              by the OCDS standard, we have a clear understanding of the types
+              of purchases that could raise red flags. Thus, we could generate
+              multiple purchases with fabricated but detailed data that meet the
+              criteria for red flags. Once this step is completed, we could
+              theoretically train a machine learning model to identify these
+              patterns, or alternatively, apply clustering algorithms to
+              recognize how outliers would manifest within clusters formed using
+              real data
+              <br />
+              <br />
+
+              However, it is important to have in mind that in order to
+              correctly process government purchases with a ML model, first, we
+              need the data to be complete with relevant information, which at
+              least for the Uruguayan government, it's not the case.
+              <br />
+              <br />
+              <br />
+              <h3 class="major">
+                Interesting Websites with Information on the Topic:
+              </h3>
+              <b
+                ><a
+                  href="https://docs.google.com/presentation/d/1Fss7T0BcSkq-XnTvSya57R0ul5WvMPaJcyUtKHZg-f4/edit#slide=id.g77e095da88_0_403"
+                >
+                  PowerPoint Presentation with Interesting Information on Red
+                  Flags and How to Use OCDS to Identify Them.</a
+                ></b
+              >
+              <br />
+              <b
+                ><a
+                  href="https://docs.google.com/spreadsheets/d/12PFkUlQH09jQvcnORjcbh9-8d-NnIuk4mAQwdGiXeSM/edit#gid=2027439485"
+                  >Excel File with Definitions of Red Flags,
+                  <i>¡really useful!</i></a
+                ></b
+              >
+              <b
+                ><a href="https://www.open-contracting.org/data/data-use/#tools"
+                  >Videos from opencontracting.org Explaining How to Calculate
+                  Red Flags.</a
+                ></b
+              >
+              <br />
+              <b
+                ><a
+                  href="http://redflags.govtransparency.eu/wp-content/uploads/2019/09/RedFlagFAQs.pdf"
+                  >Frequently Asked Questions About Red Flags.</a
+                ></b
+              >
+              <br />
+              <b
+                ><a
+                  href="https://www.open-contracting.org/wp-content/uploads/2016/11/Red-flags-for-integrity-Giving-the-green-light-to-open-data-solutions-shared.pdf"
+                  >A Document Explaining in Depth the Use of OCDS and Red
+                  Flags.</a
+                ></b
+              >
+              <br />
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <section id="footer"></section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="scripts/menuEng.js"></script>
+    <script src="scripts/footerEng.js"></script>
+  </body>
+</html>

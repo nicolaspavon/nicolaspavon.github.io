@@ -6,18 +6,18 @@
 -->
 <html>
   <head>
-    <title>State purchases</title>
+    <title>Compras Gubernamentales</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, user-scalable=no"
       charset="UTF-8"
     />
-    />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript
       ><link rel="stylesheet" href="assets/css/noscript.css"
     /></noscript>
+    <link rel="icon" href="images/icon.webp" type="image/x-icon" />
   </head>
   <body
     class="is-preload"
@@ -27,36 +27,28 @@
           rgba(46, 49, 65, 0.8),
           rgba(46, 49, 65, 0.8)
         ),
-        url(images/bigcho.jpg);
+        url(images/compras/bigcho.jpg);
     "
   >
     <!-- Page Wrapper -->
     <div id="page-wrapper">
       <!-- Header -->
       <header id="header">
-        <h1><a href="index.html">Nicolás Pavón</a></h1>
+        <h1>Nicolás Pavón</h1>
         <nav>
-          <a href="#menu">Menu</a>
+          <a href="compras-eng.html">ENG</a>
+          <a href="#menu">Menú</a>
         </nav>
       </header>
 
       <!-- Menu -->
-      <nav id="menu">
-        <div class="inner">
-          <h2>Menu</h2>
-          <ul class="links">
-            <li><a href="index.html">CV</a></li>
-            <li><a href="data_cleaning.html">Data cleaning examples</a></li>
-          </ul>
-          <a href="#" class="close">Close</a>
-        </div>
-      </nav>
+      <nav id="menu"></nav>
 
       <!-- Wrapper -->
       <section id="wrapper">
         <header id="compras-header">
           <div class="inner">
-            <h2>ANALYZING URUGUAYAN GOVERNMENT PURCHASES</h2>
+            <h2>ANALIZANDO COMPRAS GUBERNAMENTALES</h2>
           </div>
         </header>
 
@@ -64,124 +56,358 @@
         <div class="wrapper">
           <div class="inner">
             <section>
-              <h3 class="major">It's all about money</h3>
+              <h3 class="major">Por la plata baila el mono</h3>
               <p>
-                In today's world, corruption is an issue that affects every
-                country. Therefore, having a standard to store government
-                purchases, like the
+                En el mundo actual, la corrupción es un problema que afecta a
+                todos los países. Por lo tanto, contar con un estándar para
+                almacenar las compras gubernamentales, como el
+
                 <a href="https://standard.open-contracting.org/latest/en/"
-                  >Open Contracting Data Standard (OCDS).</a
-                >, plays a vital role in uncovering fraudulent activities and
-                financial misuse by the government. Luckily, in my home country,
-                Uruguay, this standard has been used since 2015 to store a wide
-                range of government purchases, and this data is publicly
-                available for free use on the
+                  >Estándar de Datos de Contrataciones (OCDS, por sus siglas en
+                  inglés)</a
+                >, desempeña un papel crucial en descubrir actividades
+                fraudulentas y mal uso financiero por parte del gobierno.
+                Afortunadamente, en Uruguay, este estándar se ha utilizado desde
+                2002 para almacenar una amplia gama de compras gubernamentales,
+                y estos datos están disponibles públicamente de forma gratuita
+                en la página web de
                 <a
                   href="https://catalogodatos.gub.uy/dataset/arce-datos-historicos-de-compras"
                   >Datos Abiertos</a
-                >
-                webpage.
+                >.
                 <br />
                 <br />
-                In this case study, we will analyze this data in search of
-                interesting patterns and characteristics, which hopefully (or
-                not), will reveal some misuse of government funds.
+                En este estudio de caso, analizaremos estos datos en busca de
+                patrones y características interesantes que, con suerte (o no),
+                revelarán algún mal uso de los fondos gubernamentales.
               </p>
 
-              <h3 class="major">inspiration</h3>
+              <h3 class="major">Inspiración</h3>
               <p>
-                While looking for a interesting dataset to demonstrate my ML
-                skills, i came across the website
-                <a href="http://cuentasclaras.uy/#/home">Cuentas claras</a> . In
-                there, the owners try to reveal fraudulent purchases and misuse
-                of government founds by applying a "function", which analyzes
-                certain parameters and returns a value, in their case, "red
-                flags". This idea of "red flags" is not new, and as we can see
-                in the
+                Al buscar un conjunto de datos interesante para demostrar
+                nuestras habilidades de Machine Learning, nos encontramos con el
+                sitio web
+                <a href="http://cuentasclaras.uy/#/home">Cuentas claras</a>. En
+                ese sitio, los propietarios intentan revelar compras
+                fraudulentas y mal uso de fondos gubernamentales aplicando una
+                "función" que analiza ciertos parámetros y devuelve un valor, en
+                su caso, "red flags". Esta idea de "red flags" no es nueva, y
+                como podemos ver en el
                 <a
                   href="https://www.open-contracting.org/2016/11/30/red-flags-integrity-giving-green-light-open-data-solutions/"
-                  >OCDS website</a
-                >, this was already attempted by a few countries, and there are
-                guides to work the OCDS data looking for these red flags.
-                <br />
+                  >sitio web de OCDS</a
+                >, ya ha sido intentada por algunos países, y existen guías para
+                trabajar con los datos de OCDS en busca de estas red flags.
               </p>
               <div class="col-12">
                 <span class="image fit"
-                  ><img src="images/claras.png" alt="" />
-                  <p><i>Cuentas claras website</i></p></span
+                  ><img src="images/compras/claras.png" alt="" />
+                  <p><i>Sitio web de Cuentas Claras</i></p></span
                 >
               </div>
               <p>
-                I strongly reccomend taking a look into the website and explore
-                it. As you can see in the image above, they have succesfully
-                processed and classified purchases of many public government
-                organizations, marking them with the famous "red flags". Also
-                there are some interesting statistics to explore.
+                Recomendamos encarecidamente echar un vistazo al sitio web y
+                explorarlo. Como puedes ver en la imagen de arriba, han
+                procesado y clasificado con éxito las compras de muchas
+                organizaciones gubernamentales públicas, marcándolas con las
+                famosas "red flags". Además, hay algunas estadísticas
+                interesantes para explorar.
                 <br />
                 <br />
-                Sadly the "Cuentas claras" proyect does not provide the
-                processed data along with the "red flags", and after some failed
-                attempts in contacting the owners, it seems to be abandoned or
-                in standby state.
+                Lamentablemente, el proyecto "Cuentas claras" no proporciona los
+                datos procesados junto con las "red flags", y después de algunos
+                intentos fallidos de ponerse en contacto con los propietarios,
+                parece estar abandonado o en un estado de espera.
                 <br />
                 <br />
-                This is not good news. In order to train a predicting model wee
-                need already labelled data, luckily, the folks at "cuentas
-                claras" <i>kind of</i> described the process they took to flag
-                the organisms in
+                Esta no es una buena noticia. Para entrenar un modelo
+                predictivo, necesitamos datos ya etiquetados. Afortunadamente,
+                las personas en "Cuentas Claras" describieron,
+                <i>de alguna manera</i>, el proceso que llevaron a cabo para
+                marcar las organizaciones en
                 <a href="http://cuentasclaras.uy/#/documentation"
-                  >these documents</a
-                >. Taking this into account, there are two possible paths to
-                continue working on this. We either "manually" label the data by
-                processing it with a similar function to the one used by cuentas
-                claras, or we try to apply clustering algorithms to identify
-                patterns and groupings, and then see if we can notice any odd
-                patterns that may indicate suspicious activity. <br />
-                Or, we may try both approaches.
+                  >estos documentos</a
+                >. Teniendo esto en cuenta, hay dos posibles caminos para
+                continuar trabajando en esto. Podemos "etiquetar" manualmente
+                los datos procesándolos con una función similar a la utilizada
+                por "Cuentas claras", o podemos intentar aplicar algoritmos de
+                agrupamiento para identificar patrones y grupos, y luego ver si
+                podemos notar algún patrón inusual que pueda indicar actividad
+                sospechosa.
+                <br />
+                O bien, podemos intentar ambas aproximaciones.
               </p>
-              <h3 class="major">Manually labelling the data</h3>
+              <h3 class="major">Generando los datos objetivo</h3>
               <p>
-                The idea of labelling the data with a function seems a little
-                odd. Why would we use AI to predict this if we can just use a
-                simple function?
+                Utilizando
+                <a
+                  href="https://docs.google.com/spreadsheets/d/12PFkUlQH09jQvcnORjcbh9-8d-NnIuk4mAQwdGiXeSM/edit#gid=245962708"
+                >
+                  la guía
+                </a>
+                provista por la organización
+                <a
+                  href="https://docs.google.com/spreadsheets/d/12PFkUlQH09jQvcnORjcbh9-8d-NnIuk4mAQwdGiXeSM/edit#gid=245962708"
+                  >Open Contracting Partnership</a
+                >
+                sería posible (en teoría) determinar si cierta compra fue
+                "sospechosa", ya que provee una lista con las posibles "banderas
+                rojas", donde se indica que condiciones debe cumplir una compra
+                para generar sospechas.
+                <br />
+                Luego de una breve investigación llegamos a la conclusión de que
+                determinar eso caso por caso no es buena idea por dos motivos:
               </p>
-              <h3 class="major">Applying clustering algorithms</h3>
-              <p>WIP ⚠️</p>
-              <h3 class="major">Interesting sites with useful info:</h3>
+              <ul>
+                <li>
+                  No estamos calificados para analizar las compras y determinar
+                  actividades sospechosas, ya que pese a contar con esa guía
+                  nunca podríamos saber con presicion si realmente fue una
+                  compra fraudulenta, por falta de contexto
+                </li>
+                <li>Generar todos esos datos es una tarea muy ardua y lenta</li>
+              </ul>
+              <h3 class="major">Aplicando clustering</h3>
+              <p>
+                Si bien no era la idea inicial, haciendo uso de los algoritmos
+                de clustering podemos estudiar la informacion de distintas
+                formas, y eventualmente lograr extraer conclusiones
+                interesantes. In cluso tal vez seamos capaz de destacar ciertas
+                compras con patrones interesantes.. outliers.
+              </p>
+              <h4 class="major">Standard OCDS</h4>
+              <p>
+                El estandard OCDS procura almacenar la informacion de los
+                prosesos de compra del gobierno de forma clara, concisa y en
+                detalle. Para esto provee una serie de guías disponibles en su
+                sitio web:
+              </p>
+              <ul>
+                <li>
+                  <a href="https://www.open-contracting.org/es/data-standard/"
+                    >Introducción al estándar</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://standard.open-contracting.org/latest/es/schema/release/"
+                    >Guía util para comprender el esquema de datos</a
+                  >
+                </li>
+              </ul>
+              <p>
+                Luego de investigar un poco mas el estandar concluimos en que un
+                proceso de compra está compuesto a grandes rasgos por:
+              </p>
+              <ul>
+                <li>
+                  <b>Una etapa de planificación (Planning)</b>
+                  <ul>
+                    <li>
+                      Información sobre la fase de planeación del proceso de
+                      contratación. Esto incluye información relacionada con el
+                      proceso de decidir qué contratar, cuándo y cómo.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <b>Una etapa de Licitación (Tender)</b>
+                  <ul>
+                    <li>
+                      Las actividades llevadas a cabo para celebrar un contrato.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <b>Una etapa de adjudicación (Awards)</b>
+                  <ul>
+                    <li>
+                      Información de la fase adjudicación del proceso de
+                      contrataciones. Puede haber más de una adjudicación por
+                      proceso de contrataciones; por ejemplo, porque el contrato
+                      se divide entre diferentes proveedores, o porque es una
+                      oferta permanente.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <b>Una etapa de Contratación (Contracts)</b>
+                  <ul>
+                    <li>
+                      Información de la fase de creación del contrato en el
+                      proceso de contratación.
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <p>
+                Como se puede observar, esto no es un proceso sencillo. Cuenta
+                de varias etapas en las que no entraremos en profundidad por
+                razones prácticas, pero en un caso ideal podemos concluit que el
+                estandar busca ser verás y completo a la hora de administrar
+                esta información
+              </p>
+              <h4 class="major">Selección de datos</h4>
+              <p>
+                Luego de haber estudiado y comprendido el estandard investigamos
+                un poco mas en profundidad las famosas "Banderas rojas", donde
+                encontramos
+                <a
+                  href="https://docs.google.com/spreadsheets/d/12PFkUlQH09jQvcnORjcbh9-8d-NnIuk4mAQwdGiXeSM/edit#gid=2027439485"
+                  >Guía util para comprender el esquema de datos</a
+                >
+                que explica en detalle varios casos posibles de actividades
+                fraudulentas
+              </p>
+              <p>De esta guía destacamos algunos ejemplos:</p>
+              <ul>
+                <li>
+                  El tiempo disponible para postularse a la licitación es muy
+                  poco (menor a 2 dias)
+                </li>
+                <li>
+                  La licitación no cuenta con un criterio claro para elegir al
+                  postulante ni informacion clave como fechas, presupuesto, etc
+                </li>
+                <li>La licitación es solo por invitación</li>
+              </ul>
+              <p>
+                Estos son los ejemplos mas claros que podemos observar, pero
+                existen 64 posibles banderas rojas en total 🤯
+              </p>
+              <p>
+                Teniendo estas red flags en cuenta y los datos disponibles en el
+                standard hacemos una pre selección de los datos que nos
+                interesan. Esta lista se puede ver en detalle en el repositorio
+                del equipo.
+              </p>
+              <h4 class="major">¿Que hacemos con las relaciones N-1?</h4>
+              <p>
+                Para estudiar este problema lo mejor será empezar por el camino
+                simple, seleccionando los ejemplos que sean posibles procesar
+                utilizando rapidminer. Teniendo en cuenta que rapidminer trabaja
+                (en un principio) con archivos csv, donde toda la información de
+                una compra se encuentra en una fila, no sería posible procesar
+                compras que contengan relaciones N-1, donde por ejemplo para una
+                compra existen varios postulantes con distintos datos cada uno.
+                Para lidiar con este problema elaboramos un script que itera
+                sobre todas las compras de un archivo con el formato OCDS,
+                resumiendo la información relevante de las compras que sean
+                buenas candidatas para ser procesadas.
+              </p>
+              <p>
+                Esto no fue una tarea simple, ya que primero hubo que definir
+                qué informacion de una compra es relevante, y luego lidiar con
+                el esquema para extraerla exitosamente resolviendo distintos
+                conflictos como el uso de diferentes monedas para indicar el
+                precio de una licitación, entre otros. Sientete libre de entrar
+                en contacto conmigo para conocer mas detalles al respecto
+              </p>
+              <h4 class="major">Datos Uruguayos</h4>
+              <p>
+                Una vez que armamos un script para reducir los datos a un csv
+                con información de interés, procesamos los datos disponibles en
+                el sitio de Uruguay y observamos lo peor.. si bien se almacenan
+                datos en cantidad desde 2002, estos datos están imcompletos,
+                conteniendo solo la indormacion de la cantidad de items que se
+                compraron y su precio unitario..
+              </p>
+              <h4 class="major">Datos BsAs</h4>
+              <p>
+                Si bien esto parecía el fin del proyecto, nos acordamos que esto
+                es un estandar internacional y muchos países lo siguen. Luego de
+                hacer una breve investigacion encontramos en su sitio web
+                <a href="https://www.open-contracting.org/worldwide/#/">
+                  un mapa con los países adheridos al estandar</a
+                >, donde observamos a argentina. Entramos a la pagina web de
+                datos argentinos, descargamos el set de datos y luego de
+                procesarlo observamos que contiene muchos mas datos que el set
+                uruguayo.
+              </p>
+              <br />
+              <p>Pero... funciona?</p>
+              <div class="col-12">
+                <span class="image fit"
+                  ><img src="images/compras/cluster.png" alt="" />
+                  <p>
+                    <i
+                      >Duración del período de licitacion vs método de
+                      adquisición</i
+                    >
+                  </p></span
+                >
+              </div>
+              <h3 class="major">Conclusión</h3>
+              Luego de aplicar algoritmos de clustering obtenemos resultados un
+              poco desalentadores. Entendemos que se detectan patrones, pero
+              nada que nos rersulte interesante a primera vista. Si bien no es
+              el resutlado que esperabamos, destacamos que es una gran
+              herramienta, y con mas conocimiento del problema y datos de
+              calidad, sería posible encontrar anomalias en los procesos de
+              compra de los países.
+
+              <br />
+              <br />
+              <h3 class="major">Futuro del proyecto</h3>
+              Una posible forma de avanzar con este proyecto es generando datos
+              simulados. Gracias al detallado trabajo del estándar OCDS,
+              comprendemos los tipos de compras que podrían ser consideradas
+              "red flags". Por lo tanto, podríamos crear múltiples compras con
+              datos ficticios pero detallados que cumplan con los criterios de
+              una red flag. Luego, podríamos entrenar un modelo de aprendizaje
+              automático para identificar estos patrones, o aplicar clustering
+              para detectar valores atípicos dentro de grupos formados con datos
+              reales.
+              <br />
+              <br />
+
+              Sin embargo, es importante tener en cuenta que para procesar y
+              clasificar exitosamente los datos del mundo real utilizando estas
+              tecnicas, primero necesitamos que los datos estén completos con
+              información relevante, lo cual, al menos para el gobierno
+              uruguayo, no es el caso.
+              <br />
+              <br />
+              <br />
+              <h3 class="major">
+                Sitios Intereseantes Con Información Del Tema:
+              </h3>
               <b
                 ><a
                   href="https://docs.google.com/presentation/d/1Fss7T0BcSkq-XnTvSya57R0ul5WvMPaJcyUtKHZg-f4/edit#slide=id.g77e095da88_0_403"
-                  >PPT with interesting info about red flags and how to use OCDS
-                  to find them</a
+                >
+                  Presentación de PowerPoint con información interesante sobre
+                  las banderas rojas ("red flags") y cómo utilizar OCDS para
+                  encontrarlas.</a
                 ></b
               >
               <br />
               <b
                 ><a
                   href="https://docs.google.com/spreadsheets/d/12PFkUlQH09jQvcnORjcbh9-8d-NnIuk4mAQwdGiXeSM/edit#gid=2027439485"
-                  >Excel file with definitions of red flags,
-                  <i>really useful!</i></a
+                  >Archivo de Excel con definiciones de banderas rojas ("red
+                  flags"), <i>¡realmente útil!</i></a
                 ></b
               >
               <b
                 ><a href="https://www.open-contracting.org/data/data-use/#tools"
-                  >Videos from the open contracting.org explaining how to
-                  calculate red flags</a
+                  >Videos de opencontracting.org que explican cómo calcular las
+                  banderas rojas ("red flags").</a
                 ></b
               >
               <br />
               <b
                 ><a
                   href="http://redflags.govtransparency.eu/wp-content/uploads/2019/09/RedFlagFAQs.pdf"
-                  >Frequently asked questions about red flags</a
+                  >Preguntas frecuentes sobre banderas rojas ("red flags").</a
                 ></b
               >
               <br />
               <b
                 ><a
                   href="https://www.open-contracting.org/wp-content/uploads/2016/11/Red-flags-for-integrity-Giving-the-green-light-to-open-data-solutions-shared.pdf"
-                  >A really long document explainig the usage of OCDS and red
-                  flags in depth</a
+                  >Un documento que explica en profundidad el uso de OCDS y las
+                  banderas rojas ("red flags").</a
                 ></b
               >
               <br />
@@ -191,14 +417,7 @@
       </section>
 
       <!-- Footer -->
-      <section id="footer">
-        <div class="inner">
-          <ul class="copyright">
-            <li>&copy; Nicolás Pavón Inc. All rights reserved.</li>
-            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-          </ul>
-        </div>
-      </section>
+      <section id="footer"></section>
     </div>
 
     <!-- Scripts -->
@@ -208,5 +427,7 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="scripts/menu.js"></script>
+    <script src="scripts/footer.js"></script>
   </body>
 </html>
