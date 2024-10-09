@@ -16,11 +16,125 @@
   </noscript>
   <link rel="icon" href="images/icon.webp" type="image/x-icon" />
   <style>
+    h3 {
+      font-family: 'Georgia', serif;
+      color: #fe8d59;
+    }
+
     .variable {
       font-family: "Courier New", Courier, monospace;
       background-color: #212430;
       padding: 2px 4px;
       color: #fe8d59;
+    }
+
+    .main-image {
+      margin-right: 20px;
+      height: auto;
+      width: 100px;
+      /* Maintain aspect ratio */
+      object-fit: cover;
+      /* Adjust the margin value as needed */
+    }
+
+    .oth-image {
+      margin-right: 20px;
+      height: auto;
+      width: 100px;
+      /* Maintain aspect ratio */
+      object-fit: cover;
+      /* Adjust the margin value as needed */
+    }
+
+    .row.gtr-uniform {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      /* Optional: Adds a gap between all columns */
+    }
+
+    .image-fit {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      object-fit: cover;
+    }
+
+    /* Form Container */
+    #contact-form {
+      background-color: #2e3141;
+      padding: 40px;
+      border-radius: 8px;
+    }
+
+    /* Form Fields */
+    .fields {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .field {
+      width: 100%;
+    }
+
+    /* Half-width fields for larger screens */
+    .field.half {
+      width: calc(50% - 10px);
+    }
+
+    .field.half.second {
+      width: calc(50% - 10px);
+      padding-right: 20px;
+      padding-left: 0px;
+    }
+
+    /* Input and Textarea Styling */
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      color: #333;
+      font-size: 16px;
+    }
+
+    /* Button Styling */
+    .button {
+      background-color: #fe8d59;
+      color: #fff;
+      padding: 12px 30px;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 16px;
+      text-align: center;
+      display: block;
+      margin: 0 auto;
+      transition: background-color 0.3s;
+      line-height: 0;
+    }
+
+    .button:hover {
+      background-color: #ff7043;
+    }
+
+    /* Labels */
+    label {
+      color: #f0f0f0;
+      font-size: 14px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* Form Responsiveness */
+    @media (max-width: 768px) {
+      .field.half {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -63,56 +177,44 @@
           <section>
             <h3 class="major">El problema</h3>
             <p>
-              En los ultimos 20 años el E-Commerce ha crecido
-              exponencialmente. Basta con solo observar el poder y tamaño de
-              los sitios como Amazon, Alibaba o incluso Mercado Libre para
-              darse cuenta de la importancia que tienen al dia de hoy. A
-              partir de esto podemos concluir que si hay algo que tienen estos
-              gigantes de la informatica son muchos datos, y entre ellos,
-              muchas imágenes. Sin embargo, los datos no sirven para nada si
-              no se pueden interpretar y trabajar, por lo que sería util poder
-              clasificar los mismos para poder darles un uso apropiado y
-              sacarles todo el provecho posible.
+              En los últimos 20 años, el E-Commerce ha crecido exponencialmente. Basta con solo observar el poder y
+              tamaño de los sitios como Amazon, Alibaba o incluso Mercado Libre para darse cuenta de la importancia que
+              tienen al día de hoy. A partir de esto, podemos concluir que si hay algo que tienen estos gigantes de la
+              informática son muchos datos, y entre ellos, muchas imágenes. Sin embargo, los datos no sirven para nada
+              si no se pueden interpretar y trabajar, por lo que sería útil poder clasificarlos para poder darles un uso
+              apropiado y sacarles todo el provecho posible.
             </p>
 
             <h3 class="major">Los datos</h3>
             <p>
-              Entre todos los datasets disponibles nos topamos con uno
+
+              Entre todos los datasets disponibles, nos topamos con uno
               <i>interesante</i>, el
               <a href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">Amazon Berkeley Objects (ABO)
-                Dataset.</a>
-              Este dataset nos provee imágenes de aproximadamente 147,000
-              productos de Amazon, con su correspondiente metadata que incluye
-              su categoria, color, keywords, marca, nombre, modelo, etc.
-              Además, provee renders en 3D y algunos otros chiches
-              interesantes. Si bien no hemos explorado aún los datos en
-              profundidad para determinar su pureza, reconocemos el hecho de
-              que los mismos provienen de Amazon, por lo que las imágenes son
-              las ideales para este problema.
+                Dataset.</a> Este dataset nos provee imágenes de aproximadamente 147,000 productos de Amazon, con su
+              correspondiente metadata que incluye su categoría, color, palabras clave, marca, nombre, modelo, etc.
+              Además, provee renders en 3D y algunos otros detalles interesantes. Si bien no hemos explorado aún los
+              datos en profundidad para determinar su pureza, apreciamos el hecho de que provienen de Amazon, por lo que
+              las imágenes son ideales para este problema.
             </p>
 
             <h3 class="major">La tecnología</h3>
             <p>
-              Si bien para este tipo de problemas hoy en dia se utilizan los
-              transformers, en este caso utilizaremos redes convolucionales,
-              partiendo de un modelo pre entrenado como VGG-16 y aplicando
-              transfer learning, donde le quitaremos las capas superiores de
-              clasificacion, y añadiremos nuevas capas especializadas para
-              esta tarea. Por ultimo aplicaremos fine tunning para mejorar la
-              performance. El código fue desarrollado en Google Colab, puede
-              verlo aquí TODO: LINK COLAB
+              Si bien para este tipo de problemas hoy en día se utilizan los transformers, en este caso utilizaremos
+              redes convolucionales, partiendo de un modelo preentrenado como inception-v3 y aplicando transfer
+              learning, donde quitaremos las capas superiores de clasificación y añadiremos nuevas capas especializadas
+              para esta tarea. Por último, aplicaremos fine-tuning para mejorar la performance. El código fue
+              desarrollado en Google Colab.
             </p>
 
             <h3 class="major">El objetivo</h3>
             <p>
-              Como objetivo nos interesa poder describir con el mayor detalle
-              posible el producto en la imagen a categorizar, dando por echo
-              que la imagen corresponde a un producto de e-commerce. Tomando
-              esto en cuenta y analizando el dataset, observamos la propiedad
-              <i class="variable">product_type</i>, la cual tiene al rededor
-              de 574 clases, las cuales varian en nivel de precision.
-              Partiremos de esta propiedad del dataset para entrenar nuestro
-              modelo.
+              Como objetivo nos interesa poder clasificar el producto en la imagen, dando por hecho que la imagen
+              corresponde a un producto de e-commerce. Tomando esto en cuenta y analizando el dataset, observamos la
+              propiedad <i class="variable">product_type</i>, la cual tiene alrededor de 574 clases que varían en nivel
+              de precisión, desde
+              “RING” hasta “BISS” (Business, Industrial, and Scientific Supplies). Partiremos de esta propiedad del
+              dataset para entrenar nuestro modelo.
             </p>
           </section>
         </div>
@@ -145,15 +247,18 @@
               </span>
             </div>
             <p>Como se ve en la imagen, el dataset está totalmente desbalanceado, con muchos ejemplos para ciertas
-              categorias, y casi ninguno en otras. Observando los datos en detalle vemos que hay 574 categorias, de las
-              cuales 460 tienen menos de 100 ejemplos 🫠 </p>
+              categorías y casi ninguno en otras. Observando los datos en detalle, vemos que hay 574 categorías, de las
+              cuales 460 tienen menos de 100 ejemplos. Esto es un problema ya que necesitamos una buena cantidad de
+              imágenes por categoría para poder identificar ese tipo de objetos con éxito.. y solo 100 o menos no son
+              suficientes. 🫠</p>
             <p>
-              Para lidiar con este problema utilizaremos el clasico divide y vencerás, y tomaremos una fracción de las
-              categorias que tengan mas ejemplos, y balancearemos los mismos para que no hayan sesgos entre las
-              categorias a la hora de entrenarlos. Se optó por utilizar todas las categorias que tengan mas de 150
-              ejemplos, y limitar la cantidad de ejemplos por categoría a 400. Esta fue una desición un tanto
-              arbitraria, por lo que si se vuelve necesario, es posible encontrar una mejor seleccion de
-              categorias/ejemplos.
+              Para lidiar con este problema, utilizaremos el clásico divide y vencerás, y trabajaremos solo con las
+              categorías que tengan más ejemplos, balanceando los mismos para que no haya sesgos entre las categorías a
+              la hora de entrenarlos. Originalmente se optó por trabajar con 170 categorías, con al menos 50
+              ejemplos por categoria. Esto no
+              dió resultado, por lo que se redució el dataset a todas las categorías que tengan al menos 150 ejemplos, y
+              con un tope de 400. Esta fue una decisión un tanto arbitraria, por lo
+              que, si se vuelve necesario, es posible encontrar una mejor selección de categorías/ejemplos.
             </p>
             <p>Una vez realizados los filtros, podemos observar las estadisticas del datset final:
             </p>
@@ -173,71 +278,126 @@
             <p>
               En este paso analizaremos el dataset previamente refinado en busca de posibles problemas evidentes a la
               vista, entre los cuales encontramos:
-            <h5 class="major">Categorias confundibles: </h5>
+            <h6>Categorias confundibles: </h6>
             <p>Estas categorias tienen objetos muy similares entre sí. Incluso en algunos casos la unica forma de
               diferenciarlos es leyendo el texto de los mismos. Esto es un problema ya que será altamente dificil de
-              clasificar para la red neuronal. Dado esto, tomamos la desicion de quitar estas categorias</p>
+              clasificar para la red neuronal.</p>
+            <ul>
+              <li>ACCESORY &#8596; HAT</li>
+              <li>STORAGE_HOOK &#8596; TOOLS</li>
+              <li>NUTRITIONAL_SUPLEMENT &#8596; VITAMINS &#8596; HEALTH_PERSONAL_CARE</li>
+              <li>LUGGAGE &#8596; SUIT_CASE</li>
+              <li>FINERING &#8596; RING</li>
+              <li>FINENECKLACEBRACALETANKLET &#8596; NECKLACE</li>
+              <li>FINEEARING &#8596; EARRING</li>
+            </ul>
+            <p>Exceptuando los casos de 'fine x' &#8596;
+              'x', en un principio conservaremos estas categorias y observaremos si son efectivamente
+              problematicas al momento de clasificar
+              Para los casos 'fine x' nos quedaremos con los que no son "fine", ya que son más abarcativos y siguen
+              preservando la forma general.</p>
 
-            - ACCESORY => HAT
-            - storage_hook => tools
-            - nutritional_suplement => vitamins => HEALTH_PERSONAL_CARE
-            - luggage => suit_case
-            - lamp => light_fixture,
-
-            - FINERING => RING
-            - FINENECKLACEBRACALETANKLET => NECKLACE
-            - FINEEARING => EARRING
-            <p> en estos casos de 'fine x' => 'x' nos quedamos los que no son fine, son mas abarcativos y siguen
-              preservando la forma general</p>
-
-            <h5 class="major">Categorias muy genericas: </h5>
+            <h5>Categorias genericas: </h5>
             <p>Estas categorias tienen objetos muy variados, por lo que será mas dificil entrenar a la red en busca de
-              patrones similares. Si todos los objetos de una categoria varian en forma, no existe un set de features /
-              patrones que los unifique bajo una categoria (se podria lograr si cada sub tipo de objeto en esta
+              patrones similares. Si todos los objetos de una categoria varian en forma, no existe un set de features
+              /
+              patrones que los unifique (se podria lograr si cada sub tipo de objeto en esta
               categoria tuviese suficientes imagenes, pero como quizas de 400 imagenes, solo 90 pertenezcan a uno de
-              estos objetos, sera mucho mas dificil de entrenar)</p>
-            - wireless_accesory
-            - ACCESORY_OR_PART_OR_SUPPLY
-            - BABY_PRODUCT
-            - COMPUTER_ADDON
-            - GROCERY
-            - sorting_goods
-            - pantry
-            - kitchen
-            - janitory_supply
-            - homefurniture_and_decor
-            - home
-            - hardware
+              estos objetos, sera muy dificil de entrenar). Estas categorias serán quitadas del dataset.</p>
+            <ul>
+              <li>WIRELESS_ACCESORY</li>
+              <li>ACCESORY_OR_PART_OR_SUPPLY</li>
+              <li>BABY_PRODUCT</li>
+              <li>COMPUTER_ADDON</li>
+              <li>GROCERY</li>
+              <li>SPORTING_GOODS</li>
+              <li>PANTRY</li>
+              <li>KITCHEN</li>
+              <li>JANITORY_SUPPLY</li>
+              <li>HOMEFURNITURE_AND_DECOR</li>
+              <li>HOME</li>
+              <li>HARDWARE</li>
+            </ul>
+
+            <p><i>Ejemplos de imagenes en la categoria HOME:</i></p>
+            <div class="row gtr-uniform">
+              <div class="col-4">
+                <span class="image fit"><img src="images/ABO/HOME_3.jpg" alt="" />
+                </span>
+              </div>
+              <div class="col-4">
+                <span class="image fit"><img src="images/ABO/HOME_2.jpg" alt="" />
+                </span>
+              </div>
+              <div class="col-4">
+                <span class="image fit"><img src="images/ABO/HOME_1.jpg" alt="" />
+                </span>
+              </div>
+            </div>
+
+
             </p>
             <h3 class="major">Balanceo del dataset</h3>
             <p>
-              Como se comentó previamente, un posible problema es el sesgo que puede generar el desbalance de ejemplos a
+              Como se comentó previamente, un posible problema es el sesgo que puede generar el desbalance de ejemplos
+              a
               la hora de entrenar una red neuronal. Si en nuestra red tenemos mil ejemplos de zapatos, y cien ejemplos
               de
               sillones, para la red las probabilidades de recibir un zapato son 10 veces mayores que las de recibir un
-              sillon. Esto afectaría la clasificacion de forma bastante drástica, por lo que nos interesa tener los
-              datasets lo mas balanceado posible.
+              sillon, y siendo este el caso la red podría retornar siempre zapato, acertando la mayoría de las veces.
+              Esto
+              afectaría la clasificacion de forma bastante drástica, por lo que nos interesa tener el dataset lo mas
+              balanceado posible.
               Para lograr esto, tomaremos en cuenta las "other images" disponibles por ejemplo. Estas imágenes pueden
               ayudarnos a aumentar la cantidad de ejemplos para aquellas categorias problemáticas.
             </p>
-            <p>observamos el siguiente ejemplo de other_images</p>
+            <p><i>Observamos el siguiente ejemplo de other_images:</i></p>
+            <div class="row gtr-uniform">
+              <div class="col-4 main-image">
+                <span class="image fit">
+                  <img src="images/ABO/SOFA_MAIN.jpg" alt="" />
+                  <p><i>"Main_image"</i></p>
+                </span>
+              </div>
+              <div class="col-4 oth-image">
+                <span class="image fit">
+                  <img src="images/ABO/SOFA_OTH_2.jpg" alt="" />
+                  <p><i>"Other_images"</i></p>
+                </span>
+              </div>
+              <div class="col-4 oth-image">
+                <span class="image fit">
+                  <img src="images/ABO/SOFA_OTH_1.jpg" alt="" />
+                </span>
+              </div>
+              <div class="col-4 oth-image">
+                <span class="image fit">
+                  <img src="images/ABO/SOFA_OTH_3.jpg" alt="" />
+                </span>
+              </div>
+            </div>
+
             <p>Luego de una no muy breve inspeccion, observamos casos satisfactorios en los que las "other_images" son
               suficientemente similares (pero no identicas) al producto original</p>
             <p>casos buenos</p>
-            <p>Sin embargo, también observamos imagenes que no son del producto en si, sino de una tabla descriptiva, un
+            <p>Sin embargo, también observamos imagenes que no son del producto en si, sino de una tabla descriptiva,
+              un
               color, o de una toma general en la que el objeto casi es indistinguible.</p>
             <p>casos malos</p>
             <p>Estos casos nos perjudican. Nos interesa tener cierta varianza en las imagenes para que nuestra red se
               vuelva mas robusta, pero cuando tenemos imagenes muy complejas, o que nisiquiera tienen al objeto en si,
-              perjudica el entrenamiento de la red, ya que la red asociara patrones erroneos a la categoria en cuestion
+              perjudica el entrenamiento de la red, ya que la red asociara patrones erroneos a la categoria en
+              cuestion
             </p>
             <p>Para superar este problema, haremos un filtrado de las "other_images" utilizando redes neuronales pre
               entrenadas para clasificacion. En este caso utilizaremos la red VGG16, quitando las capas de
-              clasificacion. esto nos dejará una red que solo se dedica a encontrar y distinguir features en una imagen.
+              clasificacion. esto nos dejará una red que solo se dedica a encontrar y distinguir features en una
+              imagen.
               Luego, con esta red procederemos a extraer las features de la imagen principal de cada objeto
               (main_image), y luego haremos una comparacion con las features de cada una de las "other_images" de este
               objeto, obteniendo un coeficiente de similitud en las mismas. este coeficiente nos indicará que tan
-              similares son las "other_images" a la imagen principal, dandole un valor muy bajo a aquellas que no tengan
+              similares son las "other_images" a la imagen principal, dandole un valor muy bajo a aquellas que no
+              tengan
               nada que ver.
             </p>
             <p>Aqui observamos algunos ejemplos del uso de esta tecnica</p>
@@ -312,14 +472,6 @@
 
               imagen de overfitting all_clusters_fine_tunnig.png
 
-              Explicar:
-              se intento usar un modelo grande para clasificar las 65 categorias, pero tenia muy mala performance.
-              Luego se intento divide y venceras, un modelo cada +- 10 categorias, pero se encontro que meterle muchos
-              modelos pesados rompe el gradio
-              Por ultimo se decidio modelo papa con 4 categorias usando el category cluster, y luego un submodelo para
-              identificar con precision, cargando en total unicamente 2 modelos
-
-
               final:
               - un input para mandar mail o comentarios.
               - posible integracion con chatgpt para contestar preguntas?
@@ -338,8 +490,12 @@
               "categorias" / cosas distintas</p>
             <p>categorias de frascos dificiles de diferenciar</p>
             <p>categorias suitcase y luggage identicas</p>
-            <h3 class="major"></h3>
-            <p>TODO:</p>
+            <h3 class="major">things that did not work</h3>
+            <p>se intento usar un modelo grande para clasificar las 65 categorias, pero tenia muy mala performance.
+              Luego se intento divide y venceras, un modelo cada +- 10 categorias, pero se encontro que meterle muchos
+              modelos pesados rompe el gradio
+              Por ultimo se decidio modelo papa con 4 categorias usando el category cluster, y luego un submodelo para
+              identificar con precision, cargando en total unicamente 2 modelos</p>
             <div style="text-align: center;">
               <iframe src="https://nicolaspavon-amazon-classification.hf.space" frameborder="0" width="850"
                 height="450"></iframe>
@@ -353,6 +509,31 @@
             <h2 class="major">Conclusiones</h2>
             <p></p>
           </section>
+          <section id="contact-form">
+            <div>
+              <h3 class="major">Contacto</h3>
+              <form id="feedbackForm" action="https://formspree.io/f/xyzygapb" method="POST">
+                <div class="fields">
+                  <div class="field half">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" placeholder="Your Name" required>
+                  </div>
+                  <div class="field half second">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Your Email" required>
+                  </div>
+                  <div class="field">
+                    <label for="message">Message</label>
+                    <textarea name="message" id="message" rows="6" placeholder="Your Message" required></textarea>
+                  </div>
+                  <div class="field">
+                    <button type="submit" class="button">Send Message</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </section>
+
         </div>
       </div>
     </section>
