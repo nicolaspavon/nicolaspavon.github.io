@@ -1,174 +1,188 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Nicolás Pavón</title>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, user-scalable=no"
-    />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript>
-      <link rel="stylesheet" href="assets/css/noscript.css" />
-    </noscript>
-    <link rel="icon" href="images/icon.webp" type="image/x-icon" />
-  </head>
 
-  <body class="is-preload">
-    <!-- Page Wrapper -->
-    <div id="page-wrapper">
-      <!-- Header -->
-      <header id="header" class="alt">
+<head>
+  <title>Nicolás Pavón</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <noscript>
+    <link rel="stylesheet" href="assets/css/noscript.css" />
+  </noscript>
+  <link rel="icon" href="images/icon.webp" type="image/x-icon" />
+</head>
+
+<style>
+  .zoom-image {
+    width: 100%;
+    height: auto;
+    transform: scale(1.2);
+    /* Adjust the scale factor as needed */
+    object-fit: cover;
+    /* Ensures the image covers the container while maintaining aspect ratio */
+  }
+</style>
+
+<body class="is-preload">
+  <!-- Page Wrapper -->
+  <div id="page-wrapper">
+    <!-- Header -->
+    <header id="header" class="alt">
+      <a href="index.html">
         <h1>Nicolás Pavón</h1>
-        <nav>
-          <a href="index-eng.html">ENG</a>
-          <a href="#menu" class="esp">Menú</a>
-        </nav>
-      </header>
+      </a>
+      <nav>
+        <a href="index-eng.html">ENG</a>
+        <a href="#menu" class="esp">Menú</a>
+      </nav>
+    </header>
 
-      <!-- Menu -->
-      <nav id="menu"></nav>
+    <!-- Menu -->
+    <nav id="menu"></nav>
 
-      <!-- Banner -->
-      <section id="banner">
+    <!-- Banner -->
+    <section id="banner">
+      <div class="inner">
+        <h2>
+          Nicolás Pavón <br />
+          machine learning portfolio
+        </h2>
+        <p>Explora mis proyectos de ML</p>
+      </div>
+    </section>
+
+    <!-- Wrapper -->
+    <section id="wrapper">
+      <!-- One -->
+      <section id="one" class="wrapper spotlight style1">
         <div class="inner">
-          <h2>
-            Nicolás Pavón <br />
-            machine learning portfolio
-          </h2>
-          <p>Explora mis proyectos de ML</p>
+          <a href="#" class="image"><img src="images/profiles/nicolas.jpg" alt="" /></a>
+          <div class="content">
+            <h2 class="major">Nicolás Pavón</h2>
+            <p class="justified">
+              Licenciado en informática con cuatro años de experiencia como
+              desarrollador web full-stack utilizando Python, Django y React,
+              recientemente me adentré en el mundo de la ciencia de datos y el
+              aprendizaje automático. Me fascina el poder de extraer ideas
+              valiosas a partir de los datos, y he estado trabajando con
+              herramientas como RapidMiner y scikit-learn para limpiar y
+              analizar conjuntos de datos. Espero aprovechar estas habilidades
+              para crear algo asombroso con la IA en el futuro.
+            </p>
+            <a href="https://www.linkedin.com/in/nicolas-pavon/" class="special">LinkedIn</a>
+          </div>
         </div>
       </section>
 
-      <!-- Wrapper -->
-      <section id="wrapper">
-        <!-- One -->
-        <section id="one" class="wrapper spotlight style1">
-          <div class="inner">
-            <a href="#" class="image"
-              ><img src="images/profiles/nicolas.jpg" alt=""
-            /></a>
-            <div class="content">
-              <h2 class="major">Nicolás Pavón</h2>
+      <!-- Eight -->
+      <section id="two" class="wrapper alt style2">
+        <div class="inner">
+          <h2 class="major">ML showcase</h2>
+          <p class="justified">
+            En esta sección podrás observar mis habilidades aplicadas en casos
+            del mundo real, donde exploro aplicaciones prácticas de las
+            herramientas de aprendizaje automatico adquiridas.
+          </p>
+          <section class="features">
+            <article>
+              <a href="ABO.html" class="image">
+                <img src="images/ABO/cosas.webp" alt="" />
+              </a>
+              <h3 class="major">Clasificando productos de amazon</h3>
               <p class="justified">
-                Licenciado en informática con cuatro años de experiencia como
-                desarrollador web full-stack utilizando Python, Django y React,
-                recientemente me adentré en el mundo de la ciencia de datos y el
-                aprendizaje automático. Me fascina el poder de extraer ideas
-                valiosas a partir de los datos, y he estado trabajando con
-                herramientas como RapidMiner y scikit-learn para limpiar y
-                analizar conjuntos de datos. Espero aprovechar estas habilidades
-                para crear algo asombroso con la IA en el futuro.
+                En este caso de estudio se pretende clasificar imagenes
+                provenientes del
+                <a href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">Amazon Berkeley Objects (ABO)
+                  Dataset</a>
+                en categorias y sub categorias de productos. Nos encontramos
+                con un dataset complicado, pero luego de implementar diversas
+                soluciones se obtienen resultados satisfactorios.
               </p>
-              <a
-                href="https://www.linkedin.com/in/nicolas-pavon/"
-                class="special"
-                >LinkedIn</a
-              >
-            </div>
-          </div>
-        </section>
+              <a href="ABO.html" class="special">Blog</a>
+            </article>
+            <article>
+              <a href="kidney.html" class="image"><img src="images/rm/clearoff.jpeg" alt="" /></a>
+              <h3 class="major">
+                Prediciendo la enfermedad crónica de riñón
+              </h3>
+              <p class="justified">
+                En este caso de estudio se utilizó rapidminer aplicando las
+                técnicas de ML adquiridas para detectar la enfermedad crónica
+                en riñones a partir de datos básicos del estado de salud de
+                una persona.
+              </p>
+              <a href="kidney.html" class="special">Blog</a>
+            </article>
 
-        <!-- Eight -->
-        <section id="two" class="wrapper alt style2">
-          <div class="inner">
-            <h2 class="major">ML showcase</h2>
-            <p class="justified">
-              En esta sección podrás observar mis habilidades aplicadas en casos
-              del mundo real, donde exploro aplicaciones prácticas de las
-              herramientas de aprendizaje automatico adquiridas.
-            </p>
-            <section class="features">
-              <article>
-                <a href="kidney.html" class="image"
-                  ><img src="images/rm/bigney.jpg" alt=""
-                /></a>
-                <h3 class="major">
-                  Prediciendo la enfermedad crónica de riñón
-                </h3>
-                <p class="justified">
-                  En este caso de estudio se utilizó rapidminer aplicando las
-                  técnicas de ML adquiridas para detectar la enfermedad crónica
-                  en riñones a partir de datos básicos del estado de salud de
-                  una persona.
-                </p>
-                <a href="kidney.html" class="special">Blog</a>
-              </article>
-
-              <article>
-                <a href="heart-attack.html" class="image"
-                  ><img src="images/heart_attack/portada.jpg" alt=""
-                /></a>
-                <h3 class="major">Prediciendo un segundo ataque al corazón</h3>
-                <p class="justified">
-                  A partir de Regresión Logística en Python, se busca predecir
-                  si un paciente que ya experimentó un ataque al corazón
-                  experimentará uno nuevo basándonos en aspectos de su vida y
-                  salud.
-                </p>
-                <a href="heart-attack.html" class="special">Blog</a>
-              </article>
-              <article>
-                <a href="iris_arboles_decision.html" class="image"
-                  ><img src="images/iris_cart/iris-setosa.jpg" alt=""
-                /></a>
-                <h3 class="major">
-                  Árboles de decisión para clasificación de Iris setosa
-                </h3>
-                <p class="justified">
-                  Usando Python + scikit-learn y Rapidminer, analizamos el uso
-                  de árboles de decisión para la clasificación de flores Iris,
-                  comparando los resultados en ambas plataformas y visualizando
-                  los árboles resultado.
-                </p>
-                <a href="iris_arboles_decision.html" class="special">Blog</a>
-              </article>
-            </section>
-          </div>
-        </section>
-
-        <!-- Nine -->
-        <section id="nine" class="wrapper style5">
-          <div class="inner">
-            <h2 class="major">Casos de estudios a profundizar</h2>
-            <p class="justified">
-              En esta sección se presentan investigaciones iniciales que pueden
-              servir como puntapié a casos de estudio interesantes a profundizar
-              en el futuro.
-            </p>
-            <section class="features">
-              <article>
-                <a href="compras.html" class="image"
-                  ><img src="images/compras/bigcho.jpg" alt=""
-                /></a>
-                <h3 class="major">Analizando Compras gubernamentales</h3>
-                <p class="justified">
-                  En este caso de estudio, investigamos y analizamos datos de
-                  compras gubernamentales bajo el
-                  <a href="https://standard.open-contracting.org/latest/en/"
-                    >estándar de Datos de Contrataciones Aiertas (OCDS).</a
-                  >
-                </p>
-                <a href="compras.html" class="special">Blog</a>
-              </article>
-            </section>
-          </div>
-        </section>
+            <article>
+              <a href="heart-attack.html" class="image"><img src="images/heart_attack/portada.jpg" alt="" /></a>
+              <h3 class="major">Prediciendo un segundo ataque al corazón</h3>
+              <p class="justified">
+                A partir de Regresión Logística en Python, se busca predecir
+                si un paciente que ya experimentó un ataque al corazón
+                experimentará uno nuevo basándonos en aspectos de su vida y
+                salud.
+              </p>
+              <a href="heart-attack.html" class="special">Blog</a>
+            </article>
+            <article>
+              <a href="iris_arboles_decision.html" class="image"><img src="images/iris_cart/iris-setosa.jpg"
+                  alt="" /></a>
+              <h3 class="major">
+                Árboles de decisión para clasificación de Iris setosa
+              </h3>
+              <p class="justified">
+                Usando Python + scikit-learn y Rapidminer, analizamos el uso
+                de árboles de decisión para la clasificación de flores Iris,
+                comparando los resultados en ambas plataformas y visualizando
+                los árboles resultado.
+              </p>
+              <a href="iris_arboles_decision.html" class="special">Blog</a>
+            </article>
+          </section>
+        </div>
       </section>
 
-      <!-- Footer -->
-      <section id="footer"></section>
-    </div>
+      <!-- Nine -->
+      <section id="nine" class="wrapper style5">
+        <div class="inner">
+          <h2 class="major">Casos a profundizar</h2>
+          <p class="justified">
+            En esta sección se presentan investigaciones iniciales que pueden
+            servir como puntapié a casos de estudio interesantes a profundizar
+            en el futuro.
+          </p>
+          <section class="features">
+            <article>
+              <a href="compras.html" class="image"><img src="images/compras/bigcho.jpg" alt="" /></a>
+              <h3 class="major">Analizando Compras gubernamentales</h3>
+              <p class="justified">
+                En este caso de estudio, investigamos y analizamos datos de
+                compras gubernamentales bajo el
+                <a href="https://standard.open-contracting.org/latest/en/">estándar de Datos de Contrataciones Aiertas
+                  (OCDS).</a>
+              </p>
+              <a href="compras.html" class="special">Blog</a>
+            </article>
+          </section>
+        </div>
+      </section>
+    </section>
 
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.scrollex.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/translations.js"></script>
-    <script src="scripts/menu.js"></script>
-    <script src="scripts/footer.js"></script>
-  </body>
+    <!-- Footer -->
+    <section id="footer"></section>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/jquery.scrollex.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/translations.js"></script>
+  <script src="scripts/menu.js"></script>
+  <script src="scripts/footer.js"></script>
+</body>
+
 </html>

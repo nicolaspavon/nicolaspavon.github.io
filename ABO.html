@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<!--
+	Solid State by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>ABO Image classification</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" charset="UTF-8" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <noscript>
+    <link rel="stylesheet" href="assets/css/noscript.css" />
+  </noscript>
+  <link rel="icon" href="images/icon.webp" type="image/x-icon" />
+  <style>
+    .variable {
+      font-family: "Courier New", Courier, monospace;
+      background-color: #212430;
+      padding: 2px 4px;
+      color: #fe8d59;
+    }
+  </style>
+</head>
+
+<body class="is-preload" style="
+      background-image: linear-gradient(
+          to top,
+          rgba(46, 49, 65, 0.8),
+          rgba(46, 49, 65, 0.8)
+        ),
+        url(images/ABO/cosas.webp);
+    ">
+  <!-- Page Wrapper -->
+  <div id="page-wrapper">
+    <!-- Header -->
+    <header id="header">
+      <a href="index.html">
+        <h1>Nicolás Pavón</h1>
+      </a>
+      <nav>
+        <a href="ABO-eng.html">ENG</a>
+        <a href="#menu">Menú</a>
+      </nav>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu"></nav>
+
+    <!-- Wrapper -->
+    <section id="wrapper">
+      <header id="ABO-header">
+        <div class="inner">
+          <h2>Clasificando imagenes de Amazon</h2>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="wrapper">
+        <div class="inner">
+          <section>
+            <h3 class="major">El problema</h3>
+            <p>
+              En los ultimos 20 años el E-Commerce ha crecido
+              exponencialmente. Basta con solo observar el poder y tamaño de
+              los sitios como Amazon, Alibaba o incluso Mercado Libre para
+              darse cuenta de la importancia que tienen al dia de hoy. A
+              partir de esto podemos concluir que si hay algo que tienen estos
+              gigantes de la informatica son muchos datos, y entre ellos,
+              muchas imágenes. Sin embargo, los datos no sirven para nada si
+              no se pueden interpretar y trabajar, por lo que sería util poder
+              clasificar los mismos para poder darles un uso apropiado y
+              sacarles todo el provecho posible.
+            </p>
+
+            <h3 class="major">Los datos</h3>
+            <p>
+              Entre todos los datasets disponibles nos topamos con uno
+              <i>interesante</i>, el
+              <a href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">Amazon Berkeley Objects (ABO)
+                Dataset.</a>
+              Este dataset nos provee imágenes de aproximadamente 147,000
+              productos de Amazon, con su correspondiente metadata que incluye
+              su categoria, color, keywords, marca, nombre, modelo, etc.
+              Además, provee renders en 3D y algunos otros chiches
+              interesantes. Si bien no hemos explorado aún los datos en
+              profundidad para determinar su pureza, reconocemos el hecho de
+              que los mismos provienen de Amazon, por lo que las imágenes son
+              las ideales para este problema.
+            </p>
+
+            <h3 class="major">La tecnología</h3>
+            <p>
+              Si bien para este tipo de problemas hoy en dia se utilizan los
+              transformers, en este caso utilizaremos redes convolucionales,
+              partiendo de un modelo pre entrenado como VGG-16 y aplicando
+              transfer learning, donde le quitaremos las capas superiores de
+              clasificacion, y añadiremos nuevas capas especializadas para
+              esta tarea. Por ultimo aplicaremos fine tunning para mejorar la
+              performance. El código fue desarrollado en Google Colab, puede
+              verlo aquí TODO: LINK COLAB
+            </p>
+
+            <h3 class="major">El objetivo</h3>
+            <p>
+              Como objetivo nos interesa poder describir con el mayor detalle
+              posible el producto en la imagen a categorizar, dando por echo
+              que la imagen corresponde a un producto de e-commerce. Tomando
+              esto en cuenta y analizando el dataset, observamos la propiedad
+              <i class="variable">product_type</i>, la cual tiene al rededor
+              de 574 clases, las cuales varian en nivel de precision.
+              Partiremos de esta propiedad del dataset para entrenar nuestro
+              modelo.
+            </p>
+          </section>
+        </div>
+      </div>
+      <div class="wrapper alt style4">
+        <div class="inner">
+          <section>
+            <h2 class="major">Informacion y estructura del dataset</h2>
+            <h3 class="major">Estructura del dataset</h3>
+            <p>
+              <a href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">El dataset</a>
+              cuenta con varios archivos para descargar, de los cuales nos interesan <i
+                class="variable">listings.tar</i>
+              (Listado de productos y metadata) y <i class="variable">images-small.tar</i>
+              (catalogo de imagenes re escaladas a un maximo de 256 pixeles).
+              <br /><br />
+              El archivo <i class="variable">listings.tar</i> contiene 15 archivos .json, cada uno conteniendo una lista
+              de objetos, siendo cada objeto un producto de amazon. Utilizaremos un script para pasar la informacion
+              relevante de estos objetos a archivos .csv, para que sean mas cómodos de trabajar.
+              Los objetos tienen una serie de atributos, de los cuales nos interesará <b><i>item_id</i></b> , <b>
+                <i>product_type</i></b> , <b> <i>main_image_id</i></b> y <b><i>other_image_id</i></b>
+            </p>
+            <h3 class="major">Atributos del dataset y estadisticas</h3>
+            <p>
+              Una vez que tenemos el .CSV inicial, procedemos a observar la distribucion de las clases:
+            </p>
+            <div class="col-12">
+              <span class="image fit"><img src="images/ABO/DS inicial desb.png" alt="" />
+                <p><i>Dataset inicial</i></p>
+              </span>
+            </div>
+            <p>Como se ve en la imagen, el dataset está totalmente desbalanceado, con muchos ejemplos para ciertas
+              categorias, y casi ninguno en otras. Observando los datos en detalle vemos que hay 574 categorias, de las
+              cuales 460 tienen menos de 100 ejemplos 🫠 </p>
+            <p>
+              Para lidiar con este problema utilizaremos el clasico divide y vencerás, y tomaremos una fracción de las
+              categorias que tengan mas ejemplos, y balancearemos los mismos para que no hayan sesgos entre las
+              categorias a la hora de entrenarlos. Se optó por utilizar todas las categorias que tengan mas de 150
+              ejemplos, y limitar la cantidad de ejemplos por categoría a 400. Esta fue una desición un tanto
+              arbitraria, por lo que si se vuelve necesario, es posible encontrar una mejor seleccion de
+              categorias/ejemplos.
+            </p>
+            <p>Una vez realizados los filtros, podemos observar las estadisticas del datset final:
+            </p>
+
+            <div class="col-12">
+              <span class="image fit"><img src="images/ABO/DS min 150 max 400.png" alt="" />
+                <p><i>Dataset simplificado</i></p>
+              </span>
+            </div>
+
+            <p>En este dataset tenemos 80 categorias, mucho mejor balanceadas que las 574 del dataset inicial. Esto
+              facilitará el trabajo ya que la red neuronal final será mas facil de entrenar, y tendrá un promedio de
+              ejemplos por categoría bastamente mayor
+            </p>
+
+            <h4 class="major">Inspección del dataset</h4>
+            <p>
+              En este paso analizaremos el dataset previamente refinado en busca de posibles problemas evidentes a la
+              vista, entre los cuales encontramos:
+            <h5 class="major">Categorias confundibles: </h5>
+            <p>Estas categorias tienen objetos muy similares entre sí. Incluso en algunos casos la unica forma de
+              diferenciarlos es leyendo el texto de los mismos. Esto es un problema ya que será altamente dificil de
+              clasificar para la red neuronal. Dado esto, tomamos la desicion de quitar estas categorias</p>
+
+            - ACCESORY => HAT
+            - storage_hook => tools
+            - nutritional_suplement => vitamins => HEALTH_PERSONAL_CARE
+            - luggage => suit_case
+            - lamp => light_fixture,
+
+            - FINERING => RING
+            - FINENECKLACEBRACALETANKLET => NECKLACE
+            - FINEEARING => EARRING
+            <p> en estos casos de 'fine x' => 'x' nos quedamos los que no son fine, son mas abarcativos y siguen
+              preservando la forma general</p>
+
+            <h5 class="major">Categorias muy genericas: </h5>
+            <p>Estas categorias tienen objetos muy variados, por lo que será mas dificil entrenar a la red en busca de
+              patrones similares. Si todos los objetos de una categoria varian en forma, no existe un set de features /
+              patrones que los unifique bajo una categoria (se podria lograr si cada sub tipo de objeto en esta
+              categoria tuviese suficientes imagenes, pero como quizas de 400 imagenes, solo 90 pertenezcan a uno de
+              estos objetos, sera mucho mas dificil de entrenar)</p>
+            - wireless_accesory
+            - ACCESORY_OR_PART_OR_SUPPLY
+            - BABY_PRODUCT
+            - COMPUTER_ADDON
+            - GROCERY
+            - sorting_goods
+            - pantry
+            - kitchen
+            - janitory_supply
+            - homefurniture_and_decor
+            - home
+            - hardware
+            </p>
+            <h3 class="major">Balanceo del dataset</h3>
+            <p>
+              Como se comentó previamente, un posible problema es el sesgo que puede generar el desbalance de ejemplos a
+              la hora de entrenar una red neuronal. Si en nuestra red tenemos mil ejemplos de zapatos, y cien ejemplos
+              de
+              sillones, para la red las probabilidades de recibir un zapato son 10 veces mayores que las de recibir un
+              sillon. Esto afectaría la clasificacion de forma bastante drástica, por lo que nos interesa tener los
+              datasets lo mas balanceado posible.
+              Para lograr esto, tomaremos en cuenta las "other images" disponibles por ejemplo. Estas imágenes pueden
+              ayudarnos a aumentar la cantidad de ejemplos para aquellas categorias problemáticas.
+            </p>
+            <p>observamos el siguiente ejemplo de other_images</p>
+            <p>Luego de una no muy breve inspeccion, observamos casos satisfactorios en los que las "other_images" son
+              suficientemente similares (pero no identicas) al producto original</p>
+            <p>casos buenos</p>
+            <p>Sin embargo, también observamos imagenes que no son del producto en si, sino de una tabla descriptiva, un
+              color, o de una toma general en la que el objeto casi es indistinguible.</p>
+            <p>casos malos</p>
+            <p>Estos casos nos perjudican. Nos interesa tener cierta varianza en las imagenes para que nuestra red se
+              vuelva mas robusta, pero cuando tenemos imagenes muy complejas, o que nisiquiera tienen al objeto en si,
+              perjudica el entrenamiento de la red, ya que la red asociara patrones erroneos a la categoria en cuestion
+            </p>
+            <p>Para superar este problema, haremos un filtrado de las "other_images" utilizando redes neuronales pre
+              entrenadas para clasificacion. En este caso utilizaremos la red VGG16, quitando las capas de
+              clasificacion. esto nos dejará una red que solo se dedica a encontrar y distinguir features en una imagen.
+              Luego, con esta red procederemos a extraer las features de la imagen principal de cada objeto
+              (main_image), y luego haremos una comparacion con las features de cada una de las "other_images" de este
+              objeto, obteniendo un coeficiente de similitud en las mismas. este coeficiente nos indicará que tan
+              similares son las "other_images" a la imagen principal, dandole un valor muy bajo a aquellas que no tengan
+              nada que ver.
+            </p>
+            <p>Aqui observamos algunos ejemplos del uso de esta tecnica</p>
+            <p>Genial! vemos que funciona, sin embargo encontramos algunos problemas:</p>
+            <p>La categoria RUG nos complica un poco. Si observamos algunos ejemplos veremos que la "main_image"
+              contiene a la alfombra en una escena generica, un poco "escondida", esto causa que el coeficiente de
+              similitud de las "other_images" sea muy bajo, dejando afuera muchas imagenes utiles.</p>
+
+            <h3 class="major">Organizacion del dataset</h3>
+            <p>
+              Dataset organizers, queremos mover las imagenes a sus carpetas por categoria
+            </p>
+            <p>
+              data augmentation
+              queremos saber que imagenes de las other_images nos sirven
+              updated_smimilarity scores
+
+            </p>
+            <div class="table-wrapper">
+              <!-- <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Abbreviation</th>
+                      <th>UCI Description</th>
+                      <th>Observed type</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Age</td>
+                      <td>age</td>
+                      <td>Numerical</td>
+                      <td>Integer</td>
+                    </tr>
+                   
+                  </tbody>
+                </table> -->
+            </div>
+            <h3 class="major">Categorias iniciales a trabajar</h3>
+            <p>
+              TODO: explicar categorias elegidas, capaz agregar explicacion
+              arbol de categorias?
+
+
+
+              ejemplos locos: 61JswZqr57L imagen de tanga en handbag
+
+              imagenes feas: 61kVdTXTJ4L, 61OnkGVhMWL
+
+            <p>total imagenes en Organized_images/filter_extremes_min150_max400_simplified:95672</p>
+            <p>total other_imagenes en updated_similarity_scores_vgg: 85004</p>
+            <p>total objetos en updated_similarity_scores_vgg: 20263</p>
+            <p>total imagenes en total en dataset: 398212</p>
+            <p>total imagenes (sin duplicar) en total en add_path_simplified_v2: 151434</p>
+
+            RUg es un problema, se baja el criterio de similarity a > 2
+
+            el hecho de que las imagenes tengan el id en el nombre del archivo logra que no se repitan en una misma
+            categoria
+            </p>
+          </section>
+          <section>
+            <h3 class="major"></h3>
+            <p>TODO: cosas para meterle
+
+              mencionar que se necesitaron muchas iteraciones de modelos para lograr buena performance.
+              se empezo con modelos complejos encima de inception, pero se observo que no eran necesarios, inception ya
+              havce un buen laburo
+              luego se escalo a todas las categorias en vez de clusters, se esperaba necesitar modelos mas complejos
+              nope, 256 neuronas fue el mejor
+
+              imagen de overfitting all_clusters_fine_tunnig.png
+
+              Explicar:
+              se intento usar un modelo grande para clasificar las 65 categorias, pero tenia muy mala performance.
+              Luego se intento divide y venceras, un modelo cada +- 10 categorias, pero se encontro que meterle muchos
+              modelos pesados rompe el gradio
+              Por ultimo se decidio modelo papa con 4 categorias usando el category cluster, y luego un submodelo para
+              identificar con precision, cargando en total unicamente 2 modelos
+
+
+              final:
+              - un input para mandar mail o comentarios.
+              - posible integracion con chatgpt para contestar preguntas?
+
+
+
+            </p>
+            <h3 class="major">Problemas</h3>
+            <p>Dataset "limpio" y balanceado, Red neuronal con buenos valores, alto acuraccy bajo loss, pero cuando lo
+              pongo en uso falla drasticamente. Para debuguear el problema usamos dataset de kaggle, 5 categorias con
+              15000 imagenes en total. Esto ayudara a determinar si el problema es el dataset o la red neuronal</p>
+            <p>Fotos de un living! tienen todo a la vez y re chico, alfombra sillon pillow mesa!</p>
+            <p>Malditas imagenes de texturas las voy a matar a todas</p>
+            <p>Furniture_cover just makes me angry so i'll remove it</p>
+            <p>categorias muy genericas, las imagenes no siguen un patron. o dentro de una categoria hay varias
+              "categorias" / cosas distintas</p>
+            <p>categorias de frascos dificiles de diferenciar</p>
+            <p>categorias suitcase y luggage identicas</p>
+            <h3 class="major"></h3>
+            <p>TODO:</p>
+            <div style="text-align: center;">
+              <iframe src="https://nicolaspavon-amazon-classification.hf.space" frameborder="0" width="850"
+                height="450"></iframe>
+            </div>
+            <h3 class="major"></h3>
+            <p>TODO:</p>
+            <h3 class="major"></h3>
+            <p>TODO:</p>
+          </section>
+          <section>
+            <h2 class="major">Conclusiones</h2>
+            <p></p>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <section id="footer"></section>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/jquery.scrollex.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="scripts/menu.js"></script>
+  <script src="scripts/footer.js"></script>
+</body>
+
+</html>
