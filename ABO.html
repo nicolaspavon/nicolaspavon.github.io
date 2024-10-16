@@ -15,17 +15,98 @@
     <link rel="stylesheet" href="assets/css/noscript.css" />
   </noscript>
   <link rel="icon" href="images/icon.webp" type="image/x-icon" />
+  <script>
+    function showMoreCategories() {
+      const groups = document.querySelectorAll('.category-group');
+      groups.forEach((group, index) => {
+        if (index !== 0) {
+          group.style.display = 'block';
+        }
+      });
+      document.getElementById('show-more-btn').style.display = 'none';
+    }
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const progressBars = document.querySelectorAll(".progress-bar");
+
+      // IntersectionObserver callback function
+      const animateProgressBar = (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const progressBar = entry.target;
+            const value = parseFloat(progressBar.getAttribute("value"));
+            progressBar.setAttribute("value", "0"); // Start from 0
+
+            // Animate the progress bar value
+            let currentValue = 0;
+            const increment = value / 100; // Adjust this for speed
+            const interval = setInterval(() => {
+              currentValue += increment;
+              if (currentValue >= value) {
+                currentValue = value;
+                clearInterval(interval);
+              }
+              progressBar.setAttribute("value", currentValue);
+            }, 15); // Adjust this for smoothness
+
+            // Stop observing the progress bar after animation is done
+            observer.unobserve(progressBar);
+          }
+        });
+      };
+
+      // Create an IntersectionObserver
+      const observer = new IntersectionObserver(animateProgressBar, {
+        threshold: 0.1 // Trigger when 10% of the element is visible
+      });
+
+      // Observe each progress bar
+      progressBars.forEach(bar => observer.observe(bar));
+    });
+  </script>
+
   <style>
     h3 {
-      font-family: 'Georgia', serif;
-      color: #fe8d59;
+      color: #ee5f0f;
+    }
+
+    h4 {
+      font-size: 0.9em;
+    }
+
+    h5 {
+      font-size: 0.8em;
+    }
+
+    .white-big {
+      font-size: 1.3em;
+      text-align: center;
+      margin-bottom: 20px;
+      border-bottom: none !important;
+    }
+
+    .orange_title {
+      font-size: 1.1em;
     }
 
     .variable {
-      font-family: "Courier New", Courier, monospace;
+      /* font-family: "Courier New", Courier, monospace; */
       background-color: #212430;
       padding: 2px 4px;
-      color: #fe8d59;
+      color: #ee5f0f;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .variable_2 {
+      /* font-family: "Courier New", Courier, monospace; */
+      background-color: #212430;
+      padding: 2px 4px;
+      color: #ee5f0f;
+      font-size: 16px;
+      font-weight: bold;
     }
 
     .main-image {
@@ -46,7 +127,7 @@
       /* Adjust the margin value as needed */
     }
 
-    .row.gtr-uniform {
+    .gtr-uniform {
       display: flex;
       align-items: center;
       gap: 10px;
@@ -104,7 +185,7 @@
 
     /* Button Styling */
     .button {
-      background-color: #fe8d59;
+      background-color: #ee5f0f;
       color: #fff;
       padding: 12px 30px;
       border: none;
@@ -135,6 +216,238 @@
       .field.half {
         width: 100%;
       }
+    }
+
+    /* Styling for the home images container */
+    .home-images {
+      display: flex;
+      justify-content: space-between;
+      background-color: #3a3d52;
+      /* Background color for the row */
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    /* Styling for each image container */
+    .home-image {
+      flex: 1;
+      margin: 0 10px;
+      background-color: #4b4e63;
+      /* Default background color for images */
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    /* Styling for the main image */
+    .home-image.main-image {
+      background-color: #5c5f75;
+      max-width: 207px;
+      /* Slightly different background color */
+    }
+
+    /* Styling for the images inside the containers */
+    .home-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .oth-row {
+      display: flex;
+      gap: 10px
+    }
+
+    .generic-cat {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .gradio {
+      width: 100%;
+      height: auto;
+      min-height: 483px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .home-images {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .generic-cat {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .home-image {
+        margin: 10px 0;
+      }
+
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 878px) {
+
+      .gradio {
+        width: 100%;
+        height: auto;
+        min-height: 838px;
+      }
+    }
+
+    /* Progress Bar Styling */
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      appearance: none;
+      -webkit-appearance: none;
+      margin-bottom: 5px;
+    }
+
+    /* Custom styles for different browsers */
+    .progress-bar::-webkit-progress-bar {
+      background-color: #f0f0f0;
+      border-radius: 4px;
+    }
+
+    .progress-bar::-webkit-progress-value {
+      background-color: #fe8d59;
+      border-radius: 4px;
+    }
+
+    .progress-bar::-moz-progress-bar {
+      background-color: #fe8d59;
+      border-radius: 4px;
+    }
+
+    .category-group {
+      margin-bottom: 20px;
+    }
+
+    #show-more-btn {
+      margin-top: 0px;
+      padding: 10px;
+      height: 25px;
+      font-size: 11px;
+      cursor: pointer;
+      line-height: 5px;
+      background-color: #ee5f0f;
+      transition: background-color 0.3s;
+      border-radius: 4px;
+      margin-left: 3px;
+    }
+
+    #show-more-btn:hover {
+      background-color: #ff7043;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-family: Arial, sans-serif;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: center;
+      border: 2px solid #666;
+      font-weight: 600;
+      /* Make text slightly bolder */
+    }
+
+    th {
+      background-color: #2e3141;
+      color: #ee5f0f;
+      border-bottom: 3px solid #ee5f0f;
+    }
+
+
+    td.boolean-cell {
+      font-size: 1.5em;
+    }
+
+    td.accuracy,
+    td.loss,
+    td.val_accuracy,
+    td.val_loss {
+      width: 70px;
+      color: #fff;
+      /* Ensure text contrast on colored background */
+    }
+
+    .green-check {
+      color: #66bb6a;
+    }
+
+    .red-cross {
+      color: #ff7043;
+    }
+
+    .separator {
+      border: none;
+      width: 1px;
+    }
+
+    td.separator {
+      background-color: #2e3141;
+      /* Set a consistent color for the separator column */
+      border: none;
+      /* Remove the border for the separator column */
+    }
+
+    tr:nth-child(odd) {
+      background-color: #3a3b44;
+      /* Softer color for odd rows */
+    }
+
+    tr:nth-child(even) {
+      background-color: #404351;
+      /* Slightly darker, but still subtle */
+    }
+
+    th,
+    td {
+      padding: 5px;
+      /* Reduce padding to make rows less tall */
+      text-align: center;
+      border: 2px solid #666;
+      font-weight: 600;
+      /* Keep the bold text */
+    }
+
+    td.accuracy,
+    td.loss,
+    td.val_accuracy,
+    td.val_loss {
+      padding: 8px;
+      /* Slightly larger padding for the score cells for readability */
+    }
+
+    tbody tr {
+      height: 40px;
+      /* Adjust this value to your preferred fixed row height */
+    }
+
+    td {
+      vertical-align: middle;
+      overflow: hidden;
+      /* Prevent overflow from expanding the row */
+      white-space: nowrap;
+      /* Prevent text wrapping inside the cells */
+      text-overflow: ellipsis;
+      /* Add ellipsis if the text is too long */
+    }
+
+    table td {
+      padding: 0em 0.35em;
+    }
+
+    table th {
+      padding: 5px;
     }
   </style>
 </head>
@@ -175,7 +488,7 @@
       <div class="wrapper">
         <div class="inner">
           <section>
-            <h3 class="major">El problema</h3>
+            <h3 class="orange_title major">El problema</h3>
             <p>
               En los últimos 20 años, el E-Commerce ha crecido exponencialmente. Basta con solo observar el poder y
               tamaño de los sitios como Amazon, Alibaba o incluso Mercado Libre para darse cuenta de la importancia que
@@ -185,7 +498,7 @@
               apropiado y sacarles todo el provecho posible.
             </p>
 
-            <h3 class="major">Los datos</h3>
+            <h3 class="orange_title major">Los datos</h3>
             <p>
 
               Entre todos los datasets disponibles, nos topamos con uno
@@ -198,16 +511,17 @@
               las imágenes son ideales para este problema.
             </p>
 
-            <h3 class="major">La tecnología</h3>
+            <h3 class="orange_title major">La tecnología</h3>
             <p>
-              Si bien para este tipo de problemas hoy en día se utilizan los transformers, en este caso utilizaremos
+              Si bien para este tipo de problemas hoy en día suelen utilizarse los transformers, en este caso
+              utilizaremos
               redes convolucionales, partiendo de un modelo preentrenado como inception-v3 y aplicando transfer
               learning, donde quitaremos las capas superiores de clasificación y añadiremos nuevas capas especializadas
               para esta tarea. Por último, aplicaremos fine-tuning para mejorar la performance. El código fue
               desarrollado en Google Colab.
             </p>
 
-            <h3 class="major">El objetivo</h3>
+            <h3 class="orange_title major">El objetivo</h3>
             <p>
               Como objetivo nos interesa poder clasificar el producto en la imagen, dando por hecho que la imagen
               corresponde a un producto de e-commerce. Tomando esto en cuenta y analizando el dataset, observamos la
@@ -222,8 +536,8 @@
       <div class="wrapper alt style4">
         <div class="inner">
           <section>
-            <h2 class="major">Informacion y estructura del dataset</h2>
-            <h3 class="major">Estructura del dataset</h3>
+            <h2 class="white-big major">Informacion y estructura del dataset</h2>
+            <h3 class="orange_title major">Estructura del dataset</h3>
             <p>
               <a href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">El dataset</a>
               cuenta con varios archivos para descargar, de los cuales nos interesan <i
@@ -237,15 +551,17 @@
               Los objetos tienen una serie de atributos, de los cuales nos interesará <b><i>item_id</i></b> , <b>
                 <i>product_type</i></b> , <b> <i>main_image_id</i></b> y <b><i>other_image_id</i></b>
             </p>
-            <h3 class="major">Atributos del dataset y estadisticas</h3>
+            <h3 class="orange_title major">Atributos del dataset y estadisticas</h3>
             <p>
               Una vez que tenemos el .CSV inicial, procedemos a observar la distribucion de las clases:
             </p>
-            <div class="col-12">
-              <span class="image fit"><img src="images/ABO/DS inicial desb.png" alt="" />
-                <p><i>Dataset inicial</i></p>
+
+            <div class="gtr-uniform home-images" style="margin-bottom: 10px">
+              <span class=" image fit" style="margin: 0px;"><img src="images/ABO/DS inicial desb.png" alt="" />
+                <p style="margin-bottom: 0px; margin-top: 10px;"><i>Dataset inicial</i></p>
               </span>
             </div>
+
             <p>Como se ve en la imagen, el dataset está totalmente desbalanceado, con muchos ejemplos para ciertas
               categorías y casi ninguno en otras. Observando los datos en detalle, vemos que hay 574 categorías, de las
               cuales 460 tienen menos de 100 ejemplos. Esto es un problema ya que necesitamos una buena cantidad de
@@ -260,12 +576,13 @@
               con un tope de 400. Esta fue una decisión un tanto arbitraria, por lo
               que, si se vuelve necesario, es posible encontrar una mejor selección de categorías/ejemplos.
             </p>
-            <p>Una vez realizados los filtros, podemos observar las estadisticas del datset final:
+            <p style="margin-bottom: 10px;">Una vez realizados los filtros, podemos observar las
+              estadisticas del datset final:
             </p>
 
-            <div class="col-12">
-              <span class="image fit"><img src="images/ABO/DS min 150 max 400.png" alt="" />
-                <p><i>Dataset simplificado</i></p>
+            <div class="gtr-uniform home-images" style="margin-bottom: 10px">
+              <span class=" image fit" style="margin: 0px;"><img src="images/ABO/DS min 150 max 400.png" alt="" />
+                <p style="margin-bottom: 0px; margin-top: 10px;"><i>Dataset simplificado</i></p>
               </span>
             </div>
 
@@ -274,26 +591,27 @@
               ejemplos por categoría bastamente mayor
             </p>
 
-            <h4 class="major">Inspección del dataset</h4>
+            <h3 class="orange_title major">Inspección del dataset</h3>
             <p>
               En este paso analizaremos el dataset previamente refinado en busca de posibles problemas evidentes a la
               vista, entre los cuales encontramos:
-            <h6>Categorias confundibles: </h6>
+            <h5>Categorias confundibles: </h5>
             <p>Estas categorias tienen objetos muy similares entre sí. Incluso en algunos casos la unica forma de
-              diferenciarlos es leyendo el texto de los mismos. Esto es un problema ya que será altamente dificil de
-              clasificar para la red neuronal.</p>
+              diferenciarlos es leyendo el texto de los mismos. Esto es un problema ya que para la red neuronal será
+              dificil decidir la categoria.</p>
             <ul>
-              <li>ACCESORY &#8596; HAT</li>
-              <li>STORAGE_HOOK &#8596; TOOLS</li>
-              <li>NUTRITIONAL_SUPLEMENT &#8596; VITAMINS &#8596; HEALTH_PERSONAL_CARE</li>
-              <li>LUGGAGE &#8596; SUIT_CASE</li>
-              <li>FINERING &#8596; RING</li>
-              <li>FINENECKLACEBRACALETANKLET &#8596; NECKLACE</li>
-              <li>FINEEARING &#8596; EARRING</li>
+              <li><i class="variable">ACCESORY</i> &#8596; <i class="variable">HAT</i></li>
+              <li><i class="variable">STORAGE_HOOK</i> &#8596; <i class="variable">TOOLS</i></li>
+              <li><i class="variable">NUTRITIONAL_SUPLEMENT</i> &#8596; <i class="variable">VITAMINS</i> &#8596; <i
+                  class="variable">HEALTH_PERSONAL_CARE</i></li>
+              <li><i class="variable">LUGGAGE</i> &#8596; <i class="variable">SUIT_CASE</i></li>
+              <li><i class="variable">FINERING</i> &#8596; <i class="variable">RING</i></li>
+              <li><i class="variable">FINENECKLACEBRACALETANKLET</i> &#8596; <i class="variable">NECKLACE</i></li>
+              <li><i class="variable">FINEEARING</i> &#8596; <i class="variable">EARRING</i></li>
             </ul>
             <p>Exceptuando los casos de 'fine x' &#8596;
               'x', en un principio conservaremos estas categorias y observaremos si son efectivamente
-              problematicas al momento de clasificar
+              problematicas al momento de clasificar.
               Para los casos 'fine x' nos quedaremos con los que no son "fine", ya que son más abarcativos y siguen
               preservando la forma general.</p>
 
@@ -301,43 +619,56 @@
             <p>Estas categorias tienen objetos muy variados, por lo que será mas dificil entrenar a la red en busca de
               patrones similares. Si todos los objetos de una categoria varian en forma, no existe un set de features
               /
-              patrones que los unifique (se podria lograr si cada sub tipo de objeto en esta
-              categoria tuviese suficientes imagenes, pero como quizas de 400 imagenes, solo 90 pertenezcan a uno de
-              estos objetos, sera muy dificil de entrenar). Estas categorias serán quitadas del dataset.</p>
-            <ul>
-              <li>WIRELESS_ACCESORY</li>
-              <li>ACCESORY_OR_PART_OR_SUPPLY</li>
-              <li>BABY_PRODUCT</li>
-              <li>COMPUTER_ADDON</li>
-              <li>GROCERY</li>
-              <li>SPORTING_GOODS</li>
-              <li>PANTRY</li>
-              <li>KITCHEN</li>
-              <li>JANITORY_SUPPLY</li>
-              <li>HOMEFURNITURE_AND_DECOR</li>
-              <li>HOME</li>
-              <li>HARDWARE</li>
-            </ul>
+              patrones que los unifique y la red no podrá categorizar eficientemente. Solo seria posible lograrlo si
+              cada sub tipo de objeto en esta
+              categoria tuviese suficientes imagenes, pero como quizas de 400 imagenes, solo 90 pertenecen a uno de
+              estos objetos, sera muy dificil de entrenar. Por esta razon estas categorias serán quitadas del dataset.
+            </p>
+            <div class="generic-cat">
+              <ul>
+                <li><i class="variable">HOME</i></li>
+                <li><i class="variable">WIRELESS_ACCESORY</i></li>
+                <li><i class="variable">ACCESORY_OR_PART_OR_SUPPLY</i></li>
+                <li><i class="variable">BABY_PRODUCT</i></li>
+                <li><i class="variable">COMPUTER_ADDON</i></li>
+                <li><i class="variable">GROCERY</i></li>
+                <li><i class="variable">SPORTING_GOODS</i></li>
+                <li><i class="variable">PANTRY</i></li>
+                <li><i class="variable">KITCHEN</i></li>
+                <li><i class="variable">JANITORY_SUPPLY</i></li>
+                <li><i class="variable">HOMEFURNITURE_AND_DECOR</i></li>
+                <li><i class="variable">HARDWARE</i></li>
+              </ul>
 
-            <p><i>Ejemplos de imagenes en la categoria HOME:</i></p>
-            <div class="row gtr-uniform">
-              <div class="col-4">
-                <span class="image fit"><img src="images/ABO/HOME_3.jpg" alt="" />
-                </span>
-              </div>
-              <div class="col-4">
-                <span class="image fit"><img src="images/ABO/HOME_2.jpg" alt="" />
-                </span>
-              </div>
-              <div class="col-4">
-                <span class="image fit"><img src="images/ABO/HOME_1.jpg" alt="" />
-                </span>
+              <div class="gtr-uniform home-images"
+                style="flex-direction: column; align-items: flex-start; margin-bottom: 20px; margin-left: 16px; flex: 1; min-width: 0;">
+                <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Ejemplos de productos en la categoria
+                  <i class="variable">HOME</i>
+                </h5>
+                <div style="flex-direction: row; display: flex;">
+                  <div class="row-4 home-image" style="align-self: center;
+                display: flex;
+                flex-direction: column;
+                height: fit-content;">
+                    <div class="oth-row">
+                      <span>
+                        <img src="images/ABO/HOME_3.jpg" alt="Home product example 2" />
+                      </span>
+                      <span>
+                        <img src="images/ABO/HOME_2.jpg" alt="Home product example 1" />
+                      </span>
+                      <span>
+                        <img src="images/ABO/HOME_1.jpg" alt="Home product example 1" />
+                      </span>
+                    </div>
+                    <p style="margin: 0px;"><i>(No se parecen en nada)</i></p>
+                  </div>
+                </div>
               </div>
             </div>
 
-
             </p>
-            <h3 class="major">Balanceo del dataset</h3>
+            <h3 class="orange_title major">Balanceo del dataset</h3>
             <p>
               Como se comentó previamente, un posible problema es el sesgo que puede generar el desbalance de ejemplos
               a
@@ -348,141 +679,678 @@
               Esto
               afectaría la clasificacion de forma bastante drástica, por lo que nos interesa tener el dataset lo mas
               balanceado posible.
-              Para lograr esto, tomaremos en cuenta las "other images" disponibles por ejemplo. Estas imágenes pueden
-              ayudarnos a aumentar la cantidad de ejemplos para aquellas categorias problemáticas.
+              En nuestro caso tenemos varias categorias con menos de 400 ejemplos, que es el numero ideal que queremos
+              mantener en todas las categorias. Para lograr el balance deseado, tomaremos en cuenta las "other images"
+              disponibles por
+              cada objeto. Estas imágenes pueden
+              ayudarnos a completar la cantidad de imagenes para aquellas categorias que lo necesitan.
             </p>
-            <p><i>Observamos el siguiente ejemplo de other_images:</i></p>
-            <div class="row gtr-uniform">
-              <div class="col-4 main-image">
-                <span class="image fit">
-                  <img src="images/ABO/SOFA_MAIN.jpg" alt="" />
-                  <p><i>"Main_image"</i></p>
-                </span>
-              </div>
-              <div class="col-4 oth-image">
-                <span class="image fit">
-                  <img src="images/ABO/SOFA_OTH_2.jpg" alt="" />
-                  <p><i>"Other_images"</i></p>
-                </span>
-              </div>
-              <div class="col-4 oth-image">
-                <span class="image fit">
-                  <img src="images/ABO/SOFA_OTH_1.jpg" alt="" />
-                </span>
-              </div>
-              <div class="col-4 oth-image">
-                <span class="image fit">
-                  <img src="images/ABO/SOFA_OTH_3.jpg" alt="" />
-                </span>
-              </div>
-            </div>
-
+            <h5>Ejemplos satisfactorios</h5>
             <p>Luego de una no muy breve inspeccion, observamos casos satisfactorios en los que las "other_images" son
               suficientemente similares (pero no identicas) al producto original</p>
-            <p>casos buenos</p>
+
+            <div class="gtr-uniform home-images"
+              style="flex-direction: column; align-items: flex-start; margin-bottom: 20px">
+              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Objeto en la categoria <i
+                  class="variable">SOFA</i></h5>
+              <div class="generic-cat">
+                <div class="col-4 home-image main-image">
+                  <span>
+                    <img src="images/ABO/SOFA_MAIN.jpg" alt="" />
+
+                    <p style="margin: 0px;"><i>Main image</i></p>
+                  </span>
+                </div>
+                <div class="row-4 home-image" style="align-self: center;
+                display: flex;
+                flex-direction: column;
+                height: fit-content;">
+                  <div class="oth-row">
+                    <span>
+                      <img src="images/ABO/SOFA_OTH_3.jpg" alt="Home product example 2" />
+                    </span>
+                    <span>
+                      <img src="images/ABO/SOFA_OTH_1.jpg" alt="Home product example 1" />
+                    </span>
+                    <span>
+                      <img src="images/ABO/SOFA_OTH_2.jpg" alt="Home product example 1" />
+                    </span>
+                  </div>
+                  <p style="margin: 0px;"><i>Other images</i></p>
+                </div>
+              </div>
+            </div>
+            <h5>Ejemplos problematicos</h5>
             <p>Sin embargo, también observamos imagenes que no son del producto en si, sino de una tabla descriptiva,
               un
               color, o de una toma general en la que el objeto casi es indistinguible.</p>
-            <p>casos malos</p>
+
+            <div class="gtr-uniform home-images"
+              style="flex-direction: column; align-items: flex-start; margin-bottom: 20px">
+              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Objeto en la categoria <i
+                  class="variable">LEGUME</i></h5>
+              <div class="generic-cat">
+                <div class="col-4 home-image main-image" style="max-width: 170px;">
+                  <span>
+                    <img src="images/ABO/LEGUME_MAIN.jpg" alt="" />
+
+                    <p style="margin: 0px;"><i>Main image</i></p>
+                  </span>
+                </div>
+                <div class="row-4 home-image" style="align-self: center;
+                display: flex;
+                flex-direction: column;
+                height: fit-content;">
+                  <div class="oth-row">
+                    <span>
+                      <img src="images/ABO/LEGUME_OTH_1.jpg" alt="Home product example 2" />
+                    </span>
+                    <span>
+                      <img src="images/ABO/LEGUME_OTH_4.jpg" alt="Home product example 1" />
+                    </span>
+                    <span>
+                      <img src="images/ABO/LEGUME_OTH_3.jpg" alt="Home product example 1" />
+                    </span>
+                    <span>
+                      <img src="images/ABO/LEGUME_OTH_2.jpg" alt="Home product example 1" />
+                    </span>
+                  </div>
+                  <p style="margin: 0px;"><i>Other images</i></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="gtr-uniform home-images"
+              style="flex-direction: column; align-items: flex-start; margin-bottom: 20px">
+              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Objeto en la categoria <i
+                  class="variable">RUG</i>
+              </h5>
+              <div class="generic-cat">
+                <div class="col-4 home-image main-image">
+                  <span>
+                    <img src="images/ABO/RUG_MAIN.jpg" alt="" />
+
+                    <p style="margin: 0px;"><i>Main image</i></p>
+                  </span>
+                </div>
+                <div class="row-4 home-image" style="align-self: center;
+                display: flex;
+                flex-direction: column;
+                height: fit-content;">
+                  <div class="oth-row">
+                    <span>
+                      <img src="images/ABO/RUG_OTH_1.jpg" alt="Home product example 2" />
+                    </span>
+                    <span>
+                      <img src="images/ABO/RUG_OTH_2.jpg" alt="Home product example 1" />
+                    </span>
+                    <span>
+                      <img src="images/ABO/RUG_OTH_3.jpg" alt="Home product example 1" />
+                    </span>
+                  </div>
+                  <p style="margin: 0px;"><i>Other images</i></p>
+                </div>
+              </div>
+            </div>
             <p>Estos casos nos perjudican. Nos interesa tener cierta varianza en las imagenes para que nuestra red se
               vuelva mas robusta, pero cuando tenemos imagenes muy complejas, o que nisiquiera tienen al objeto en si,
               perjudica el entrenamiento de la red, ya que la red asociara patrones erroneos a la categoria en
-              cuestion
+              cuestión. Recuerda el ejemplo de <i class="variable">RUG</i>! va a ser un problema en el futuro.
             </p>
             <p>Para superar este problema, haremos un filtrado de las "other_images" utilizando redes neuronales pre
-              entrenadas para clasificacion. En este caso utilizaremos la red VGG16, quitando las capas de
-              clasificacion. esto nos dejará una red que solo se dedica a encontrar y distinguir features en una
-              imagen.
-              Luego, con esta red procederemos a extraer las features de la imagen principal de cada objeto
-              (main_image), y luego haremos una comparacion con las features de cada una de las "other_images" de este
-              objeto, obteniendo un coeficiente de similitud en las mismas. este coeficiente nos indicará que tan
-              similares son las "other_images" a la imagen principal, dandole un valor muy bajo a aquellas que no
-              tengan
-              nada que ver.
+              entrenadas. En este caso utilizaremos el modelo VGG16, quitando las capas de
+              clasificacion. Esto nos dejará una red que solo detecta features en una
+              imagen, pero no la clasifica.
+              Con esta red procederemos a extraer las features de la imagen principal de cada objeto
+              (main_image), y luego haremos una comparación con las features de cada una de las "other_images" de este
+              objeto, obteniendo un coeficiente de similitud entre las mismas. Este coeficiente nos indicará que tan
+              similares son las "other_images" a la imagen principal, dándole un valor muy bajo a aquellas que no
+              sean similares.
             </p>
-            <p>Aqui observamos algunos ejemplos del uso de esta tecnica</p>
-            <p>Genial! vemos que funciona, sin embargo encontramos algunos problemas:</p>
-            <p>La categoria RUG nos complica un poco. Si observamos algunos ejemplos veremos que la "main_image"
-              contiene a la alfombra en una escena generica, un poco "escondida", esto causa que el coeficiente de
-              similitud de las "other_images" sea muy bajo, dejando afuera muchas imagenes utiles.</p>
+            <p style="margin-bottom: 10px;">Aqui observamos algunos ejemplos del uso de esta técnica:</p>
+            <div class="gtr-uniform home-images"
+              style="flex-direction: column; align-items: flex-start; margin-bottom: 20px">
+              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Similarity scores del objeto <i
+                  class="variable">SOFA</i>
+              </h5>
+              <div class="generic-cat">
+                <div class="col-4 home-image main-image">
+                  <span>
 
-            <h3 class="major">Organizacion del dataset</h3>
-            <p>
-              Dataset organizers, queremos mover las imagenes a sus carpetas por categoria
-            </p>
-            <p>
-              data augmentation
-              queremos saber que imagenes de las other_images nos sirven
-              updated_smimilarity scores
-
-            </p>
-            <div class="table-wrapper">
-              <!-- <table>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Abbreviation</th>
-                      <th>UCI Description</th>
-                      <th>Observed type</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Age</td>
-                      <td>age</td>
-                      <td>Numerical</td>
-                      <td>Integer</td>
-                    </tr>
-                   
-                  </tbody>
-                </table> -->
+                    <p style="display: flex;
+                    margin: 0px;
+                    margin-bottom: -9px;"><i>Similarity score:</i><i style="font-weight: bold; color:#ee5f0f;
+                    margin-left: 5px;">1</i></p>
+                    <progress value="1" max="1" class="progress-bar"></progress>
+                    <img src="images/ABO/SOFA_MAIN.jpg" alt="" />
+                    <p style="margin: 0px;"><i>Main image</i></p>
+                  </span>
+                </div>
+                <div class="row-4 home-image" style="align-self: center;
+              display: flex;
+              flex-direction: column;
+              height: fit-content;">
+                  <div class="oth-row">
+                    <span>
+                      <p style="
+                    
+                      margin: 0px;
+                      margin-bottom: -9px;
+                      font-size: 19px; display: flex;"><i style="font-weight: bold; color:#ee5f0f;
+                      margin-left: 5px;">0.861</i></p>
+                      <progress value="0.8615963" max="1" class="progress-bar"></progress>
+                      <img src="images/ABO/SOFA_OTH_1.jpg" alt="Home product example 2" />
+                    </span>
+                    <span>
+                      <p style="
+                      margin: 0px;
+                      margin-bottom: -9px; font-size: 19px; display: flex;"><i style="font-weight: bold; color:#ee5f0f;
+                      margin-left: 5px;">0.640</i></p>
+                      <progress value="0.6404396" max="1" class="progress-bar"></progress>
+                      <img src="images/ABO/SOFA_OTH_2.jpg" alt="Home product example 1" />
+                    </span>
+                    <span>
+                      <p style="
+                      margin: 0px;
+                      margin-bottom: -9px; font-size: 19px; display: flex;"><i style="font-weight: bold; color:#ee5f0f;
+                      margin-left: 5px;">0.599</i></p>
+                      <progress value="0.5996146" max="1" class="progress-bar"></progress>
+                      <img src="images/ABO/SOFA_OTH_3.jpg" alt="Home product example 1" />
+                    </span>
+                    <span>
+                      <p style="
+                      
+                      margin: 0px;
+                      margin-bottom: -9px; font-size: 19px; display: flex;"><i style="font-weight: bold; color:#ee5f0f;
+                      margin-left: 5px;">0.196</i></p>
+                      <progress value="0.1969997" max="1" class="progress-bar"></progress>
+                      <img src="images/ABO/SOFA_OTH_4.jpg" alt="Home product example 1" />
+                    </span>
+                  </div>
+                  <p style="margin: 0px;"><i>Other images</i></p>
+                </div>
+              </div>
             </div>
-            <h3 class="major">Categorias iniciales a trabajar</h3>
+            <div class="gtr-uniform home-images"
+              style="flex-direction: column; align-items: flex-start; margin-bottom: 20px">
+              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Similarity scores del objeto <i
+                  class="variable">OTTOMAN</i>
+              </h5>
+              <div class="generic-cat">
+                <div class="col-4 home-image main-image">
+                  <span>
+
+                    <p style="display: flex;
+                    margin: 0px;
+                    margin-bottom: -9px;"><i>Similarity score:</i><i style="font-weight: bold; color:#ee5f0f;
+                    margin-left: 5px;">1</i></p>
+                    <progress value="1" max="1" class="progress-bar"></progress>
+                    <img src="images/ABO/OTTOMAN-MAIN.jpg" alt="" />
+                    <p style="margin: 0px;"><i>Main image</i></p>
+                  </span>
+                </div>
+                <div class="row-4 home-image" style="align-self: center;
+              display: flex;
+              flex-direction: column;
+              height: fit-content;">
+                  <div class="oth-row">
+                    <span>
+                      <p style="
+                    
+                      margin: 0px;
+                      margin-bottom: -9px;
+                      font-size: 19px; display: flex;"><i style="font-weight: bold; color:#ee5f0f;
+                      margin-left: 5px;">0.819</i></p>
+                      <progress value="0.819" max="1" class="progress-bar"></progress>
+                      <img src="images/ABO/OTTOMAN-0.8198348.jpg" alt="Home product example 2" />
+                    </span>
+                    <span>
+                      <p style="
+                      margin: 0px;
+                      margin-bottom: -9px; font-size: 19px; display: flex;"><i style="font-weight: bold; color:#ee5f0f;
+                      margin-left: 5px;">0.689</i></p>
+                      <progress value="0.689" max="1" class="progress-bar"></progress>
+                      <img src="images/ABO/OTTOMAN-0.6890952.jpg" alt="Home product example 1" />
+                    </span>
+                    <span>
+                      <p style="
+                      margin: 0px;
+                      margin-bottom: -9px; font-size: 19px; display: flex;"><i style="font-weight: bold; color:#ee5f0f;
+                      margin-left: 5px;">0.581</i></p>
+                      <progress value="0.581" max="1" class="progress-bar"></progress>
+                      <img src="images/ABO/OTTOMAN-0.5811923.jpg" alt="Home product example 1" />
+                    </span>
+                    <span>
+                      <p style="
+                      
+                      margin: 0px;
+                      margin-bottom: -9px; font-size: 19px; display: flex;"><i style="font-weight: bold; color:#ee5f0f;
+                      margin-left: 5px;">0.192</i></p>
+                      <progress value="0.19274572" max="1" class="progress-bar"></progress>
+                      <img src="images/ABO/OTTOMAN-0.19274572.jpg" alt="Home product example 1" />
+                    </span>
+                  </div>
+                  <p style="margin: 0px;"><i>Other images</i></p>
+                </div>
+              </div>
+            </div>
+
+            <p style="margin-bottom: 10px;">Genial! vemos que funciona, sin embargo encontramos algunos problemas:</p>
+            <p>La categoria RUG nos complica un poco. Si observamos algunos ejemplos veremos que la "main_image"
+              suele contener a la alfombra en una escena generica, un poco "escondida", esto causa que el coeficiente de
+              similitud de las "other_images" sea muy bajo, dejando afuera muchas imagenes utiles.</p>
+            <div class="gtr-uniform home-images"
+              style="flex-direction: column; align-items: flex-start; margin-bottom: 20px">
+              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Similarity scores del objeto <i
+                  class="variable">RUG</i>
+              </h5>
+              <div class="generic-cat">
+                <div class="col-4 home-image main-image">
+                  <span>
+                    <p style="display: flex;
+                    margin: 0px;
+                    margin-bottom: -9px;"><i>Similarity score:</i><i style="font-weight: bold; color:#ee5f0f;
+                    margin-left: 5px;">1</i></p>
+                    <progress value="1" max="1" class="progress-bar"></progress>
+                    <img src="images/ABO/RUG-MAIN-SIM.jpg" alt="" />
+
+                    <p style="margin: 0px;"><i>Main image</i></p>
+                  </span>
+                </div>
+                <div class="row-4 home-image" style="align-self: center;
+                display: flex;
+                flex-direction: column;
+                height: fit-content;">
+                  <div class="oth-row">
+                    <span>
+                      <p style="
+                      
+                      margin: 0px;
+                      margin-bottom: -9px; font-size: 19px; display: flex;"><i style="font-weight: bold; color:#ee5f0f;
+                      margin-left: 5px;">0.273</i></p>
+                      <progress value="0.27311817" max="1" class="progress-bar"></progress>
+                      <img src="images/ABO/RUG-0.27311817.jpg" alt="Home product example 2" />
+                    </span>
+                    <span>
+                      <p style="
+                      
+                      margin: 0px;
+                      margin-bottom: -9px; font-size: 19px; display: flex;"><i style="font-weight: bold; color:#ee5f0f;
+                      margin-left: 5px;">0.213</i></p>
+                      <progress value="0.21372926" max="1" class="progress-bar"></progress>
+                      <img src="images/ABO/RUG-0.21372926.jpg" alt="Home product example 1" />
+                    </span>
+                    <span>
+                      <p style="
+                      
+                      margin: 0px;
+                      margin-bottom: -9px; font-size: 19px; display: flex;"><i style="font-weight: bold; color:#ee5f0f;
+                      margin-left: 5px;">0.187</i></p>
+                      <progress value="0.18717194" max="1" class="progress-bar"></progress>
+                      <img src="images/ABO/RUG-0.18717194.jpg" alt="Home product example 1" />
+                    </span>
+                  </div>
+                  <p style="margin: 0px;"><i>Other images</i></p>
+                </div>
+              </div>
+            </div>
+            <p>Utilizaremos un threshold de 0.5 como criterio para seleccionar las other_images, seleccionando aquellas
+              que
+              tengan un coeficiente de similitud mayor a este para completar las imágenes faltantes en una categoría,
+              pero en el caso de la categoría <i class="variable">RUG</i> tomaremos un threshold de solo 0.2, ya que
+              sino, por las caracteristicas de las main_images, la mayoría de las other_images quedarían afuera.
+            </p>
+
+            <h3 class="orange_title major">Dataset final</h3>
             <p>
-              TODO: explicar categorias elegidas, capaz agregar explicacion
-              arbol de categorias?
-
-
-
-              ejemplos locos: 61JswZqr57L imagen de tanga en handbag
-
-              imagenes feas: 61kVdTXTJ4L, 61OnkGVhMWL
-
-            <p>total imagenes en Organized_images/filter_extremes_min150_max400_simplified:95672</p>
-            <p>total other_imagenes en updated_similarity_scores_vgg: 85004</p>
-            <p>total objetos en updated_similarity_scores_vgg: 20263</p>
-            <p>total imagenes en total en dataset: 398212</p>
-            <p>total imagenes (sin duplicar) en total en add_path_simplified_v2: 151434</p>
-
-            RUg es un problema, se baja el criterio de similarity a > 2
-
-            el hecho de que las imagenes tengan el id en el nombre del archivo logra que no se repitan en una misma
-            categoria
+              Por ultimo para terminar de armar el dataset y poder entrenar la red neuronal, debemos organizar las
+              imágenes, agrupandolas por categoria.
+              Una vez que sabemos los similarity scores de las other_images, procedemos a mover todas las "main images"
+              a la carpeta de su categoria, y completamos aquellas que tengan pocos
+              ejemplos con las other_images que tengan mayor similarity score.
             </p>
+            <p style="margin-bottom: 10px;">
+              Este es el balance del dataset resultante, mucho mejor!
+            </p>
+            <div class="gtr-uniform home-images" style="margin-bottom: 10px">
+              <span class=" image fit" style="margin: 0px;"><img src="images/ABO/DS FINAL.png" alt="" />
+                <p style="margin-bottom: 0px; margin-top: 10px;"><i>Dataset final</i></p>
+              </span>
+            </div>
+            <p>
+              Este dataset cuenta con 65 categorías y 25800 imágenes aproximadamente. Reconocemos que hay categorias que
+              no llegaron a 400 por falta de imágenes con un buen similarity score, pero como siguen teniendo una buena
+              cantidad (>320) simplemente lo vamos a ignorar.
+            </p>
+            <p style="margin-bottom: 10px;">
+              Las categorias finales son:
+            </p>
+            <div class="categories-container" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px;">
+              <!-- Categorías comunes diarias -->
+              <div class="category-group" style="width: 100%;">
+                <i class="variable_2">COFFEE</i>
+                <i class="variable_2">TEA</i>
+                <i class="variable_2">BREAD</i>
+                <i class="variable_2">DRINKING_CUP</i>
+                <i class="variable_2">HEADPHONES</i>
+                <i class="variable_2">CHARGING_ADAPTER</i>
+                <i class="variable_2">SHOES</i>
+                <i class="variable_2">PILLOW</i>
+                <i class="variable_2">CHAIR</i>
+                <i class="variable_2">WALL_ART</i>
+                <i class="variable_2">LAMP</i>
+                <i class="variable_2">RING</i>
+                <i class="variable_2">HAT</i>
+                <i class="variable_2">BACKPACK</i>
+                <i class="variable_2">SUITCASE</i>
+                <i class="variable_2">PLANTER</i>
+                <i class="variable_2">WALLET</i>
+              </div>
+
+              <button id="show-more-btn" onclick="showMoreCategories()" style="margin-top: -20px;">...ver más</button>
+
+              <!-- Comida y Salud -->
+              <div class="category-group" style="display: none; width: 100%;">
+                <h5>Comida y Salud</h5>
+                <i class="variable_2">LEGUME</i>
+                <i class="variable_2">HERB</i>
+                <i class="variable_2">HEALTH_PERSONAL_CARE</i>
+                <i class="variable_2">SKIN_CLEANING_AGENT</i>
+                <i class="variable_2">SKIN_MOISTURIZER</i>
+                <i class="variable_2">BEAUTY</i>
+                <i class="variable_2">VITAMIN</i>
+                <i class="variable_2">NUTRITIONAL_SUPPLEMENT</i>
+              </div>
+
+              <!-- Muebles -->
+              <div class="category-group" style="display: none; width: 100%;">
+                <h5>Muebles</h5>
+                <i class="variable_2">SHELF</i>
+                <i class="variable_2">CABINET</i>
+                <i class="variable_2">DESK</i>
+                <i class="variable_2">TABLE</i>
+                <i class="variable_2">HEADBOARD</i>
+                <i class="variable_2">BED</i>
+                <i class="variable_2">OTTOMAN</i>
+                <i class="variable_2">STOOL_SEATING</i>
+                <i class="variable_2">SOFA</i>
+              </div>
+
+              <!-- Decoración y Ropa de Cama -->
+              <div class="category-group" style="display: none; width: 100%;">
+                <h5>Decoración y Ropa de Cama</h5>
+                <i class="variable_2">RUG</i>
+                <i class="variable_2">FLAT_SHEET</i>
+                <i class="variable_2">FURNITURE_COVER</i>
+                <i class="variable_2">LIGHT_FIXTURE</i>
+              </div>
+
+              <!-- Accesorios y Joyas -->
+              <div class="category-group" style="display: none; width: 100%;">
+                <h5>Accesorios y Joyas</h5>
+                <i class="variable_2">NECKLACE</i>
+                <i class="variable_2">EARRING</i>
+                <i class="variable_2">ACCESSORY</i>
+                <i class="variable_2">HANDBAG</i>
+                <i class="variable_2">BOOT</i>
+                <i class="variable_2">SANDAL</i>
+                <i class="variable_2">PORTABLE_ELECTRONIC_DEVICE_COVER</i>
+                <i class="variable_2">CELLULAR_PHONE_CASE</i>
+                <i class="variable_2">SCREEN_PROTECTOR</i>
+              </div>
+
+              <!-- Artículos de Oficina y Limpieza -->
+              <div class="category-group" style="display: none; width: 100%;">
+                <h5>Artículos de Oficina y Limpieza</h5>
+                <i class="variable_2">OFFICE_PRODUCTS</i>
+                <i class="variable_2">STORAGE_BINDER</i>
+                <i class="variable_2">STORAGE_HOOK</i>
+                <i class="variable_2">CLEANING_AGENT</i>
+                <i class="variable_2">BATTERY</i>
+              </div>
+
+              <!-- Otros -->
+              <div class="category-group" style="display: none; width: 100%;">
+                <h5>Otros</h5>
+                <i class="variable_2">AUTO_ACCESSORY</i>
+                <i class="variable_2">TOOLS</i>
+                <i class="variable_2">SAFETY_SUPPLY</i>
+                <i class="variable_2">FOOD_SERVICE_SUPPLY</i>
+                <i class="variable_2">BISS</i>
+                <i class="variable_2">LIGHT_BULB</i>
+                <i class="variable_2">OUTDOOR_LIVING</i>
+                <i class="variable_2">PET_SUPPLIES</i>
+              </div>
+            </div>
           </section>
+        </div>
+      </div>
+
+      <div class="wrapper style3">
+        <div class="inner">
           <section>
-            <h3 class="major"></h3>
-            <p>TODO: cosas para meterle
-
-              mencionar que se necesitaron muchas iteraciones de modelos para lograr buena performance.
-              se empezo con modelos complejos encima de inception, pero se observo que no eran necesarios, inception ya
-              havce un buen laburo
-              luego se escalo a todas las categorias en vez de clusters, se esperaba necesitar modelos mas complejos
-              nope, 256 neuronas fue el mejor
-
-              imagen de overfitting all_clusters_fine_tunnig.png
-
-              final:
-              - un input para mandar mail o comentarios.
-              - posible integracion con chatgpt para contestar preguntas?
-
-
-
+            <h2 class="white-big major">Diseño y entrenamiento de la red neuronal</h2>
+            <h3 class="orange_title major">Entrenamiento de la red</h3>
+            <p>Lograr que la red tenga una buena performance fue dificil. Como se mencionó previamente, se optó por
+              aplicar transfer learning, partir de un modelo pre entrenado sin sus top layers (las capas de
+              clasificación). Este modelo sería el encargado de detectar las "features" en las imágenes, y luego sobre
+              esto se agregarían layers custom
+              encargadas de clasificar estas features dentro de las 65 categorias posibles. Por ultimo se aplicaria
+              fine-tunning
+              para optimizar la performance.
             </p>
-            <h3 class="major">Problemas</h3>
-            <p>Dataset "limpio" y balanceado, Red neuronal con buenos valores, alto acuraccy bajo loss, pero cuando lo
-              pongo en uso falla drasticamente. Para debuguear el problema usamos dataset de kaggle, 5 categorias con
-              15000 imagenes en total. Esto ayudara a determinar si el problema es el dataset o la red neuronal</p>
+            <p>En un principio se optó por utilizar el modelo VGG-16, agregando varias layers arriba
+              para la clasificación (3 dense layers, 1 dropouts). Este modelo tenía muy mala
+              performance.</p>
+            <p>Se optó por simplificar el problema reduciendo la cantidad de categorias, y
+              además pasar a utilizar inception-v3. Aquí se empezaron a notar mejoras, sobre todo cuando se simplificó
+              la etapa de clasificación, reduciéndola a 2 dense layers, 1 dropouts y 1 BatchNormalization.</p>
+            <p>Luego de varias iteraciones se lograron métricas satisfactorias. El modelo mas performante solo agrega
+              una capa
+              dense de solo 256 unidades, acompañada de un Dropout(0.4) y una layer de data augmentation con varias
+              tecnicas para evitar overfitting. Sorprendentemente, esta red tan sencilla es
+              de las mas performantes. Por esto podemos asumir que el modelo inception-v3 ya hace un excelente trabajo
+              al detectar las features en una imágen, dejándonos poco trabajo para completar el modelo.</p>
+            <p>Una vez que encontramos un diseño de red eficiente, continuamos con las pruebas, estudiando qué beneficia
+              al modelo y qué lo perjudica. En la siguiente tabla se pueden observar las métricas de los distintos
+              diseños experimentados:</p>
+
+            <div class="gtr-uniform home-images"
+              style="margin-bottom: 10px; flex-direction: column; align-items: flex-start; background-color: #313345">
+              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Tabla comparativa de los modelos</h5>
+              <table id="score-table" style="margin: 0px">
+                <thead>
+                  <tr>
+                    <th>Version</th>
+                    <th>Dense Layers</th>
+                    <th>Data <br>Augmentation</th>
+                    <th>BatchNorm</th>
+                    <th>Dropout</th>
+                    <th class="separator"></th>
+                    <th>Accuracy</th>
+                    <th>Loss</th>
+                    <th>Val Accuracy</th>
+                    <th>Val Loss</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="description">v1.1</td>
+                    <td>1x(256)</td>
+                    <td class="boolean-cell">✅</td>
+                    <td class="boolean-cell">✅</td>
+                    <td class="boolean-cell">✅</td>
+                    <td class="separator"></td>
+                    <td class="accuracy">0.89</td>
+                    <td class="loss">0.35</td>
+                    <td class="val_accuracy">0.86</td>
+                    <td class="val_loss">0.48</td>
+                  </tr>
+                  <tr>
+                    <td class="description">v1.2</td>
+                    <td>1x(256)</td>
+                    <td class="boolean-cell">❌</td>
+                    <td class="boolean-cell">✅</td>
+                    <td class="boolean-cell">✅</td>
+                    <td class="separator"></td>
+                    <td class="accuracy">0.97</td>
+                    <td class="loss">0.09</td>
+                    <td class="val_accuracy">0.86</td>
+                    <td class="val_loss">0.56</td>
+                  </tr>
+                  <tr>
+                    <td class="description">v1.3</td>
+                    <td>1x(256)</td>
+                    <td class="boolean-cell">✅</td>
+                    <td class="boolean-cell">❌</td>
+                    <td class="boolean-cell">✅</td>
+                    <td class="separator"></td>
+                    <td class="accuracy">0.91</td>
+                    <td class="loss">0.26</td>
+                    <td class="val_accuracy">0.86</td>
+                    <td class="val_loss">0.46</td>
+                  </tr>
+                  <tr>
+                    <td class="description">v1.4</td>
+                    <td>1x(256)</td>
+                    <td class="boolean-cell">✅</td>
+                    <td class="boolean-cell">✅</td>
+                    <td class="boolean-cell">❌</td>
+                    <td class="separator"></td>
+                    <td class="accuracy">0.95</td>
+                    <td class="loss">0.15</td>
+                    <td class="val_accuracy">0.86</td>
+                    <td class="val_loss">0.51</td>
+                  </tr>
+                  <tr>
+                    <td class="description">v2.1</td>
+                    <td>1x(256) 1x(512)</td>
+                    <td class="boolean-cell">✅</td>
+                    <td class="boolean-cell">✅x2</td>
+                    <td class="boolean-cell">✅x2</td>
+                    <td class="separator"></td>
+                    <td class="accuracy">0.83</td>
+                    <td class="loss">0.57</td>
+                    <td class="val_accuracy">0.84</td>
+                    <td class="val_loss">0.54</td>
+                  </tr>
+                  <tr>
+                    <td class="description">v2.2</td>
+                    <td>1x(512) 1x(1024)</td>
+                    <td class="boolean-cell">✅</td>
+                    <td class="boolean-cell">✅x2</td>
+                    <td class="boolean-cell">✅x2</td>
+                    <td class="separator"></td>
+                    <td class="accuracy">0.85</td>
+                    <td class="loss">0.47</td>
+                    <td class="val_accuracy">0.84</td>
+                    <td class="val_loss">0.55</td>
+                  </tr>
+                  <!-- Add more rows as needed -->
+                </tbody>
+              </table>
+              <p style="margin-bottom: 0px; margin-top: 0px;"><i style="font-size: 14px">Todos los modelos fueron
+                  entrenados con 20 epochs en el
+                  entrenamiento inicial y 15 en la etapa de
+                  fine-tunning</i></p>
+              </span>
+            </div>
+            <p> Analizando un poco estas estadisticas podemos observar en los modelos v1.2 y v1.4 grandes mejoras en
+              los valores de accuracy y loss, pero a la vez notamos valores de val_loss un poco peores, esto nos
+              indica overfitting, lo cual tiene sentido. La layer de data augmentation busca volver a nuestro modelo
+              mas robusto, alterando las imágenes de varias formas, con rotaciones random, cambios en el contraste o
+              brightness, random zooms, etc. A su vez, el mero objetivo de las capas dropout es prevenir el
+              overfitting, por lo que es entendible que empeore su performance. </p>
+
+            <p> Por otra parte, observamos que el modelo v1.3, que carece de la layer BatchNormalization y tiene una
+              mejora interesante en la performance. Si bien este tipo de layers son muy importantes y frecuentemente
+              utilizadas en modelos de clasificación de imágenes, podemos atribuir esta baja en la performance al
+              hecho de que se está utilizando en la etapa final de clasificación del modelo. Quizás sería mas util en
+              una etapa intermedia de un modelo mas complejo. </p>
+
+            <p>Otro hecho interesante que podemos observar de las estadísticas es la similitud de performances entre
+              modelos respecto al val_accuracy. Como podemos ver, todos los modelos tienen valores muy similares. Mi
+              teoría es que esto se debe a que varias imágenes utilizadas para la validación simplemente están
+              mal, son casos similares a los de la categoria RUG, donde la primer imágen además de contener la
+              alformbra, tambien suele contener otros objetos como sillones, sillas, cuadros, etc.
+              Teniendo esto en cuenta, podemos suponer que el modelo nunca será capaz de superar cierta performance,
+              porque algunas imágenes estarian clasificadas bajo cierta categoria, pero tienen objetos de otra. Esto
+              es un punto a estudiar y mejorar </p>
+
+            <p>
+              Por ultimo, observamos que aumentar la complejidad del modelo solo empeora la performance, lo cual es en
+              parte sorprendente, pero por otro lado tiene sentido, ya que el modelo base inception_v3 es muy bueno
+              haciendo su trabajo, y posiblemente el output del mismo no pueda ser mejorable, dejandonos con la unica
+              tarea de clasificar las features en las x categorias de nuestro problema.
+            </p>
+
+            <h3 class="orange_title major">Estadísticas del modelo seleccionado</h3>
+            <p style="margin-bottom: 20px">
+              El modelo ganador fue el v1.3, en el colab se puede observar el codigo completo, explicado en detalle,
+              recomiendo darle una vichada. A continuación se observan algunas estadísticas del modelo:
+            </p>
+            <div class="gtr-uniform home-images" style="margin-bottom: 25px; background-color: #313345">
+              <span class=" image fit" style="margin: 0px;">
+                <h5 style="margin: 0px; margin-left: 7px; margin-bottom: 15px;">Entrenamiento inicial</h5>
+                <img src="images/ABO/train v1.3.png" alt="" />
+                <p style="margin-bottom: 0px; margin-top: 19px;">
+                  A diferencia de los otros modelos, para entrenar este se aumentó de 20 epochs a 40 para exprimir un
+                  poco
+                  mas de performance.
+                </p>
+              </span>
+            </div>
+            <div class="gtr-uniform home-images" style="margin-bottom: 50px; background-color: #313345">
+              <span class=" image fit" style="margin: 0px;">
+                <h5 style="margin: 0px; margin-left: 7px; margin-bottom: 15px;">Fine tunning</h5>
+                <img src="images/ABO/fine v1.3.png" alt="" />
+                <p style="margin-bottom: 0px; margin-top: 19px;">
+                  De igual forma se aumentaron los epochs en la etapa de fine tunning a 25, aunque como se puede
+                  observar en
+                  el gráfico, a partir del epoch 10-15 se empiezan a notar signos de overfitting, con poca mejora en los
+                  valores de val_accuracy y val_loss, que son los que nos interesan
+                </p>
+              </span>
+            </div>
+
+            <h3 class="orange_title major">Modelo en acción</h3>
+            <p>Se creó un space en HuggingFace spaces para tener el modelo activo utilizando Gradio de forma constante,
+              para
+              poder ser utilizado en cualquier momento. Lo puedes usar aquí abajo, pruébalo con una foto propia!</p>
+
+            <p style="margin-bottom: 10px;">Estas
+              son las categorias mas frecuentemente accesibles en mi opinión, pero puedes fotografiar cualquier objeto
+              de las categorias y probar el modelo</p>
+            <div class="category-group" style="width: 100%;">
+              <i class="variable_2">COFFEE</i>
+              <i class="variable_2">TEA</i>
+              <i class="variable_2">BREAD</i>
+              <i class="variable_2">DRINKING_CUP</i>
+              <i class="variable_2">HEADPHONES</i>
+              <i class="variable_2">CHARGING_ADAPTER</i>
+              <i class="variable_2">SHOES</i>
+              <i class="variable_2">PILLOW</i>
+              <i class="variable_2">CHAIR</i>
+              <i class="variable_2">WALL_ART</i>
+              <i class="variable_2">LAMP</i>
+              <i class="variable_2">RING</i>
+              <i class="variable_2">HAT</i>
+              <i class="variable_2">BACKPACK</i>
+              <i class="variable_2">SUITCASE</i>
+              <i class="variable_2">PLANTER</i>
+              <i class="variable_2">WALLET</i>
+            </div>
+            <div style="text-align: center;">
+              <iframe src="https://nicolaspavon-amazon-classification.hf.space" frameborder="0" class="gradio"></iframe>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="wrapper alt style4">
+        <div class="inner">
+          <section>
+
+            <h3 class="orange_title major">Problemas</h3>
             <p>Fotos de un living! tienen todo a la vez y re chico, alfombra sillon pillow mesa!</p>
             <p>Malditas imagenes de texturas las voy a matar a todas</p>
             <p>Furniture_cover just makes me angry so i'll remove it</p>
@@ -490,28 +1358,23 @@
               "categorias" / cosas distintas</p>
             <p>categorias de frascos dificiles de diferenciar</p>
             <p>categorias suitcase y luggage identicas</p>
-            <h3 class="major">things that did not work</h3>
+            <h3 class="orange_title major">things that did not work</h3>
             <p>se intento usar un modelo grande para clasificar las 65 categorias, pero tenia muy mala performance.
               Luego se intento divide y venceras, un modelo cada +- 10 categorias, pero se encontro que meterle muchos
               modelos pesados rompe el gradio
               Por ultimo se decidio modelo papa con 4 categorias usando el category cluster, y luego un submodelo para
               identificar con precision, cargando en total unicamente 2 modelos</p>
-            <div style="text-align: center;">
-              <iframe src="https://nicolaspavon-amazon-classification.hf.space" frameborder="0" width="850"
-                height="450"></iframe>
-            </div>
-            <h3 class="major"></h3>
-            <p>TODO:</p>
-            <h3 class="major"></h3>
-            <p>TODO:</p>
+            <p>se intento pasar las imagenes a blanco y negro, ya que los colores no hacen la diferencia entre una
+              categoria u otra. sin embargo no se notó mejora, aunque quizás fue por un error de implementación</p>
+
           </section>
           <section>
-            <h2 class="major">Conclusiones</h2>
+            <h2 class="orange_title major">Conclusiones</h2>
             <p></p>
           </section>
           <section id="contact-form">
             <div>
-              <h3 class="major">Contacto</h3>
+              <h3 class="orange_title major">Contacto</h3>
               <form id="feedbackForm" action="https://formspree.io/f/xyzygapb" method="POST">
                 <div class="fields">
                   <div class="field half">
@@ -551,6 +1414,61 @@
   <script src="assets/js/main.js"></script>
   <script src="scripts/menu.js"></script>
   <script src="scripts/footer.js"></script>
+
+  <script>
+    function applyColorToCell() {
+      const table = document.getElementById('score-table');
+      const rows = table.getElementsByTagName('tr');
+
+      for (let i = 1; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+
+        const accuracy = parseFloat(cells[6].innerText);
+        const loss = parseFloat(cells[7].innerText);
+        const valAccuracy = parseFloat(cells[8].innerText);
+        const valLoss = parseFloat(cells[9].innerText);
+
+        // For accuracy and val_accuracy (higher is better)
+        cells[6].style.backgroundColor = getGreenToRedGradient(accuracy, true);
+        cells[8].style.backgroundColor = getGreenToRedGradient(valAccuracy, true);
+
+        // For loss and val_loss (lower is better)
+        cells[7].style.backgroundColor = getGreenToRedGradient(loss, false);
+        cells[9].style.backgroundColor = getGreenToRedGradient(valLoss, false);
+      }
+    }
+
+    function getGreenToRedGradient(value, higherIsBetter) {
+      const colors = [
+        { r: 0, g: 128, b: 0 },     // Green
+        { r: 85, g: 170, b: 0 },    // Yellowgreen
+        { r: 255, g: 255, b: 0 },   // Yellow
+        { r: 255, g: 165, b: 0 },   // Orange
+        { r: 255, g: 0, b: 0 },     // Red
+        { r: 0, g: 0, b: 0 }        // Black
+      ];
+
+      // Adjust ratio for whether higher or lower is better
+      let ratio = !higherIsBetter ? value : 1 - value;
+      const step = 1 / (colors.length - 1);
+      const index = Math.min(Math.floor(ratio / step), colors.length - 2);
+      const color1 = colors[index];
+      const color2 = colors[index + 1];
+
+      const t = (ratio - index * step) / step;
+      const r = Math.round(color1.r * (1 - t) + color2.r * t);
+      const g = Math.round(color1.g * (1 - t) + color2.g * t);
+      const b = Math.round(color1.b * (1 - t) + color2.b * t);
+
+      return `rgb(${r}, ${g}, ${b}, 0.8)`; // Added opacity (0.8) to the colors
+    }
+
+
+
+    // Call the function to apply colors on page load
+    applyColorToCell();
+  </script>
+
 </body>
 
 </html>
