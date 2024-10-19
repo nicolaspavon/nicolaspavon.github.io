@@ -9,6 +9,7 @@
 <head>
   <title>ABO Image classification</title>
   <meta charset="utf-8" />
+  <meta http-equiv="Permissions-Policy" content="camera=(self)">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" charset="UTF-8" />
   <link rel="stylesheet" href="assets/css/main.css" />
   <noscript>
@@ -24,6 +25,17 @@
         }
       });
       document.getElementById('show-more-btn').style.display = 'none';
+    }
+  </script>
+  <script>
+    function showMoreStats() {
+      const groups = document.querySelectorAll('.cat_stats');
+      groups.forEach((group, index) => {
+        if (index !== 0) {
+          group.style.display = 'table-row';
+        }
+      });
+      document.getElementById('show-more-table-btn').style.display = 'none';
     }
   </script>
 
@@ -68,6 +80,10 @@
   </script>
 
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     h3 {
       color: #ee5f0f;
     }
@@ -326,6 +342,10 @@
       margin-bottom: 20px;
     }
 
+    .cat_stats {
+      display: none;
+    }
+
     #show-more-btn {
       margin-top: 0px;
       padding: 10px;
@@ -337,6 +357,20 @@
       transition: background-color 0.3s;
       border-radius: 4px;
       margin-left: 3px;
+    }
+
+    #show-more-table-btn {
+      margin-top: 0px;
+      padding: 10px;
+      height: 25px;
+      font-size: 13px;
+      cursor: pointer;
+      line-height: 5px;
+      background-color: #ee5f0f;
+      transition: background-color 0.3s;
+      border-radius: 4px;
+      margin-left: 3px;
+      margin-bottom: 20px;
     }
 
     #show-more-btn:hover {
@@ -449,6 +483,12 @@
     table th {
       padding: 5px;
     }
+
+    .a-custom {
+      color: #ee5f0f;
+      text-decoration: underline;
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -490,45 +530,41 @@
           <section>
             <h3 class="orange_title major">El problema</h3>
             <p>
-              En los últimos 20 años, el E-Commerce ha crecido exponencialmente. Basta con solo observar el poder y
-              tamaño de los sitios como Amazon, Alibaba o incluso Mercado Libre para darse cuenta de la importancia que
-              tienen al día de hoy. A partir de esto, podemos concluir que si hay algo que tienen estos gigantes de la
-              informática son muchos datos, y entre ellos, muchas imágenes. Sin embargo, los datos no sirven para nada
-              si no se pueden interpretar y trabajar, por lo que sería útil poder clasificarlos para poder darles un uso
-              apropiado y sacarles todo el provecho posible.
+              En los últimos 20 años, el comercio electrónico ha crecido exponencialmente. Basta con observar el poder y
+              el tamaño de sitios como Amazon, Alibaba o incluso Mercado Libre para darse cuenta de la importancia que
+              tienen hoy en día. A partir de esto, podemos concluir que, si hay algo que tienen estos gigantes de la
+              informática, es una enorme cantidad de datos, entre ellos, muchas imágenes. Sin embargo, los datos no
+              sirven de nada si no se pueden interpretar y trabajar, por lo que es útil poder clasificarlos para darles
+              un uso adecuado y sacarles todo el provecho posible.
             </p>
 
             <h3 class="orange_title major">Los datos</h3>
             <p>
-
-              Entre todos los datasets disponibles, nos topamos con uno
-              <i>interesante</i>, el
-              <a href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">Amazon Berkeley Objects (ABO)
-                Dataset.</a> Este dataset nos provee imágenes de aproximadamente 147,000 productos de Amazon, con su
-              correspondiente metadata que incluye su categoría, color, palabras clave, marca, nombre, modelo, etc.
-              Además, provee renders en 3D y algunos otros detalles interesantes. Si bien no hemos explorado aún los
-              datos en profundidad para determinar su pureza, apreciamos el hecho de que provienen de Amazon, por lo que
-              las imágenes son ideales para este problema.
+              Entre todos los conjuntos de datos disponibles, nos topamos con uno <i>interesante</i>, el <a
+                href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">Amazon Berkeley Objects (ABO)
+                Dataset.</a> Este conjunto de datos nos proporciona imágenes de aproximadamente 147,000 productos de
+              Amazon, con su correspondiente metadata, que incluye su categoría, color, palabras clave, marca, nombre,
+              modelo, entre otros. Además, ofrece renders en 3D y algunos otros detalles interesantes. Si bien aún no
+              hemos explorado los datos en profundidad para determinar su pureza, apreciamos el hecho de que provienen
+              de Amazon, lo que hace que las imágenes sean ideales para este problema.
             </p>
 
             <h3 class="orange_title major">La tecnología</h3>
             <p>
-              Si bien para este tipo de problemas hoy en día suelen utilizarse los transformers, en este caso
-              utilizaremos
-              redes convolucionales, partiendo de un modelo preentrenado como inception-v3 y aplicando transfer
-              learning, donde quitaremos las capas superiores de clasificación y añadiremos nuevas capas especializadas
-              para esta tarea. Por último, aplicaremos fine-tuning para mejorar la performance. El código fue
-              desarrollado en Google Colab.
+              Si bien hoy en día suelen utilizarse los transformers para este tipo de problemas, en este caso
+              utilizaremos redes convolucionales, partiendo de un modelo preentrenado como Inception-v3 y aplicando
+              transfer learning, donde eliminaremos las capas superiores de clasificación y añadiremos nuevas capas
+              especializadas para esta tarea. Por último, aplicaremos fine-tuning para mejorar el rendimiento. El código
+              fue desarrollado en Google Colab.
             </p>
 
             <h3 class="orange_title major">El objetivo</h3>
             <p>
-              Como objetivo nos interesa poder clasificar el producto en la imagen, dando por hecho que la imagen
-              corresponde a un producto de e-commerce. Tomando esto en cuenta y analizando el dataset, observamos la
-              propiedad <i class="variable">product_type</i>, la cual tiene alrededor de 574 clases que varían en nivel
-              de precisión, desde
-              “RING” hasta “BISS” (Business, Industrial, and Scientific Supplies). Partiremos de esta propiedad del
-              dataset para entrenar nuestro modelo.
+              Nuestro objetivo es clasificar el producto en la imagen, asumiendo que la imagen corresponde a un producto
+              de comercio electrónico. Tomando esto en cuenta y analizando el conjunto de datos, observamos la propiedad
+              <i class="variable">product_type</i>, la cual tiene alrededor de 574 clases que varían en nivel de
+              precisión, desde "RING" hasta "BISS" (Business, Industrial, and Scientific Supplies). Partiremos de esta
+              propiedad del conjunto de datos para entrenar nuestro modelo.
             </p>
           </section>
         </div>
@@ -539,21 +575,18 @@
             <h2 class="white-big major">Informacion y estructura del dataset</h2>
             <h3 class="orange_title major">Estructura del dataset</h3>
             <p>
-              <a href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">El dataset</a>
-              cuenta con varios archivos para descargar, de los cuales nos interesan <i
-                class="variable">listings.tar</i>
-              (Listado de productos y metadata) y <i class="variable">images-small.tar</i>
-              (catalogo de imagenes re escaladas a un maximo de 256 pixeles).
-              <br /><br />
-              El archivo <i class="variable">listings.tar</i> contiene 15 archivos .json, cada uno conteniendo una lista
-              de objetos, siendo cada objeto un producto de amazon. Utilizaremos un script para pasar la informacion
-              relevante de estos objetos a archivos .csv, para que sean mas cómodos de trabajar.
-              Los objetos tienen una serie de atributos, de los cuales nos interesará <b><i>item_id</i></b> , <b>
-                <i>product_type</i></b> , <b> <i>main_image_id</i></b> y <b><i>other_image_id</i></b>
+              <a href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">El conjunto de datos</a> cuenta con
+              varios archivos para descargar, de los cuales nos interesan <i class="variable">listings.tar</i> (listado
+              de productos y metadata) e <i class="variable">images-small.tar</i> (catálogo de imágenes reescaladas a un
+              máximo de 256 píxeles). <br /><br /> El archivo <i class="variable">listings.tar</i> contiene 15 archivos
+              .json, cada uno con una lista de objetos, siendo cada objeto un producto de Amazon. Utilizaremos un script
+              para pasar la información relevante de estos objetos a archivos .csv, para que sean más cómodos de
+              trabajar. Los objetos tienen una serie de atributos, de los cuales nos interesarán <b><i>item_id</i></b>,
+              <b><i>product_type</i></b>, <b><i>main_image_id</i></b> y <b><i>other_image_id</i></b>
             </p>
             <h3 class="orange_title major">Atributos del dataset y estadisticas</h3>
             <p>
-              Una vez que tenemos el .CSV inicial, procedemos a observar la distribucion de las clases:
+              Una vez que tenemos el archivo .csv inicial, procedemos a observar la distribución de las clases:
             </p>
 
             <div class="gtr-uniform home-images" style="margin-bottom: 10px">
@@ -562,22 +595,21 @@
               </span>
             </div>
 
-            <p>Como se ve en la imagen, el dataset está totalmente desbalanceado, con muchos ejemplos para ciertas
-              categorías y casi ninguno en otras. Observando los datos en detalle, vemos que hay 574 categorías, de las
-              cuales 460 tienen menos de 100 ejemplos. Esto es un problema ya que necesitamos una buena cantidad de
-              imágenes por categoría para poder identificar ese tipo de objetos con éxito.. y solo 100 o menos no son
-              suficientes. 🫠</p>
+            <p>Como se ve en la imagen, el conjunto de datos está totalmente desbalanceado, con muchos ejemplos para
+              ciertas categorías y casi ninguno en otras. Al observar los datos en detalle, vemos que hay 574
+              categorías, de las cuales 460 tienen menos de 100 ejemplos. Esto es un problema, ya que necesitamos una
+              buena cantidad de imágenes por categoría para poder identificar ese tipo de objetos con éxito, y solo 100
+              o menos no son suficientes.</p>
             <p>
-              Para lidiar con este problema, utilizaremos el clásico divide y vencerás, y trabajaremos solo con las
-              categorías que tengan más ejemplos, balanceando los mismos para que no haya sesgos entre las categorías a
-              la hora de entrenarlos. Originalmente se optó por trabajar con 170 categorías, con al menos 50
-              ejemplos por categoria. Esto no
-              dió resultado, por lo que se redució el dataset a todas las categorías que tengan al menos 150 ejemplos, y
-              con un tope de 400. Esta fue una decisión un tanto arbitraria, por lo
-              que, si se vuelve necesario, es posible encontrar una mejor selección de categorías/ejemplos.
+              Para lidiar con este problema, en un principio trabajaremos solo con las
+              categorías que tengan más ejemplos, balanceando los mismos para evitar sesgos entre las categorías al
+              momento de entrenar. Originalmente, se optó por trabajar con 170 categorías con al menos 50 ejemplos por
+              categoría. Esto no dio resultado, por lo que se redujo el conjunto de datos a todas las categorías que
+              tuvieran al menos 150 ejemplos, con un tope de 400. Esta fue una decisión algo arbitraria, por lo que, si
+              se vuelve necesario, es posible encontrar una mejor selección de categorías y ejemplos.
             </p>
-            <p style="margin-bottom: 10px;">Una vez realizados los filtros, podemos observar las
-              estadisticas del datset final:
+            <p style="margin-bottom: 10px;">Una vez realizados los filtros, podemos observar las estadísticas del
+              conjunto de datos final:
             </p>
 
             <div class="gtr-uniform home-images" style="margin-bottom: 10px">
@@ -586,19 +618,20 @@
               </span>
             </div>
 
-            <p>En este dataset tenemos 80 categorias, mucho mejor balanceadas que las 574 del dataset inicial. Esto
-              facilitará el trabajo ya que la red neuronal final será mas facil de entrenar, y tendrá un promedio de
-              ejemplos por categoría bastamente mayor
+            <p>En este conjunto de datos tenemos 80 categorías, mucho mejor balanceadas que las 574 del conjunto de
+              datos inicial. Esto facilitará el trabajo, ya que la red neuronal final será más fácil de entrenar y
+              tendrá un promedio de ejemplos por categoría considerablemente mayor.
             </p>
 
-            <h3 class="orange_title major">Inspección del dataset</h3>
+            <h3 class="orange_title major" id="inspeccion">Inspección del dataset</h3>
             <p>
-              En este paso analizaremos el dataset previamente refinado en busca de posibles problemas evidentes a la
-              vista, entre los cuales encontramos:
+              En este paso, analizaremos el conjunto de datos previamente refinado en busca de posibles problemas
+              evidentes, entre los cuales encontramos:
             <h5>Categorias confundibles: </h5>
-            <p>Estas categorias tienen objetos muy similares entre sí. Incluso en algunos casos la unica forma de
-              diferenciarlos es leyendo el texto de los mismos. Esto es un problema ya que para la red neuronal será
-              dificil decidir la categoria.</p>
+            <p>Estas categorías contienen objetos muy similares entre sí. Incluso, en algunos casos, la única forma de
+              diferenciarlos es leyendo el texto que tiene el producto en la etiqueta. Esto es un problema, ya que para
+              la red neuronal será
+              difícil aprender las diferencias.</p>
             <ul>
               <li><i class="variable">ACCESORY</i> &#8596; <i class="variable">HAT</i></li>
               <li><i class="variable">STORAGE_HOOK</i> &#8596; <i class="variable">TOOLS</i></li>
@@ -609,20 +642,17 @@
               <li><i class="variable">FINENECKLACEBRACALETANKLET</i> &#8596; <i class="variable">NECKLACE</i></li>
               <li><i class="variable">FINEEARING</i> &#8596; <i class="variable">EARRING</i></li>
             </ul>
-            <p>Exceptuando los casos de 'fine x' &#8596;
-              'x', en un principio conservaremos estas categorias y observaremos si son efectivamente
-              problematicas al momento de clasificar.
-              Para los casos 'fine x' nos quedaremos con los que no son "fine", ya que son más abarcativos y siguen
-              preservando la forma general.</p>
+            <p>Exceptuando los casos de 'fine x' ↔ 'x', en un principio conservaremos estas categorías y observaremos si
+              son efectivamente problemáticas al momento de clasificar. Para los casos 'fine x', nos quedaremos con los
+              que no son "fine", ya que son más abarcativos y siguen preservando la forma general.</p>
 
             <h5>Categorias genericas: </h5>
-            <p>Estas categorias tienen objetos muy variados, por lo que será mas dificil entrenar a la red en busca de
-              patrones similares. Si todos los objetos de una categoria varian en forma, no existe un set de features
-              /
-              patrones que los unifique y la red no podrá categorizar eficientemente. Solo seria posible lograrlo si
-              cada sub tipo de objeto en esta
-              categoria tuviese suficientes imagenes, pero como quizas de 400 imagenes, solo 90 pertenecen a uno de
-              estos objetos, sera muy dificil de entrenar. Por esta razon estas categorias serán quitadas del dataset.
+            <p>Estas categorías contienen objetos muy variados, por lo que será más difícil entrenar a la red en busca
+              de patrones compartidos. Si todos los objetos de una categoría varían en forma, no existe un conjunto de
+              features o patrones que los unifique, y la red no podrá categorizar eficientemente. Solo sería posible
+              lograrlo si cada subgrupo de objetos en esta categoría tuviera suficientes imágenes, pero como quizás de
+              400 imágenes solo 90 pertenecen a uno de estos objetos, será muy difícil de entrenar. Por esta razón,
+              estas categorías serán eliminadas del conjunto de datos.
             </p>
             <div class="generic-cat">
               <ul>
@@ -671,23 +701,20 @@
             <h3 class="orange_title major">Balanceo del dataset</h3>
             <p>
               Como se comentó previamente, un posible problema es el sesgo que puede generar el desbalance de ejemplos
-              a
-              la hora de entrenar una red neuronal. Si en nuestra red tenemos mil ejemplos de zapatos, y cien ejemplos
-              de
-              sillones, para la red las probabilidades de recibir un zapato son 10 veces mayores que las de recibir un
-              sillon, y siendo este el caso la red podría retornar siempre zapato, acertando la mayoría de las veces.
-              Esto
-              afectaría la clasificacion de forma bastante drástica, por lo que nos interesa tener el dataset lo mas
-              balanceado posible.
-              En nuestro caso tenemos varias categorias con menos de 400 ejemplos, que es el numero ideal que queremos
-              mantener en todas las categorias. Para lograr el balance deseado, tomaremos en cuenta las "other images"
-              disponibles por
-              cada objeto. Estas imágenes pueden
-              ayudarnos a completar la cantidad de imagenes para aquellas categorias que lo necesitan.
+              al momento de entrenar una red neuronal. Si en nuestra red tenemos mil ejemplos de zapatos y cien ejemplos
+              de sillones, para la red las probabilidades de recibir un zapato son 10 veces mayores que las de recibir
+              un sillón. En este caso, la red podría retornar siempre "zapato", acertando la mayoría de las veces. Esto
+              afectaría la clasificación de forma bastante drástica, por lo que nos interesa tener el conjunto de datos
+              lo más balanceado posible.
+
+              En nuestro caso, tenemos varias categorías con menos de 400 ejemplos, que es el número ideal que queremos
+              mantener en todas las categorías. Para lograr el balance deseado, tomaremos en cuenta las "other_images"
+              disponibles por cada objeto que nos provee el dataset. Estas imágenes pueden ayudarnos a completar la
+              cantidad de imágenes para aquellas categorías que lo necesiten.
             </p>
             <h5>Ejemplos satisfactorios</h5>
-            <p>Luego de una no muy breve inspeccion, observamos casos satisfactorios en los que las "other_images" son
-              suficientemente similares (pero no identicas) al producto original</p>
+            <p>Luego de una no muy breve inspección, observamos casos satisfactorios en los que las "other_images" son
+              suficientemente similares (pero no idénticas) al producto original.</p>
 
             <div class="gtr-uniform home-images"
               style="flex-direction: column; align-items: flex-start; margin-bottom: 20px">
@@ -721,9 +748,8 @@
               </div>
             </div>
             <h5>Ejemplos problematicos</h5>
-            <p>Sin embargo, también observamos imagenes que no son del producto en si, sino de una tabla descriptiva,
-              un
-              color, o de una toma general en la que el objeto casi es indistinguible.</p>
+            <p>Sin embargo, también observamos imágenes que no son del producto en sí, sino de una tabla descriptiva, un
+              color, o de una toma general en la que el objeto es casi indistinguible.</p>
 
             <div class="gtr-uniform home-images"
               style="flex-direction: column; align-items: flex-start; margin-bottom: 20px">
@@ -792,20 +818,19 @@
                 </div>
               </div>
             </div>
-            <p>Estos casos nos perjudican. Nos interesa tener cierta varianza en las imagenes para que nuestra red se
-              vuelva mas robusta, pero cuando tenemos imagenes muy complejas, o que nisiquiera tienen al objeto en si,
-              perjudica el entrenamiento de la red, ya que la red asociara patrones erroneos a la categoria en
-              cuestión. Recuerda el ejemplo de <i class="variable">RUG</i>! va a ser un problema en el futuro.
+            <p>Estos casos nos perjudican. Nos interesa tener cierta variabilidad en las imágenes para que nuestra red
+              se vuelva más robusta, pero cuando tenemos imágenes demasiado complejas, o que ni siquiera contienen el
+              objeto en sí, perjudican el entrenamiento de la red, ya que esta asociará patrones erróneos a la categoría
+              en cuestión. ¡Recuerda el ejemplo de <i class="variable">RUG</i>! Será un problema en el futuro.
             </p>
-            <p>Para superar este problema, haremos un filtrado de las "other_images" utilizando redes neuronales pre
-              entrenadas. En este caso utilizaremos el modelo VGG16, quitando las capas de
-              clasificacion. Esto nos dejará una red que solo detecta features en una
-              imagen, pero no la clasifica.
-              Con esta red procederemos a extraer las features de la imagen principal de cada objeto
-              (main_image), y luego haremos una comparación con las features de cada una de las "other_images" de este
-              objeto, obteniendo un coeficiente de similitud entre las mismas. Este coeficiente nos indicará que tan
-              similares son las "other_images" a la imagen principal, dándole un valor muy bajo a aquellas que no
-              sean similares.
+            <p>Para superar este problema, haremos un filtrado de las "other_images" utilizando redes neuronales
+              preentrenadas. En este caso, utilizaremos el modelo VGG16, quitando las capas de clasificación. Esto nos
+              dejará una red que solo detecta features en una imagen, pero no la clasifica.
+
+              Con esta red, procederemos a extraer las features de la imagen principal de cada objeto (main_image) y
+              luego compararemos dichas features con las de cada una de las "other_images" de este objeto, obteniendo un
+              coeficiente de similitud entre ellas. Este coeficiente nos indicará qué tan similares son las
+              "other_images" a la imagen principal, asignando un valor muy bajo a aquellas que no sean similares.
             </p>
             <p style="margin-bottom: 10px;">Aqui observamos algunos ejemplos del uso de esta técnica:</p>
             <div class="gtr-uniform home-images"
@@ -935,10 +960,11 @@
               </div>
             </div>
 
-            <p style="margin-bottom: 10px;">Genial! vemos que funciona, sin embargo encontramos algunos problemas:</p>
-            <p>La categoria RUG nos complica un poco. Si observamos algunos ejemplos veremos que la "main_image"
-              suele contener a la alfombra en una escena generica, un poco "escondida", esto causa que el coeficiente de
-              similitud de las "other_images" sea muy bajo, dejando afuera muchas imagenes utiles.</p>
+            <p style="margin-bottom: 10px;">¡Genial! Vemos que funciona, sin embargo, encontramos algunos problemas::
+            </p>
+            <p>La categoría RUG nos complica un poco. Si observamos algunos ejemplos, veremos que la "main_image" suele
+              contener la alfombra en una escena genérica, un poco "escondida". Esto causa que el coeficiente de
+              similitud de las "other_images" sea muy bajo, dejando fuera muchas imágenes útiles.</p>
             <div class="gtr-uniform home-images"
               style="flex-direction: column; align-items: flex-start; margin-bottom: 20px">
               <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Similarity scores del objeto <i
@@ -994,20 +1020,19 @@
                 </div>
               </div>
             </div>
-            <p>Utilizaremos un threshold de 0.5 como criterio para seleccionar las other_images, seleccionando aquellas
-              que
-              tengan un coeficiente de similitud mayor a este para completar las imágenes faltantes en una categoría,
-              pero en el caso de la categoría <i class="variable">RUG</i> tomaremos un threshold de solo 0.2, ya que
-              sino, por las caracteristicas de las main_images, la mayoría de las other_images quedarían afuera.
+            <p>Utilizaremos un threshold de 0.5 como criterio para seleccionar las "other_images", eligiendo aquellas
+              que tengan un coeficiente de similitud mayor a este para completar las imágenes faltantes en una
+              categoría. Sin embargo, en el caso de la categoría <i class="variable">RUG</i>, tomaremos un threshold de
+              solo 0.2, ya que, debido a las características de las "main_images", la mayoría de las "other_images"
+              quedarían fuera.
             </p>
 
             <h3 class="orange_title major">Dataset final</h3>
             <p>
-              Por ultimo para terminar de armar el dataset y poder entrenar la red neuronal, debemos organizar las
-              imágenes, agrupandolas por categoria.
-              Una vez que sabemos los similarity scores de las other_images, procedemos a mover todas las "main images"
-              a la carpeta de su categoria, y completamos aquellas que tengan pocos
-              ejemplos con las other_images que tengan mayor similarity score.
+              Por último, para terminar de armar el conjunto de datos y poder entrenar la red neuronal, debemos
+              organizar las imágenes, agrupándolas por categoría. Una vez que conocemos los similarity scores de las
+              "other_images", procedemos a mover todas las "main_images" a la carpeta de su categoría y completamos
+              aquellas que tengan pocos ejemplos con las "other_images" que tengan mayor similarity score.
             </p>
             <p style="margin-bottom: 10px;">
               Este es el balance del dataset resultante, mucho mejor!
@@ -1017,14 +1042,14 @@
                 <p style="margin-bottom: 0px; margin-top: 10px;"><i>Dataset final</i></p>
               </span>
             </div>
-            <p>
-              Este dataset cuenta con 65 categorías y 25800 imágenes aproximadamente. Reconocemos que hay categorias que
-              no llegaron a 400 por falta de imágenes con un buen similarity score, pero como siguen teniendo una buena
-              cantidad (>320) simplemente lo vamos a ignorar.
+            <p id="categorias">
+              Este dataset cuenta con 65 categorías y aproximadamente 25,800 imágenes. Reconocemos que hay categorías
+              que no alcanzaron las 400 imágenes debido a la falta de un buen similarity score, pero dado que aún tienen
+              una cantidad considerable (>320), simplemente lo ignoraremos.
             </p>
-            <p style="margin-bottom: 10px;">
-              Las categorias finales son:
-            </p>
+            <h5 style="margin-bottom: 10px;">
+              Categorias finales:
+            </h5>
             <div class="categories-container" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px;">
               <!-- Categorías comunes diarias -->
               <div class="category-group" style="width: 100%;">
@@ -1131,29 +1156,26 @@
           <section>
             <h2 class="white-big major">Diseño y entrenamiento de la red neuronal</h2>
             <h3 class="orange_title major">Entrenamiento de la red</h3>
-            <p>Lograr que la red tenga una buena performance fue dificil. Como se mencionó previamente, se optó por
-              aplicar transfer learning, partir de un modelo pre entrenado sin sus top layers (las capas de
-              clasificación). Este modelo sería el encargado de detectar las "features" en las imágenes, y luego sobre
-              esto se agregarían layers custom
-              encargadas de clasificar estas features dentro de las 65 categorias posibles. Por ultimo se aplicaria
-              fine-tunning
-              para optimizar la performance.
+            <p>Lograr que la red tuviera un buen rendimiento fue difícil. Como se mencionó previamente, se optó por
+              aplicar transfer learning, partiendo de un modelo preentrenado sin sus top layers (las capas de
+              clasificación). Este modelo se encargaría de detectar las features o características principales en las
+              imágenes, y luego sobre esto
+              se agregarían capas personalizadas encargadas de clasificar estas features dentro de las 65 categorías
+              posibles. Por último, se aplicaría fine-tuning para optimizar el rendimiento.
             </p>
-            <p>En un principio se optó por utilizar el modelo VGG-16, agregando varias layers arriba
-              para la clasificación (3 dense layers, 1 dropouts). Este modelo tenía muy mala
-              performance.</p>
-            <p>Se optó por simplificar el problema reduciendo la cantidad de categorias, y
-              además pasar a utilizar inception-v3. Aquí se empezaron a notar mejoras, sobre todo cuando se simplificó
-              la etapa de clasificación, reduciéndola a 2 dense layers, 1 dropouts y 1 BatchNormalization.</p>
-            <p>Luego de varias iteraciones se lograron métricas satisfactorias. El modelo mas performante solo agrega
-              una capa
-              dense de solo 256 unidades, acompañada de un Dropout(0.4) y una layer de data augmentation con varias
-              tecnicas para evitar overfitting. Sorprendentemente, esta red tan sencilla es
-              de las mas performantes. Por esto podemos asumir que el modelo inception-v3 ya hace un excelente trabajo
-              al detectar las features en una imágen, dejándonos poco trabajo para completar el modelo.</p>
+            <p>En un principio, se optó por utilizar el modelo VGG-16, agregando varias capas para la clasificación (3
+              capas dense y 1 capa de dropout). Este modelo tuvo un rendimiento muy pobre.</p>
+            <p>Se optó por simplificar el problema reduciendo la cantidad de categorías y, además, utilizar
+              Inception-v3. Aquí se empezaron a notar mejoras, sobre todo cuando se simplificó la etapa de
+              clasificación, reduciéndola a 2 dense layers, 1 dropout y 1 BatchNormalization.</p>
+            <p>Luego de varias iteraciones, se lograron métricas satisfactorias. El modelo más performante solo agrega
+              una capa dense de 256 unidades, acompañada de un Dropout(0.4) y una capa de data augmentation con varias
+              técnicas para evitar el overfitting. Sorprendentemente, esta red tan sencilla es de las más performantes.
+              Por esto, podemos asumir que el modelo Inception-v3 ya hace un excelente trabajo al detectar las features
+              en una imagen, dejándonos poco trabajo para completar el modelo.</p>
             <p>Una vez que encontramos un diseño de red eficiente, continuamos con las pruebas, estudiando qué beneficia
               al modelo y qué lo perjudica. En la siguiente tabla se pueden observar las métricas de los distintos
-              diseños experimentados:</p>
+              diseños experimentados: </p>
 
             <div class="gtr-uniform home-images"
               style="margin-bottom: 10px; flex-direction: column; align-items: flex-start; background-color: #313345">
@@ -1255,39 +1277,40 @@
                   fine-tunning</i></p>
               </span>
             </div>
-            <p> Analizando un poco estas estadisticas podemos observar en los modelos v1.2 y v1.4 grandes mejoras en
+            <p> Analizando un poco estas estadísticas, podemos observar en los modelos v1.2 y v1.4 grandes mejoras en
               los valores de accuracy y loss, pero a la vez notamos valores de val_loss un poco peores, esto nos
-              indica overfitting, lo cual tiene sentido. La layer de data augmentation busca volver a nuestro modelo
-              mas robusto, alterando las imágenes de varias formas, con rotaciones random, cambios en el contraste o
-              brightness, random zooms, etc. A su vez, el mero objetivo de las capas dropout es prevenir el
-              overfitting, por lo que es entendible que empeore su performance. </p>
+              indica overfitting, lo cual tiene sentido. La capa de data augmentation busca hacer que nuestro modelo sea
+              más robusto, alterando las imágenes de varias formas, como rotaciones aleatorias, cambios en el contraste
+              o brillo, zooms aleatorios, etc. A su vez, el objetivo principal de las capas dropout es prevenir el
+              overfitting, por lo que es entendible que empeore su performance.</p>
 
-            <p> Por otra parte, observamos que el modelo v1.3, que carece de la layer BatchNormalization y tiene una
-              mejora interesante en la performance. Si bien este tipo de layers son muy importantes y frecuentemente
-              utilizadas en modelos de clasificación de imágenes, podemos atribuir esta baja en la performance al
-              hecho de que se está utilizando en la etapa final de clasificación del modelo. Quizás sería mas util en
-              una etapa intermedia de un modelo mas complejo. </p>
+            <p>Por otra parte, observamos que el modelo v1.3, que carece de la capa BatchNormalization, tiene una mejora
+              interesante en la performance. Si bien este tipo de capas son muy importantes y frecuentemente utilizadas
+              en modelos de clasificación de imágenes, podemos atribuir esta baja en la performance al hecho de que se
+              está utilizando en la etapa final de clasificación del modelo. Quizás sería más útil en una etapa
+              intermedia de un modelo más complejo. </p>
 
             <p>Otro hecho interesante que podemos observar de las estadísticas es la similitud de performances entre
               modelos respecto al val_accuracy. Como podemos ver, todos los modelos tienen valores muy similares. Mi
-              teoría es que esto se debe a que varias imágenes utilizadas para la validación simplemente están
-              mal, son casos similares a los de la categoria RUG, donde la primer imágen además de contener la
-              alformbra, tambien suele contener otros objetos como sillones, sillas, cuadros, etc.
+              teoría es que esto se debe a que varias imágenes utilizadas para la validación están simplemente mal
+              etiquetadas. Son casos similares a los de la categoría RUG, donde la primera imagen, además de contener la
+              alfombra, también suele contener otros objetos como sillones, sillas, cuadros, etc.
+
               Teniendo esto en cuenta, podemos suponer que el modelo nunca será capaz de superar cierta performance,
-              porque algunas imágenes estarian clasificadas bajo cierta categoria, pero tienen objetos de otra. Esto
-              es un punto a estudiar y mejorar </p>
+              porque algunas imágenes están clasificadas bajo cierta categoría, pero contienen objetos de otra. Esto es
+              un punto a estudiar y mejorar. </p>
 
             <p>
-              Por ultimo, observamos que aumentar la complejidad del modelo solo empeora la performance, lo cual es en
-              parte sorprendente, pero por otro lado tiene sentido, ya que el modelo base inception_v3 es muy bueno
-              haciendo su trabajo, y posiblemente el output del mismo no pueda ser mejorable, dejandonos con la unica
-              tarea de clasificar las features en las x categorias de nuestro problema.
+              Por último, observamos que aumentar la complejidad del modelo solo empeora la performance, lo cual es, en
+              parte, sorprendente, pero por otro lado tiene sentido, ya que el modelo base Inception_v3 es muy bueno
+              haciendo su trabajo, y posiblemente el output del mismo no pueda ser mejorado, dejándonos con la única
+              tarea de clasificar las features en las x categorías de nuestro problema.
             </p>
 
             <h3 class="orange_title major">Estadísticas del modelo seleccionado</h3>
             <p style="margin-bottom: 20px">
-              El modelo ganador fue el v1.3, en el colab se puede observar el codigo completo, explicado en detalle,
-              recomiendo darle una vichada. A continuación se observan algunas estadísticas del modelo:
+              El modelo ganador fue el v1.3. En el Colab se puede observar el código completo, explicado en detalle;
+              recomiendo darle una vichada. A continuación, se presentan algunas estadísticas del modelo:
             </p>
             <div class="gtr-uniform home-images" style="margin-bottom: 25px; background-color: #313345">
               <span class=" image fit" style="margin: 0px;">
@@ -1305,22 +1328,514 @@
                 <h5 style="margin: 0px; margin-left: 7px; margin-bottom: 15px;">Fine tunning</h5>
                 <img src="images/ABO/fine v1.3.png" alt="" />
                 <p style="margin-bottom: 0px; margin-top: 19px;">
-                  De igual forma se aumentaron los epochs en la etapa de fine tunning a 25, aunque como se puede
-                  observar en
-                  el gráfico, a partir del epoch 10-15 se empiezan a notar signos de overfitting, con poca mejora en los
-                  valores de val_accuracy y val_loss, que son los que nos interesan
+                  De igual forma, se aumentaron los epochs en la etapa de fine-tuning a 25, aunque, como se puede
+                  observar en el gráfico, a partir del epoch 10-15 se empiezan a notar signos de overfitting, con poca
+                  mejora en los valores de val_accuracy y val_loss, que son los que nos interesan.
                 </p>
               </span>
             </div>
+            <h5>Estadísticas por categoría</h5>
+            <p>En la siguiente tabla se pueden observar los valores de Precision, Recall y F1
+              para cada categoria, donde
+              las primeras son las que tienen peor performance</p>
+            <p style="margin-bottom: 0px">Precision mide cuántas de las predicciones positivas son correctas.</p>
+            <p style="margin-bottom: 0px">Recall mide cuántos de los positivos reales fueron identificados
+              correctamente.</p>
+            <p style="margin-bottom: 0px">F1 es la media armónica entre precisión y recall.</p>
+            <p style="margin-bottom: 0px">Support es el número total de ocurrencias de una clase específica en el
+              conjunto de datos.</p>
+
+            <table id="score-table_2">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Precision</th>
+                  <th>Recall</th>
+                  <th>F1-Score</th>
+                  <th>Support</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>HEALTH_PERSONAL_CARE</td>
+                  <td>0.71</td>
+                  <td>0.57</td>
+                  <td>0.63</td>
+                  <td>83</td>
+                </tr>
+                <tr>
+                  <td>SHOES</td>
+                  <td>0.80</td>
+                  <td>0.68</td>
+                  <td>0.74</td>
+                  <td>66</td>
+                </tr>
+                <tr>
+                  <td>LUGGAGE</td>
+                  <td>0.80</td>
+                  <td>0.67</td>
+                  <td>0.73</td>
+                  <td>83</td>
+                </tr>
+                <tr>
+                  <td>ACCESSORY</td>
+                  <td>0.85</td>
+                  <td>0.70</td>
+                  <td>0.77</td>
+                  <td>76</td>
+                </tr>
+                <tr>
+                  <td>CHAIR</td>
+                  <td>0.82</td>
+                  <td>0.70</td>
+                  <td>0.76</td>
+                  <td>80</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>OUTDOOR_LIVING</td>
+                  <td>0.81</td>
+                  <td>0.69</td>
+                  <td>0.75</td>
+                  <td>81</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>BISS</td>
+                  <td>0.69</td>
+                  <td>0.63</td>
+                  <td>0.66</td>
+                  <td>73</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>BEAUTY</td>
+                  <td>0.68</td>
+                  <td>0.65</td>
+                  <td>0.67</td>
+                  <td>75</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>OFFICE_PRODUCTS</td>
+                  <td>0.67</td>
+                  <td>0.65</td>
+                  <td>0.66</td>
+                  <td>83</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>WASTE_BAG</td>
+                  <td>0.86</td>
+                  <td>0.90</td>
+                  <td>0.88</td>
+                  <td>69</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>NUTRITIONAL_SUPPLEMENT</td>
+                  <td>0.71</td>
+                  <td>0.82</td>
+                  <td>0.76</td>
+                  <td>74</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>SKIN_CLEANING_AGENT</td>
+                  <td>0.78</td>
+                  <td>0.82</td>
+                  <td>0.80</td>
+                  <td>93</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>AUTO_ACCESSORY</td>
+                  <td>0.69</td>
+                  <td>0.85</td>
+                  <td>0.76</td>
+                  <td>65</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>VITAMIN</td>
+                  <td>0.82</td>
+                  <td>0.75</td>
+                  <td>0.79</td>
+                  <td>85</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>HOME_BED_AND_BATH</td>
+                  <td>0.86</td>
+                  <td>0.74</td>
+                  <td>0.80</td>
+                  <td>74</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>SHELF</td>
+                  <td>0.89</td>
+                  <td>0.76</td>
+                  <td>0.82</td>
+                  <td>87</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>FOOD_SERVICE_SUPPLY</td>
+                  <td>0.75</td>
+                  <td>0.82</td>
+                  <td>0.79</td>
+                  <td>78</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>TOOLS</td>
+                  <td>0.84</td>
+                  <td>0.78</td>
+                  <td>0.81</td>
+                  <td>86</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>COFFEE</td>
+                  <td>0.85</td>
+                  <td>0.91</td>
+                  <td>0.88</td>
+                  <td>76</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>WALLET</td>
+                  <td>0.83</td>
+                  <td>0.93</td>
+                  <td>0.88</td>
+                  <td>70</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>NECKLACE</td>
+                  <td>0.99</td>
+                  <td>1.00</td>
+                  <td>0.99</td>
+                  <td>83</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>BATTERY</td>
+                  <td>0.96</td>
+                  <td>0.95</td>
+                  <td>0.96</td>
+                  <td>83</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>HANDBAG</td>
+                  <td>0.96</td>
+                  <td>0.96</td>
+                  <td>0.96</td>
+                  <td>75</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>BACKPACK</td>
+                  <td>0.82</td>
+                  <td>0.97</td>
+                  <td>0.89</td>
+                  <td>69</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>BREAD</td>
+                  <td>0.97</td>
+                  <td>0.96</td>
+                  <td>0.96</td>
+                  <td>70</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>BED</td>
+                  <td>0.86</td>
+                  <td>0.88</td>
+                  <td>0.87</td>
+                  <td>73</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>BOOT</td>
+                  <td>0.89</td>
+                  <td>0.95</td>
+                  <td>0.92</td>
+                  <td>86</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>CABINET</td>
+                  <td>0.90</td>
+                  <td>0.91</td>
+                  <td>0.90</td>
+                  <td>95</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>CHARGING_ADAPTER</td>
+                  <td>0.93</td>
+                  <td>0.91</td>
+                  <td>0.92</td>
+                  <td>81</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>CLEANING_AGENT</td>
+                  <td>0.89</td>
+                  <td>0.87</td>
+                  <td>0.88</td>
+                  <td>82</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>DESK</td>
+                  <td>0.91</td>
+                  <td>0.90</td>
+                  <td>0.90</td>
+                  <td>79</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>DRINKING_CUP</td>
+                  <td>0.92</td>
+                  <td>0.95</td>
+                  <td>0.94</td>
+                  <td>76</td>
+                </tr>
+                <tr>
+                  <td>EARRING</td>
+                  <td>0.97</td>
+                  <td>0.95</td>
+                  <td>0.96</td>
+                  <td>88</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>FLAT_SHEET</td>
+                  <td>0.91</td>
+                  <td>0.91</td>
+                  <td>0.91</td>
+                  <td>66</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>FURNITURE_COVER</td>
+                  <td>0.88</td>
+                  <td>0.93</td>
+                  <td>0.90</td>
+                  <td>84</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>HARDWARE_HANDLE</td>
+                  <td>0.87</td>
+                  <td>0.95</td>
+                  <td>0.91</td>
+                  <td>62</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>HAT</td>
+                  <td>0.86</td>
+                  <td>0.88</td>
+                  <td>0.87</td>
+                  <td>84</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>HEADBOARD</td>
+                  <td>0.94</td>
+                  <td>0.93</td>
+                  <td>0.94</td>
+                  <td>86</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>HEADPHONES</td>
+                  <td>0.96</td>
+                  <td>0.94</td>
+                  <td>0.95</td>
+                  <td>87</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>HERB</td>
+                  <td>0.99</td>
+                  <td>0.94</td>
+                  <td>0.96</td>
+                  <td>71</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>LAMP</td>
+                  <td>0.89</td>
+                  <td>0.94</td>
+                  <td>0.92</td>
+                  <td>70</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>LEGUME</td>
+                  <td>0.96</td>
+                  <td>0.99</td>
+                  <td>0.97</td>
+                  <td>88</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>LIGHT_BULB</td>
+                  <td>0.91</td>
+                  <td>0.97</td>
+                  <td>0.94</td>
+                  <td>62</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>LIGHT_FIXTURE</td>
+                  <td>0.90</td>
+                  <td>0.89</td>
+                  <td>0.90</td>
+                  <td>84</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>OTTOMAN</td>
+                  <td>0.85</td>
+                  <td>0.88</td>
+                  <td>0.86</td>
+                  <td>83</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>PET_SUPPLIES</td>
+                  <td>0.92</td>
+                  <td>0.79</td>
+                  <td>0.85</td>
+                  <td>72</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>PILLOW</td>
+                  <td>0.87</td>
+                  <td>0.98</td>
+                  <td>0.92</td>
+                  <td>87</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>PLANTER</td>
+                  <td>0.88</td>
+                  <td>0.99</td>
+                  <td>0.93</td>
+                  <td>80</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>PORTABLE_ELECTRONIC_DEVICE_COVER</td>
+                  <td>0.96</td>
+                  <td>0.87</td>
+                  <td>0.91</td>
+                  <td>84</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>RING</td>
+                  <td>1.00</td>
+                  <td>0.94</td>
+                  <td>0.97</td>
+                  <td>88</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>RUG</td>
+                  <td>0.98</td>
+                  <td>0.97</td>
+                  <td>0.97</td>
+                  <td>90</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>SAFETY_SUPPLY</td>
+                  <td>0.89</td>
+                  <td>0.84</td>
+                  <td>0.86</td>
+                  <td>83</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>SANDAL</td>
+                  <td>0.87</td>
+                  <td>0.93</td>
+                  <td>0.90</td>
+                  <td>80</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>SAUTE_FRY_PAN</td>
+                  <td>0.96</td>
+                  <td>0.95</td>
+                  <td>0.96</td>
+                  <td>83</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>SCREEN_PROTECTOR</td>
+                  <td>0.96</td>
+                  <td>0.99</td>
+                  <td>0.97</td>
+                  <td>87</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>SKIN_MOISTURIZER</td>
+                  <td>0.91</td>
+                  <td>0.89</td>
+                  <td>0.90</td>
+                  <td>87</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>SOFA</td>
+                  <td>0.79</td>
+                  <td>0.86</td>
+                  <td>0.82</td>
+                  <td>86</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>STOOL_SEATING</td>
+                  <td>0.96</td>
+                  <td>0.96</td>
+                  <td>0.96</td>
+                  <td>79</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>STORAGE_BINDER</td>
+                  <td>0.93</td>
+                  <td>0.97</td>
+                  <td>0.95</td>
+                  <td>69</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>STORAGE_HOOK</td>
+                  <td>0.94</td>
+                  <td>0.97</td>
+                  <td>0.95</td>
+                  <td>90</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>SUITCASE</td>
+                  <td>0.87</td>
+                  <td>0.95</td>
+                  <td>0.91</td>
+                  <td>80</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>TABLE</td>
+                  <td>0.82</td>
+                  <td>0.79</td>
+                  <td>0.80</td>
+                  <td>84</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td>TEA</td>
+                  <td>0.87</td>
+                  <td>0.96</td>
+                  <td>0.91</td>
+                  <td>70</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td><strong>Accuracy</strong></td>
+                  <td colspan="4">0.88</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td><strong>Macro avg</strong></td>
+                  <td>0.87</td>
+                  <td>0.88</td>
+                  <td>0.87</td>
+                  <td>5167</td>
+                </tr>
+                <tr class="cat_stats">
+                  <td><strong>Weighted avg</strong></td>
+                  <td>0.88</td>
+                  <td>0.88</td>
+                  <td>0.87</td>
+                  <td>5167</td>
+                </tr>
+              </tbody>
+            </table>
+
+
+            <button id="show-more-table-btn" onclick="showMoreStats()"
+              style="margin-top: -20px; margin-bottom: 60px">...expandir</button>
+
 
             <h3 class="orange_title major">Modelo en acción</h3>
-            <p>Se creó un space en HuggingFace spaces para tener el modelo activo utilizando Gradio de forma constante,
-              para
-              poder ser utilizado en cualquier momento. Lo puedes usar aquí abajo, pruébalo con una foto propia!</p>
+            <p style="margin-bottom: 20px">Se creó un espacio en HuggingFace Spaces para tener el modelo activo
+              utilizando Gradio de forma constante, para poder ser utilizado en cualquier momento. Puedes usarlo aquí
+              abajo, ¡pruébalo con una foto propia!</p>
 
-            <p style="margin-bottom: 10px;">Estas
-              son las categorias mas frecuentemente accesibles en mi opinión, pero puedes fotografiar cualquier objeto
-              de las categorias y probar el modelo</p>
+            <div style="text-align: center;">
+              <iframe allow="camera" src="https://nicolaspavon-amazon-classification.hf.space" frameborder="0"
+                class="gradio"></iframe>
+            </div>
+
+            <p style="margin-bottom: 20px; margin-top: 10px;">Aquí dejo las categorías más frecuentemente accesibles (en
+              mi opinión), pero puedes fotografiar cualquier objeto de <a class="a-custom" href="#categorias">las 65
+                categorías</a> para probar el modelo.</p>
             <div class="category-group" style="width: 100%;">
               <i class="variable_2">COFFEE</i>
               <i class="variable_2">TEA</i>
@@ -1340,45 +1855,95 @@
               <i class="variable_2">PLANTER</i>
               <i class="variable_2">WALLET</i>
             </div>
-            <div style="text-align: center;">
-              <iframe src="https://nicolaspavon-amazon-classification.hf.space" frameborder="0" class="gradio"></iframe>
-            </div>
           </section>
         </div>
       </div>
       <div class="wrapper alt style4">
         <div class="inner">
           <section>
+            <h3 class="orange_title major">Aspectos a mejorar</h3>
+            <p>Como se observó en la etapa de análisis del dataset, una gran cantidad de imágenes de <i
+                class="variable">RUG</i> contienen otros elementos como sillones, sillas, mesas, entre otros. Esto
+              perjudica a la red, provocando que imágenes de sillones, por ejemplo, sean clasificadas erróneamente bajo
+              la categoría <i class="variable">RUG</i>. Quitar estas imágenes "genéricas" del dataset mejoraría
+              notablemente la performance.</p>
+            <p>En el dataset también hay muchas imágenes que muestran la textura o el color del objeto en venta, lo cual
+              no aporta al entrenamiento de la red y posiblemente cause problemas.</p>
+            <p>La categoría <i class="variable">FURNITURE_COVER</i> es muy similar a categorías como <i
+                class="variable">SOFA</i> o <i class="variable">CHAIR</i>, causando clasificaciones erróneas.</p>
+            <p>Como se comentó en la etapa de <a class="a-custom" href="#inspeccion">inspección del dataset</a>, existen
+              varias categorías que son muy genéricas o confundibles. Como era de esperar, al probar el modelo con
+              objetos de <i class="variable">SUITCASE</i> y <i class="variable">LUGGAGE</i>, suele confundirse en la
+              clasificación. De igual forma ocurre con <i class="variable">NUTRITIONAL_SUPPLEMENT</i> ↔ <i
+                class="variable">VITAMINS</i> ↔ <i class="variable">HEALTH_PERSONAL_CARE</i>, las cuales suelen ser
+              imágenes de frascos. En las <a class="a-custom" href="#score-table_2">estadísticas del modelo</a> se puede
+              observar la mala performance que tienen estas categorías, debido a su similitud.</p>
+            <p>Eliminar o unificar algunas de estas categorías mejoraría la mayoría de los problemas que tiene el
+              modelo.</p>
 
-            <h3 class="orange_title major">Problemas</h3>
-            <p>Fotos de un living! tienen todo a la vez y re chico, alfombra sillon pillow mesa!</p>
-            <p>Malditas imagenes de texturas las voy a matar a todas</p>
-            <p>Furniture_cover just makes me angry so i'll remove it</p>
-            <p>categorias muy genericas, las imagenes no siguen un patron. o dentro de una categoria hay varias
-              "categorias" / cosas distintas</p>
-            <p>categorias de frascos dificiles de diferenciar</p>
-            <p>categorias suitcase y luggage identicas</p>
-            <h3 class="orange_title major">things that did not work</h3>
-            <p>se intento usar un modelo grande para clasificar las 65 categorias, pero tenia muy mala performance.
-              Luego se intento divide y venceras, un modelo cada +- 10 categorias, pero se encontro que meterle muchos
-              modelos pesados rompe el gradio
-              Por ultimo se decidio modelo papa con 4 categorias usando el category cluster, y luego un submodelo para
-              identificar con precision, cargando en total unicamente 2 modelos</p>
-            <p>se intento pasar las imagenes a blanco y negro, ya que los colores no hacen la diferencia entre una
-              categoria u otra. sin embargo no se notó mejora, aunque quizás fue por un error de implementación</p>
-
+            <h3 class="orange_title major">Cosas que no funcionaron</h3>
+            <h5>Clustering de macro-categorias</h5>
+            <p>En un principio, se asoció la mala performance del modelo a la gran cantidad de categorías. Por esta
+              razón, se planteó la posibilidad de crear un modelo genérico encargado de clasificar dentro de 4-5
+              macro-categorías, y luego aplicar otro submodelo para cada macro-categoría, encargado de identificar la
+              categoría final. Para esto, incluso se utilizó una técnica de clustering similar a la utilizada en el
+              balanceo del dataset, que agrupó las categorías similares para luego, a partir de estos grupos, generar
+              las macro-categorías. A continuación, se puede observar el gráfico generado para la agrupación:
+            </p>
+            <div class="gtr-uniform home-images" style="margin-bottom: 10px">
+              <span class=" image fit" style="margin: 0px;"><img src="images/ABO/class clustering.png" alt="" />
+                <p style="margin-bottom: 0px; margin-top: 10px;"><i>Agrupaciones de categorias por similitud</i></p>
+              </span>
+            </div>
+            <p>Como se puede observar, agrupó exitosamente categorías como <i class="variable">SOFA</i>, <i
+                class="variable">RUG</i>, <i class="variable">CHAIR</i> y otras dentro de una posible macro-categoría <i
+                class="variable">FURNITURE</i> (rama verde). De igual forma, ocurre con otras categorías similares.
+            </p>
+            <p>Si bien esta idea parecía prometedora, se observó que el modelo era capaz de trabajar exitosamente con
+              las
+              65 categorías, por lo que esta idea quedó obsoleta.
+            </p>
+            <h5>Imágenes en blanco y negro</h5>
+            <p>Se intento pasar las imagenes a blanco y negro, ya que los colores no deberían hacer la diferencia entre
+              una
+              categoria u otra. sin embargo no se notó mejora, aunque quizás fue por un error de implementación.</p>
           </section>
+        </div>
+      </div>
+      <div class="wrapper style2">
+        <div class="inner">
           <section>
-            <h2 class="orange_title major">Conclusiones</h2>
-            <p></p>
+            <h2 class="white-big major">Conclusiones</h2>
+            <p>En resumen, el desarrollo de este modelo nos permitió explorar estrategias para abordar problemas
+              complejos de clasificación de imágenes, utilizando técnicas como transfer learning, fine-tuning,
+              clustering y comparación de similitud de imágenes para balancear el dataset. A pesar de las limitaciones
+              debido a la calidad y composición de los datos, logramos un modelo performante que demuestra la eficacia
+              de una red bien ajustada sobre un conjunto de categorías específicas.
+            </p>
+            <p>
+
+              El análisis de los resultados y la implementación de soluciones para problemas como el overfitting y la
+              confusión entre categorías similares resaltan la importancia de una correcta selección y balanceo de datos
+              para mejorar el rendimiento del modelo.
+            </p>
+            <p>
+              Si bien aún existen áreas de mejora, los resultados obtenidos muestran el potencial de un enfoque
+              incremental para el desarrollo de modelos de aprendizaje profundo. Esto subraya la importancia de la
+              experimentación constante y del ajuste fino para optimizar el desempeño en problemas reales.
+            </p>
+            <p>
+              ¡Gracias por leer y espero que este recorrido haya sido tan enriquecedor para ti como lo fue para mí al
+              desarrollarlo!</p>
+
+            <p>Tienes alguna sugerencia o comentario? Déjamelo saber aquí abajo!</p>
           </section>
           <section id="contact-form">
             <div>
-              <h3 class="orange_title major">Contacto</h3>
+              <h3 class="orange_title major">Feedback</h3>
               <form id="feedbackForm" action="https://formspree.io/f/xyzygapb" method="POST">
                 <div class="fields">
                   <div class="field half">
-                    <label for="name">Name</label>
+                    <label for="name">Nombre</label>
                     <input type="text" name="name" id="name" placeholder="Your Name" required>
                   </div>
                   <div class="field half second">
@@ -1386,7 +1951,7 @@
                     <input type="email" name="email" id="email" placeholder="Your Email" required>
                   </div>
                   <div class="field">
-                    <label for="message">Message</label>
+                    <label for="message">Mensaje</label>
                     <textarea name="message" id="message" rows="6" placeholder="Your Message" required></textarea>
                   </div>
                   <div class="field">
@@ -1438,6 +2003,27 @@
       }
     }
 
+    function applyColorToCell_2() {
+      const table = document.getElementById('score-table_2');
+      const rows = table.getElementsByTagName('tr');
+      console.log(rows.length)
+
+
+      for (let i = 1; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        console.log(cells)
+
+        const precision = parseFloat(cells[1].innerText);
+        const recall = parseFloat(cells[2].innerText);
+        const f1 = parseFloat(cells[3].innerText);
+
+        // For accuracy and val_accuracy (higher is better)
+        cells[1].style.backgroundColor = getGreenToRedGradient(precision, true);
+        cells[2].style.backgroundColor = getGreenToRedGradient(recall, true);
+        cells[3].style.backgroundColor = getGreenToRedGradient(f1, true);
+      }
+    }
+
     function getGreenToRedGradient(value, higherIsBetter) {
       const colors = [
         { r: 0, g: 128, b: 0 },     // Green
@@ -1467,6 +2053,7 @@
 
     // Call the function to apply colors on page load
     applyColorToCell();
+    applyColorToCell_2();
   </script>
 
 </body>
