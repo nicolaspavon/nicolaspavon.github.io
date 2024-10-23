@@ -634,12 +634,12 @@
   <div id="page-wrapper">
     <!-- Header -->
     <header id="header">
-      <a href="index.html">
+      <a href="index-eng.html">
         <h1>Nicolás Pavón</h1>
       </a>
       <nav>
-        <a href="ABO-eng.html">ENG</a>
-        <a href="#menu">Menú</a>
+        <a href="ABO.html">ESP</a>
+        <a href="#menu">Menu</a>
       </nav>
     </header>
 
@@ -650,7 +650,7 @@
     <section id="wrapper">
       <header id="ABO-header">
         <div class="inner">
-          <h2>Clasificando imagenes de Amazon</h2>
+          <h2>Classifying Amazon images</h2>
         </div>
       </header>
 
@@ -658,169 +658,160 @@
       <div class="wrapper">
         <div class="inner">
           <section>
-            <h3 class="orange_title major">Introducción</h3>
-            <p>Esto es la continuación del proyecto sobre redes neuronales y clasificacion de imágenes de la
-              materia "Inteligencia Artificial 2" dictada por Juan Kurucz y Ernesto Ocampo en la Universidad Católica
-              del
-              Uruguay. Trata de la creación de una red neuronal para clasificar imágenes de un dataset de productos de
-              e-commerce.</p>
-            <p>En este blog explico en detalle los problemas y soluciones encontrados en el camino, por lo que su
-              version completa puede ser muy extensa (15 min de lectura). Si cuentas con poco tiempo puedes cambiar a la
-              version resumida (8 min)
-              haciendo click en el siguiente botón:
-            </p>
+            <h3 class="orange_title major">Introduction</h3>
+            <p>This is the continuation of the project on neural networks and image classification from the course
+              "Artificial Intelligence 2" taught by Juan Kurucz and Ernesto Ocampo at the Catholic University of
+              Uruguay. It is about creating a neural network to classify images from an e-commerce product dataset.</p>
+            <p>In this blog, I explain in detail the problems and solutions encountered along the way, which makes the
+              full version quite extensive (15 minutes of reading). If you are short on time, you can switch to the
+              summarized version (8 minutes) by clicking the button below:</p>
 
-            <button id="complete-btn" onclick="toggleVersion()" style="margin-top: -20px; margin-bottom: 60px">Ver
-              version resumida</button>
-            <button id="resumed-btn" onclick="toggleVersion()" style="margin-top: -20px; margin-bottom: 60px">Ver
-              version original (recomendado)</button>
+
+            <button id="complete-btn" onclick="toggleVersion()" style="margin-top: -20px; margin-bottom: 60px">Show
+              resumed version</button>
+            <button id="resumed-btn" onclick="toggleVersion()" style="margin-top: -20px; margin-bottom: 60px">Show
+              original version (recommended)</button>
           </section>
           <section class="extended">
-            <h3 class="orange_title major">El problema</h3>
+            <h3 class="orange_title major">The issue</h3>
             <p>
-              En los últimos 20 años, el comercio electrónico ha crecido exponencialmente. Basta con observar el poder y
-              el tamaño de sitios como Amazon, Alibaba o incluso Mercado Libre para darse cuenta de la importancia que
-              tienen hoy en día. A partir de esto, podemos concluir que, si hay algo que tienen estos gigantes de la
-              informática, es una enorme cantidad de datos, entre ellos, muchas imágenes. Pese a esto, los datos no
-              sirven de nada si no se pueden interpretar y trabajar, por lo que es útil poder clasificarlos para darles
-              un uso adecuado y sacarles todo el provecho posible.
+              In the last 20 years, e-commerce has grown exponentially. Just look at the power and size of sites like
+              Amazon, Alibaba, or even Mercado Libre to realize how important they are today. From this, we can conclude
+              that if there’s something these tech giants have, it's a massive amount of data, including many images.
+              However, data is useless if it cannot be interpreted and worked with, so it's helpful to classify it to
+              make proper use of it and maximize its potential.
             </p>
-            <p>Sin embargo, mi objetivo no es resolver ese gran desafío global. Siendo realistas,
-              estoy más interesado en mostrar mis habilidades en machine learning 😎. Así que aquí va!
-            </p>
-
-            <h3 class="orange_title major">Los datos</h3>
-            <p>
-              Entre todos los conjuntos de datos disponibles, nos topamos con uno <i>interesante</i>, el <a
-                class="a-custom" href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">Amazon Berkeley
-                Objects (ABO)
-                Dataset.</a> Este conjunto de datos nos proporciona imágenes de aproximadamente 147,000 productos de
-              Amazon, con su correspondiente metadata, que incluye su categoría, color, palabras clave, marca, nombre,
-              modelo, entre otros. Además, ofrece renders en 3D y algunos otros detalles interesantes. Si bien aún no
-              hemos explorado los datos en profundidad para determinar su pureza, apreciamos el hecho de que provienen
-              de Amazon, lo que hace que las imágenes sean ideales para este problema.
+            <p>However, my goal is not to solve this huge global challenge. To be realistic, I’m more interested in
+              showcasing my machine learning skills 😎. So, here we go!
             </p>
 
-            <h3 class="orange_title major">La tecnología</h3>
+
+            <h3 class="orange_title major">The data</h3>
             <p>
-              Si bien hoy en día suelen utilizarse los transformers para este tipo de problemas, en este caso
-              utilizaremos redes convolucionales, partiendo de un modelo preentrenado como Inception-v3 y aplicando
-              transfer learning, donde eliminaremos las capas superiores de clasificación y añadiremos nuevas capas
-              especializadas para esta tarea. Por último, aplicaremos fine-tuning para mejorar el rendimiento. El código
-              fue desarrollado <a class="a-custom" target="_blank"
-                href="https://colab.research.google.com/drive/1uU5ySJ_FRQYYXtaBswYEyEkJcovputsj?usp=sharing">en Google
+              Among all the available datasets, we came across an <i>interesting</i> one, the <a class="a-custom"
+                href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">Amazon Berkeley Objects (ABO)
+                Dataset.</a> This dataset provides images of approximately 147,000 Amazon products, along with
+              corresponding metadata, including category, color, keywords, brand, name, model, among others. It also
+              offers 3D renders and some other interesting details. While we have yet to explore the data in depth to
+              determine its purity, we appreciate the fact that it comes from Amazon, making the images ideal for this
+              problem.
+            </p>
+
+
+            <h3 class="orange_title major">The technology</h3>
+            <p>
+              Although transformers are commonly used for this type of problem today, in this case, we will use
+              convolutional networks, starting with a pre-trained model like Inception-v3 and applying transfer
+              learning. We will remove the top classification layers and add new layers specialized for this task.
+              Finally, we will apply fine-tuning to improve performance. The code was developed <a class="a-custom"
+                target="_blank"
+                href="https://colab.research.google.com/drive/1uU5ySJ_FRQYYXtaBswYEyEkJcovputsj?usp=sharing">in Google
                 Colab.</a>
             </p>
 
-            <h3 class="orange_title major">El objetivo</h3>
+            <h3 class="orange_title major">The objective</h3>
             <p>
-              Nuestro objetivo es clasificar el producto en la imagen, asumiendo que la imagen corresponde a un producto
-              de comercio electrónico. Tomando esto en cuenta y analizando el conjunto de datos, observamos la propiedad
-              <i class="variable">product_type</i>, la cual tiene alrededor de 574 clases que varían en nivel de
-              precisión, desde "RING" hasta "BISS" (Business, Industrial, and Scientific Supplies). Partiremos de esta
-              propiedad del conjunto de datos para entrenar nuestro modelo.
+              Our goal is to classify the product in the image, assuming the image corresponds to an e-commerce product.
+              Taking this into account and analyzing the dataset, we observed the <i class="variable">product_type</i>
+              property, which has around 574 classes that vary in level of specificity, from "RING" to "BISS" (Business,
+              Industrial, and Scientific Supplies). We will use this property from the dataset as the starting point to
+              train our model.
             </p>
+
           </section>
           <section class="resumed">
-            <h3 class="orange_title major">Resumen</h3>
+            <h3 class="orange_title major">Resume</h3>
             <p>
-              El comercio electrónico ha crecido enormemente en las últimas décadas, impulsado por gigantes como Amazon
-              y Alibaba. Con este crecimiento, la cantidad de datos también ha aumentado, especialmente en forma de
-              imágenes de productos. Para aprovechar estos datos, es fundamental poder clasificarlos adecuadamente.
-              Aunque, siendo realistas, en este caso no estoy aquí para salvar el comercio global, sino para mostrar lo
-              que sé hacer en machine learning 😅. Vamos a trabajar con el <a class="a-custom"
-                href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">Amazon Berkeley
-                Objects (ABO)
-                Dataset.</a>, que contiene
-              imágenes y metadata de más de 147,000 productos de Amazon.
+              E-commerce has grown tremendously in recent decades, driven by giants like Amazon and Alibaba. With this
+              growth, the amount of data has also increased, especially in the form of product images. To make the most
+              of this data, it is essential to classify it properly. Although, to be realistic, in this case, I’m not
+              here to save global commerce, but rather to show what I can do in machine learning 😅. We’ll be working
+              with the <a class="a-custom" href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">Amazon
+                Berkeley Objects (ABO) Dataset.</a>, which contains images and metadata of over 147,000 Amazon products.
             </p>
             <p>
-              Para abordar este problema de clasificación, usaremos redes convolucionales y transfer learning con un
-              modelo preentrenado como Inception-v3. Eliminaremos las capas de clasificación originales y las
-              reemplazaremos con capas personalizadas para mejorar el rendimiento en la tarea específica de
-              clasificación de productos, ajustando el modelo con fine-tuning. El objetivo es clasificar la mayor
-              cantidad de clases diferentes de productos basándonos en la propiedad product_type del conjunto de datos,
-              que incluye desde
-              categorías muy específicas como "RING" hasta otras más amplias como "BISS" (Business, Industrial, and
-              Scientific Supplies).
+              To tackle this classification problem, we’ll use convolutional networks and transfer learning with a
+              pre-trained model like Inception-v3. We will remove the original classification layers and replace them
+              with custom layers to improve performance on the specific task of product classification, fine-tuning the
+              model. The goal is to classify as many different product classes as possible based on the
+              <i>product_type</i> property of the dataset, which ranges from highly specific categories like "RING" to
+              broader ones like "BISS" (Business, Industrial, and Scientific Supplies).
             </p>
+
           </section>
         </div>
       </div>
       <div class="wrapper alt style4">
         <div class="inner">
           <section>
-            <h2 class="white-big major">Informacion y estructura del dataset</h2>
-            <h3 class="orange_title major">Estructura del dataset</h3>
+            <h2 class="white-big major">Dataset structure and info</h2>
+            <h3 class="orange_title major">Dataset structure</h3>
             <p>
-              <a class="a-custom" href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">El conjunto de
-                datos</a> cuenta con
-              varios archivos para descargar, de los cuales nos interesan <i class="variable">listings.tar</i> (listado
-              de productos y metadata) e <i class="variable">images-small.tar</i> (catálogo de imágenes reescaladas a un
-              máximo de 256 píxeles).
+              <a class="a-custom" href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">The dataset</a>
+              includes several files for download, of which we are interested in <i class="variable">listings.tar</i>
+              (product listings and metadata) and <i class="variable">images-small.tar</i> (catalog of images resized to
+              a maximum of 256 pixels).
             </p>
-            <p class="extended">El archivo <i class="variable">listings.tar</i> contiene 15 archivos
-              .json, cada uno con una lista de objetos, siendo cada objeto un producto de Amazon. Utilizaremos un script
-              para pasar la información relevante de estos objetos a archivos .csv, para que sean más cómodos de
-              trabajar. Los objetos tienen una serie de atributos, de los cuales nos interesarán <b><i>item_id</i></b>,
-              <b><i>product_type</i></b>, <b><i>main_image_id</i></b> y <b><i>other_image_id</i></b>
+            <p class="extended">The <i class="variable">listings.tar</i> file contains 15 .json files, each with a list
+              of objects, with each object representing an Amazon product. We will use a script to convert the relevant
+              information from these objects into .csv files, making them easier to work with. The objects have a series
+              of attributes, and we will be focusing on <b><i>item_id</i></b>, <b><i>product_type</i></b>,
+              <b><i>main_image_id</i></b>, and <b><i>other_image_id</i></b>.
             </p>
-            <h3 class="orange_title major">Atributos del dataset y estadisticas</h3>
+            <h3 class="orange_title major">Dataset Attributes and Statistics</h3>
             <p>
-              Una vez que tenemos el archivo .csv inicial, procedemos a observar la distribución de las clases:
+              Once we have the initial .csv file, we proceed to observe the class distribution:
             </p>
+
 
             <div class="gtr-uniform home-images" style="margin-bottom: 10px">
               <span class=" image fit" style="margin: 0px;"><img src="images/ABO/DS inicial desb.png" alt="" />
-                <p style="margin-bottom: 0px; margin-top: 10px;"><i>Dataset inicial</i></p>
+                <p style="margin-bottom: 0px; margin-top: 10px;"><i>Initial dataset</i></p>
               </span>
             </div>
-
-            <p class="extended">Como se ve en la imagen, el conjunto de datos está totalmente desbalanceado, con muchos
-              ejemplos para
-              ciertas categorías y casi ninguno en otras. Al observar los datos en detalle, vemos que hay 574
-              categorías, de las cuales 460 tienen menos de 100 ejemplos. Esto es un problema, ya que necesitamos una
-              buena cantidad de imágenes por categoría para poder identificar ese tipo de objetos con éxito, y solo 100
-              o menos no son suficientes.</p>
+            <p class="extended">As seen in the image, the dataset is highly imbalanced, with many examples for certain
+              categories and almost none for others. Upon closer inspection, we see that there are 574 categories, of
+              which 460 have fewer than 100 examples. This is problematic, as we need a good number of images per
+              category to successfully identify these types of objects, and only 100 or fewer is not enough.</p>
             <p class="extended">
-              Para lidiar con este problema, en un principio trabajaremos solo con las
-              categorías que tengan más ejemplos, balanceando los mismos para evitar sesgos entre las categorías al
-              momento de entrenar. Originalmente, se optó por trabajar con 170 categorías con al menos 50 ejemplos por
-              categoría. Esto no dio resultado, por lo que se redujo el conjunto de datos a todas las categorías que
-              tuvieran al menos 150 ejemplos, con un tope de 400. Esta fue una decisión algo arbitraria, por lo que, si
-              se vuelve necesario, es posible encontrar una mejor selección de categorías y ejemplos.
+              To deal with this issue, we will initially work only with the categories that have more examples,
+              balancing them to avoid bias between categories during training. Originally, we decided to work with 170
+              categories that had at least 50 examples per category. This didn’t work, so we reduced the dataset to
+              include only categories with at least 150 examples, with a cap of 400. This was a somewhat arbitrary
+              decision, so if necessary, a better selection of categories and examples could be made.
             </p>
 
             <p class="resumed">
-              El dataset está desbalanceado, con 574 categorías, de las cuales 460 tienen menos de 100 ejemplos, lo que
-              dificultará identificar objetos correctamente. Para abordar esto, se seleccionarán categorías con al menos
-              150 ejemplos y un máximo de 400. Esta selección fue algo arbitraria y podría mejorarse si fuera necesario.
+              The dataset is imbalanced, with 574 categories, of which 460 have fewer than 100 examples, making it
+              difficult to correctly identify objects. To address this, categories with at least 150 examples and a
+              maximum of 400 were selected. This selection was somewhat arbitrary and could be improved if needed.
             </p>
-            <p style="margin-bottom: 10px;">Una vez realizados los filtros, podemos observar las estadísticas del
-              conjunto de datos final:
+            <p style="margin-bottom: 10px;">Once the filters were applied, we can observe the statistics of the final
+              dataset:
             </p>
+
 
             <div class="gtr-uniform home-images" style="margin-bottom: 10px">
               <span class=" image fit" style="margin: 0px;"><img src="images/ABO/DS min 150 max 400.png" alt="" />
-                <p style="margin-bottom: 0px; margin-top: 10px;"><i>Dataset simplificado</i></p>
+                <p style="margin-bottom: 0px; margin-top: 10px;"><i>Simplified dataset</i></p>
               </span>
             </div>
+            <p>In this dataset, we have 80 categories, much better balanced than the 574 in the initial dataset. This
+              will make the task easier, as the final neural network will be simpler to train and will have a
+              significantly higher average number of examples per category.</p>
 
-            <p>En este conjunto de datos tenemos 80 categorías, mucho mejor balanceadas que las 574 del conjunto de
-              datos inicial. Esto facilitará el trabajo, ya que la red neuronal final será más fácil de entrenar y
-              tendrá un promedio de ejemplos por categoría considerablemente mayor.
-            </p>
 
-            <h3 class="orange_title major" id="inspeccion">Inspección del dataset</h3>
+            <h3 class="orange_title major" id="inspeccion">Dataset inspection</h3>
             <p>
-              En este paso, analizaremos el conjunto de datos previamente refinado en busca de posibles problemas
-              evidentes, entre los cuales encontramos:
-            <h5>Categorias confundibles: </h5>
-            <p>Estas categorías contienen objetos muy similares entre sí. Incluso, en algunos casos, la única forma de
-              diferenciarlos es leyendo el texto que tiene el producto en la etiqueta. Esto es un problema, ya que para
-              la red neuronal será
-              difícil aprender las diferencias.</p>
+              In this step, we will analyze the previously refined dataset in search of potential obvious issues, among
+              which we found:
+            </p>
+            <h5>Confusable categories:</h5>
+            <p>These categories contain objects that are very similar to each other. In some cases, the only way to
+              differentiate them is by reading the text on the product label. This is a problem, as it will be difficult
+              for the neural network to learn the differences.</p>
             <ul>
+
               <li><i class="variable">ACCESORY</i> &#8596; <i class="variable">HAT</i></li>
               <li><i class="variable">STORAGE_HOOK</i> &#8596; <i class="variable">TOOLS</i></li>
               <li><i class="variable">NUTRITIONAL_SUPLEMENT</i> &#8596; <i class="variable">VITAMINS</i> &#8596; <i
@@ -830,24 +821,21 @@
               <li><i class="variable">FINENECKLACEBRACALETANKLET</i> &#8596; <i class="variable">NECKLACE</i></li>
               <li><i class="variable">FINEEARING</i> &#8596; <i class="variable">EARRING</i></li>
             </ul>
-            <p class="extended">Exceptuando los casos de 'fine x' ↔ 'x', en un principio conservaremos estas categorías
-              y observaremos si
-              son efectivamente problemáticas al momento de clasificar. Para los casos 'fine x', nos quedaremos con los
-              que no son "fine", ya que son más abarcativos y siguen preservando la forma general.</p>
+            <p class="extended">Except for the cases of 'fine x' ↔ 'x', we will initially keep these categories and
+              observe if they indeed pose classification issues. For the 'fine x' cases, we will keep the non-"fine"
+              ones, as they are more general and still preserve the overall form.</p>
 
-            <h5>Categorias genericas: </h5>
-            <p class="extended">Estas categorías contienen objetos muy variados, por lo que será más difícil entrenar a
-              la red en busca
-              de patrones compartidos. Si todos los objetos de una categoría varían en forma, no existe un conjunto de
-              features o patrones que los unifique, y la red no podrá categorizar eficientemente. Solo sería posible
-              lograrlo si cada subgrupo de objetos en esta categoría tuviera suficientes imágenes, pero como quizás de
-              400 imágenes solo 90 pertenecen a uno de estos objetos, será muy difícil de entrenar. Por esta razón,
-              estas categorías serán eliminadas del conjunto de datos.
-            </p>
-            <p class="resumed">Estas categorías son demasiado variadas, lo que dificulta que la red encuentre patrones
-              comunes. Al no
-              haber suficientes imágenes por subgrupo dentro de cada categoría, la red no podrá clasificarlas
-              eficientemente, por lo que serán eliminadas del dataset.</p>
+            <h5>Generic categories: </h5>
+            <p class="extended">These categories contain very diverse objects, making it harder to train the network to
+              find shared patterns. If all the objects in a category vary in shape, there is no set of features or
+              patterns that unify them, and the network will not be able to categorize them efficiently. This would only
+              be possible if each subgroup of objects in this category had enough images, but with maybe only 90 out of
+              400 images belonging to one of these objects, it will be very difficult to train. For this reason, these
+              categories will be removed from the dataset.</p>
+            <p class="resumed">These categories are too diverse, making it difficult for the network to find common
+              patterns. Since there aren’t enough images per subgroup within each category, the network won’t be able to
+              classify them efficiently, so they will be removed from the dataset.</p>
+
             <div class="generic-cat">
               <ul>
                 <li><i class="variable">HOME</i></li>
@@ -866,8 +854,8 @@
 
               <div class="gtr-uniform home-images"
                 style="flex-direction: column; align-items: flex-start; margin-bottom: 20px; margin-left: 16px; flex: 1; min-width: 0;">
-                <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Ejemplos de productos en la categoria
-                  <i class="variable">HOME</i>
+                <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Examples of
+                  <i class="variable">HOME</i> products
                 </h5>
                 <div style="flex-direction: row; display: flex;">
                   <div class="row-4 home-image" style="align-self: center;
@@ -885,40 +873,40 @@
                         <img src="images/ABO/HOME_1.jpg" alt="Home product example 1" />
                       </span>
                     </div>
-                    <p style="margin: 0px;"><i>(No se parecen en nada)</i></p>
+                    <p style="margin: 0px;"><i>(They don't look alike at all)</i></p>
                   </div>
                 </div>
               </div>
             </div>
 
             </p>
-            <h3 class="orange_title major">Balanceo del dataset</h3>
+            <h3 class="orange_title major">Dataset Balancing</h3>
             <p class="extended">
-              Como se comentó previamente, un posible problema es el sesgo que puede generar el desbalance de ejemplos
-              al momento de entrenar una red neuronal. Si en nuestra red tenemos mil ejemplos de zapatos y cien ejemplos
-              de sillones, para la red las probabilidades de recibir un zapato son 10 veces mayores que las de recibir
-              un sillón. En este caso, la red podría retornar siempre "zapato", acertando la mayoría de las veces. Esto
-              afectaría la clasificación de forma bastante drástica, por lo que nos interesa tener el conjunto de datos
-              lo más balanceado posible.
+              As previously mentioned, a potential issue is the bias that can arise from imbalanced examples when
+              training a neural network. If in our network we have a thousand examples of shoes and a hundred examples
+              of sofas, for the network, the likelihood of receiving a shoe is 10 times higher than receiving a sofa. In
+              this case, the network might always return "shoe," being correct most of the time. This would drastically
+              affect classification, so we aim to keep the dataset as balanced as possible.
 
-              En nuestro caso, tenemos varias categorías con menos de 400 ejemplos, que es el número ideal que queremos
-              mantener en todas las categorías. Para lograr el balance deseado, tomaremos en cuenta las "other_images"
-              disponibles por cada objeto que nos provee el dataset. Estas imágenes pueden ayudarnos a completar la
-              cantidad de imágenes para aquellas categorías que lo necesiten.
+              In our case, we have several categories with fewer than 400 examples, which is the ideal number we want to
+              maintain across all categories. To achieve the desired balance, we will also work with the
+              "other_images" available for each object provided by the dataset. These images can help us complete the
+              number of images for the categories that need them.
             </p>
             <p class="resumed">
-              El desbalance de ejemplos puede generar sesgos en la red neuronal, favoreciendo categorías con más
-              ejemplos. Para evitar esto, es importante balancear el dataset. Como algunas categorías tienen menos de
-              400 ejemplos, utilizaremos las "other_images" disponibles para completar las imágenes necesarias.
+              The imbalance of examples can create biases in the neural network, favoring categories with more examples.
+              To avoid this, it is important to balance the dataset. Since some categories have fewer than 400 examples,
+              we will use the available "other_images" to fill in the necessary images.
             </p>
-            <h5>Ejemplos satisfactorios</h5>
-            <p>Luego de una no muy breve inspección, observamos casos satisfactorios en los que las "other_images" son
-              suficientemente similares (pero no idénticas) al producto original.</p>
+            <h5>Satisfactory Examples</h5>
+            <p>After a not-so-brief inspection, we observed satisfactory cases where the "other_images" are sufficiently
+              similar (but not identical) to the original product.</p>
+
 
             <div class="gtr-uniform home-images"
               style="flex-direction: column; align-items: flex-start; margin-bottom: 20px">
-              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Objeto en la categoria <i
-                  class="variable">SOFA</i></h5>
+              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Object from the <i
+                  class="variable">SOFA</i> category</h5>
               <div class="generic-cat">
                 <div class="col-4 home-image main-image">
                   <span>
@@ -946,14 +934,14 @@
                 </div>
               </div>
             </div>
-            <h5>Ejemplos problematicos</h5>
-            <p>Sin embargo, también observamos imágenes que no son del producto en sí, sino de una tabla descriptiva, un
-              color, o de una toma general en la que el objeto es casi indistinguible.</p>
+            <h5>Problematic Examples</h5>
+            <p>However, we also found images that are not of the product itself, but rather of a descriptive table, a
+              color, or a general shot where the object is almost indistinguishable.</p>
 
             <div class="gtr-uniform home-images"
               style="flex-direction: column; align-items: flex-start; margin-bottom: 20px">
-              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Objeto en la categoria <i
-                  class="variable">LEGUME</i></h5>
+              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Object from the <i
+                  class="variable">LEGUME</i> category</h5>
               <div class="generic-cat">
                 <div class="col-4 home-image main-image" style="max-width: 170px;">
                   <span>
@@ -987,8 +975,8 @@
 
             <div class="gtr-uniform home-images extended"
               style="flex-direction: column; align-items: flex-start; margin-bottom: 20px">
-              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Objeto en la categoria <i
-                  class="variable">RUG</i>
+              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Object from the <i
+                  class="variable">RUG</i> category
               </h5>
               <div class="generic-cat">
                 <div class="col-4 home-image main-image">
@@ -1017,33 +1005,33 @@
                 </div>
               </div>
             </div>
-            <p class="extended">Estos casos nos perjudican. Nos interesa tener cierta variabilidad en las imágenes para
-              que nuestra red
-              se vuelva más robusta, pero cuando tenemos imágenes demasiado complejas, o que ni siquiera contienen el
-              objeto en sí, perjudican el entrenamiento de la red, ya que esta asociará patrones erróneos a la categoría
-              en cuestión. ¡Recuerda el ejemplo de <i class="variable">RUG</i>! Será un problema en el futuro.
+            <p class="extended">This is an issue for us. We are interested in having some variability in the images
+              to make our network more robust, but when we have overly complex images or images that don’t even contain
+              the object itself, they harm the network's training, as it will associate incorrect patterns with the
+              category in question. Remember the <i class="variable">RUG</i> example! It will be a problem in the
+              future.
             </p>
-            <p class="extended">Para superar este problema, haremos un filtrado de las "other_images" utilizando redes
-              neuronales
-              preentrenadas. En este caso, utilizaremos el modelo VGG16, quitando las capas de clasificación. Esto nos
-              dejará una red que solo detecta features en una imagen, pero no la clasifica.
+            <p class="extended">To overcome this issue, we will filter the "other_images" using pre-trained neural
+              networks. In this case, we will use the VGG16 model, removing the classification layers. This will leave
+              us with a network that only detects features in an image, but doesn’t classify it.
 
-              Con esta red, procederemos a extraer las features de la imagen principal de cada objeto (main_image) y
-              luego compararemos dichas features con las de cada una de las "other_images" de este objeto, obteniendo un
-              coeficiente de similitud entre ellas. Este coeficiente nos indicará qué tan similares son las
-              "other_images" a la imagen principal, asignando un valor muy bajo a aquellas que no sean similares.
+              With this network, we will proceed to extract the features from the main image of each object (main_image)
+              and then compare those features with each of the object's "other_images," obtaining a similarity
+              coefficient between them. This coefficient will indicate how similar the "other_images" are to the main
+              image, assigning a very low value to those that are not similar.
             </p>
 
             <p class="resumed">
-              Estos casos complican el entrenamiento, ya que imágenes demasiado complejas o irrelevantes hacen que la
-              red aprenda patrones incorrectos. Para resolverlo, usaremos el modelo VGG16, eliminando las capas de
-              clasificación, para extraer y comparar las features entre la imagen principal y las "other_images". Así,
-              obtendremos un coeficiente de similitud que utilizaremos para filtrar las imágenes menos útiles.
+              These cases complicate training, as overly complex or irrelevant images cause the network to learn
+              incorrect patterns. To solve this, we will use the VGG16 model, removing the classification layers, to
+              extract and compare the features between the main image and the "other_images." This way, we will obtain a
+              similarity coefficient that will help us filter out less useful images.
             </p>
-            <p style="margin-bottom: 10px;">Aqui observamos algunos ejemplos del uso de esta técnica:</p>
+            <p style="margin-bottom: 10px;">Here are some examples of the use of this technique:</p>
+
             <div class="gtr-uniform home-images"
               style="flex-direction: column; align-items: flex-start; margin-bottom: 20px">
-              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Similarity scores del objeto <i
+              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Similarity scores of a <i
                   class="variable">SOFA</i>
               </h5>
               <div class="generic-cat">
@@ -1106,7 +1094,7 @@
             </div>
             <div class="gtr-uniform home-images"
               style="flex-direction: column; align-items: flex-start; margin-bottom: 20px">
-              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Similarity scores del objeto <i
+              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Similarity scores of an <i
                   class="variable">OTTOMAN</i>
               </h5>
               <div class="generic-cat">
@@ -1168,16 +1156,15 @@
               </div>
             </div>
 
-            <p class="extended" style="margin-bottom: 10px;">¡Genial! Vemos que funciona, sin embargo, encontramos
-              algunos problemas::
-            </p>
-            <p class="extended">La categoría RUG nos complica un poco. Si observamos algunos ejemplos, veremos que la
-              "main_image" suele
-              contener la alfombra en una escena genérica, un poco "escondida". Esto causa que el coeficiente de
-              similitud de las "other_images" sea muy bajo, dejando fuera muchas imágenes útiles.</p>
+            <p class="extended" style="margin-bottom: 10px;">Great! We see that it works; however, we encountered some
+              issues:</p>
+            <p class="extended">The RUG category gives us some trouble. If we look at a few examples, we can see that
+              the "main_image" often shows the rug in a generic scene, somewhat "hidden." This causes the similarity
+              coefficient of the "other_images" to be very low, leaving out many useful images.</p>
+
             <div class="gtr-uniform home-images extended"
               style="flex-direction: column; align-items: flex-start; margin-bottom: 20px">
-              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Similarity scores del objeto <i
+              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Similarity scores of a <i
                   class="variable">RUG</i>
               </h5>
               <div class="generic-cat">
@@ -1230,48 +1217,45 @@
                 </div>
               </div>
             </div>
-            <p class="extended">Utilizaremos un threshold de 0.5 como criterio para seleccionar las "other_images",
-              eligiendo aquellas
-              que tengan un coeficiente de similitud mayor a este para completar las imágenes faltantes en una
-              categoría. Sin embargo, en el caso de la categoría <i class="variable">RUG</i>, tomaremos un threshold de
-              solo 0.2, ya que, debido a las características de las "main_images", la mayoría de las "other_images"
-              quedarían fuera.
-            </p>
-            <p class="resumed">¡Genial! Vemos que funciona, utilizaremos un threshold de 0.5 como criterio para
-              seleccionar las "other_images", eligiendo aquellas
-              que tengan un coeficiente de similitud mayor a este para completar las imágenes faltantes en una
-              categoría.
-            </p>
+            <p class="extended">We will use a threshold of 0.5 as the criterion to select the "other_images," choosing
+              those with a similarity coefficient higher than this to reach 400 examples by category.
+              However, for the <i class="variable">RUG</i> category, we will use a threshold of only 0.2 because, due to
+              the characteristics of the "main_images," most of the "other_images" would be excluded.</p>
+            <p class="resumed">Great! We see that it works, so we will use a threshold of 0.5 as the criterion to select
+              the "other_images," choosing those with a similarity coefficient higher than this to complete the missing
+              images in a category.</p>
 
-            <h3 class="orange_title major">Dataset final</h3>
+            <h3 class="orange_title major">Final Dataset</h3>
             <p class="resumed">
-              Para finalizar, organizamos las imágenes por categoría usando los similarity scores de las "other_images"
-              para completar aquellas con pocos ejemplos. El dataset resultante tiene 65 categorías y unas 25,800
-              imágenes. Aunque algunas categorías no alcanzaron las 400 imágenes, al tener más de 320, se consideraron
-              suficientes.
+              To wrap up, we organized the images by category using the similarity scores of the "other_images" to fill
+              in those with few examples. The resulting dataset has 65 categories and about 25,800 images. Although some
+              categories didn't reach 400 images, those with more than 320 were considered sufficient.
             </p>
             <p class="extended">
-              Por último, para terminar de armar el conjunto de datos y poder entrenar la red neuronal, debemos
-              organizar las imágenes, agrupándolas por categoría. Una vez que conocemos los similarity scores de las
-              "other_images", procedemos a mover todas las "main_images" a la carpeta de su categoría y completamos
-              aquellas que tengan pocos ejemplos con las "other_images" que tengan mayor similarity score.
+              Finally, to complete the dataset and train the neural network, we need to organize the images, grouping
+              them by category. Once we know the similarity scores of the "other_images," we move all the "main_images"
+              to their respective category folders and fill in those with less than 400 examples with the "other_images"
+              of
+              highest similarity score.
             </p>
             <p style="margin-bottom: 10px;">
-              Este es el balance del dataset resultante, mucho mejor!
+              Here is the balance of the resulting dataset, much better!
             </p>
+
             <div class="gtr-uniform home-images" style="margin-bottom: 10px">
               <span class=" image fit" style="margin: 0px;"><img src="images/ABO/DS FINAL.png" alt="" />
-                <p style="margin-bottom: 0px; margin-top: 10px;"><i>Dataset final</i></p>
+                <p style="margin-bottom: 0px; margin-top: 10px;"><i>Final dataset</i></p>
               </span>
             </div>
             <p id="categorias" class="extended">
-              Este dataset cuenta con 65 categorías y aproximadamente 25,800 imágenes. Reconocemos que hay categorías
-              que no alcanzaron las 400 imágenes debido a la falta de un buen similarity score, pero dado que aún tienen
-              una cantidad considerable (>320), simplemente lo ignoraremos.
+              This dataset contains 65 categories and approximately 25,800 images. We acknowledge that some categories
+              did not reach 400 images due to the lack of a good similarity score, but since they still have a
+              considerable amount (>320), we will simply overlook it.
             </p>
             <h5 style="margin-bottom: 10px;" class="extended">
-              Categorias finales:
+              Final Categories:
             </h5>
+
             <div class="categories-container extended"
               style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px;">
               <!-- Categorías comunes diarias -->
@@ -1295,11 +1279,11 @@
                 <i class="variable_2">WALLET</i>
               </div>
 
-              <button id="show-more-btn" onclick="showMoreCategories()" style="margin-top: -20px;">...ver más</button>
+              <button id="show-more-btn" onclick="showMoreCategories()" style="margin-top: -20px;">...see more</button>
 
               <!-- Comida y Salud -->
               <div class="category-group" style="display: none; width: 100%;">
-                <h5>Comida y Salud</h5>
+                <h5>Health and food</h5>
                 <i class="variable_2">LEGUME</i>
                 <i class="variable_2">HERB</i>
                 <i class="variable_2">HEALTH_PERSONAL_CARE</i>
@@ -1312,7 +1296,7 @@
 
               <!-- Muebles -->
               <div class="category-group" style="display: none; width: 100%;">
-                <h5>Muebles</h5>
+                <h5>Furniture</h5>
                 <i class="variable_2">SHELF</i>
                 <i class="variable_2">CABINET</i>
                 <i class="variable_2">DESK</i>
@@ -1326,7 +1310,7 @@
 
               <!-- Decoración y Ropa de Cama -->
               <div class="category-group" style="display: none; width: 100%;">
-                <h5>Decoración y Ropa de Cama</h5>
+                <h5>Deco and bed</h5>
                 <i class="variable_2">RUG</i>
                 <i class="variable_2">FLAT_SHEET</i>
                 <i class="variable_2">FURNITURE_COVER</i>
@@ -1335,7 +1319,7 @@
 
               <!-- Accesorios y Joyas -->
               <div class="category-group" style="display: none; width: 100%;">
-                <h5>Accesorios y Joyas</h5>
+                <h5>Accessories and jewelry</h5>
                 <i class="variable_2">NECKLACE</i>
                 <i class="variable_2">EARRING</i>
                 <i class="variable_2">ACCESSORY</i>
@@ -1349,7 +1333,7 @@
 
               <!-- Artículos de Oficina y Limpieza -->
               <div class="category-group" style="display: none; width: 100%;">
-                <h5>Artículos de Oficina y Limpieza</h5>
+                <h5>Office products and cleaning</h5>
                 <i class="variable_2">OFFICE_PRODUCTS</i>
                 <i class="variable_2">STORAGE_BINDER</i>
                 <i class="variable_2">STORAGE_HOOK</i>
@@ -1359,7 +1343,7 @@
 
               <!-- Otros -->
               <div class="category-group" style="display: none; width: 100%;">
-                <h5>Otros</h5>
+                <h5>Other</h5>
                 <i class="variable_2">AUTO_ACCESSORY</i>
                 <i class="variable_2">TOOLS</i>
                 <i class="variable_2">SAFETY_SUPPLY</i>
@@ -1377,94 +1361,94 @@
       <div class="wrapper style3">
         <div class="inner">
           <section>
-            <h2 class="white-big major">Diseño y entrenamiento de la red neuronal</h2>
-            <h3 class="orange_title major">Entrenamiento de la red</h3>
+            <h2 class="white-big major">Neural Network Design and Training</h2>
+            <h3 class="orange_title major">Network Training</h3>
             <div class="extended">
-              <p>Lograr que la red tuviera un buen rendimiento fue difícil. Como se mencionó previamente, se optó por
-                aplicar transfer learning, partiendo de un modelo preentrenado sin sus top layers (las capas de
-                clasificación). Este modelo se encargaría de detectar las features o características principales en las
-                imágenes, y luego sobre esto
-                se agregarían capas personalizadas encargadas de clasificar estas features dentro de las 65 categorías
-                posibles. Por último, se aplicaría fine-tuning para optimizar el rendimiento.
-              </p>
-              <p>En un principio, se optó por utilizar el modelo VGG-16, agregando varias capas para la clasificación (3
-                capas dense y 1 capa de dropout). Este modelo tuvo un rendimiento muy pobre.</p>
-              <p>Se optó por simplificar el problema reduciendo la cantidad de categorías y, además, utilizar
-                Inception-v3. Aquí se empezaron a notar mejoras, sobre todo cuando se simplificó la etapa de
-                clasificación, reduciéndola a 2 dense layers, 1 dropout y 1 BatchNormalization.</p>
-              <p>Luego de varias iteraciones, se lograron métricas satisfactorias. El modelo más performante solo agrega
-                una capa dense de 256 unidades, acompañada de un Dropout(0.4) y una capa de data augmentation con varias
-                técnicas para evitar el overfitting. Sorprendentemente, esta red tan sencilla es de las más
-                performantes.
-                Por esto, podemos asumir que el modelo Inception-v3 ya hace un excelente trabajo al detectar las
-                features
-                en una imagen, dejándonos poco trabajo para completar el modelo.</p>
-              <p>Una vez que encontramos un diseño de red eficiente, continuamos con las pruebas, estudiando qué
-                beneficia
-                al modelo y qué lo perjudica. En la siguiente tabla se pueden observar las métricas de los distintos
-                diseños experimentados: </p>
+              <p>Achieving good network performance was challenging. As previously mentioned, we opted for transfer
+                learning, starting with a pre-trained model without its top layers (the classification layers). This
+                model would be responsible for detecting the main features in the images, and then custom layers would
+                be added to classify these features into the 65 possible categories. Finally, fine-tuning was applied to
+                optimize performance.</p>
+
+              <p>Initially, we used the VGG-16 model, adding several classification layers (3 dense layers and 1 dropout
+                layer). This model performed very poorly.</p>
+
+              <p>We decided to simplify the problem by reducing the number of categories and also using Inception-v3.
+                Improvements started to show, especially when the classification stage was simplified to 2 dense layers,
+                1 dropout, and 1 BatchNormalization layer.</p>
+
+              <p>After several iterations, satisfactory metrics were achieved. The most performant model only adds a
+                single dense layer with 256 units, accompanied by a Dropout(0.4) and a data augmentation layer with
+                various techniques to avoid overfitting. Surprisingly, this simple network is one of the most
+                performant. This suggests that the Inception-v3 model already does an excellent job at detecting the
+                features in an image, leaving little work to complete the model.</p>
+
+              <p>Once we found an efficient network design, we continued testing, studying what benefits and harms the
+                model. In the following table, you can see the metrics of the different designs tested:</p>
             </div>
             <div class="resumed">
-              <p>Lograr un buen rendimiento fue complicado. Se utilizó transfer learning, empezando con un modelo
-                preentrenado sin sus capas de clasificación, al que se le añadieron capas personalizadas para clasificar
-                las 65 categorías. Inicialmente, se probó con VGG-16 y varias capas dense, pero el rendimiento fue
-                pobre.
-              </p>
-              <p> Al simplificar el problema reduciendo categorías y utilizando Inception-v3 con una arquitectura más
-                simple (2 dense layers, dropout y BatchNormalization), se notaron mejoras significativas. Finalmente, el
-                modelo más eficiente solo añadió una capa dense de 256 unidades, dropout, y data augmentation,
-                demostrando que Inception-v3 ya detecta muy bien las features, dejando poco trabajo adicional.
-              </p>
-              <p> A continuación, se muestran las métricas de los diferentes diseños experimentados:</p>
+              <p>Achieving good performance was challenging. Transfer learning was used, starting with a pre-trained
+                model without its classification layers, and custom layers were added to classify the 65 categories.
+                Initially, VGG-16 and several dense layers were tested, but performance was poor.</p>
+
+              <p>By simplifying the problem by reducing categories and using Inception-v3 with a simpler architecture (2
+                dense layers, dropout, and BatchNormalization), significant improvements were observed. Finally, the
+                most efficient model only added a 256-unit dense layer, dropout, and data augmentation, demonstrating
+                that Inception-v3 already detects features very well, leaving little additional work.</p>
+
+              <p>Below are the metrics for the different designs tested:</p>
             </div>
+
             <div class="gtr-uniform home-images"
               style="margin-bottom: 10px; flex-direction: column; align-items: flex-start; background-color: #313345">
-              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Tabla comparativa de los modelos</h5>
+              <h5 style="margin: 0px; margin-left: 15px; margin-bottom: 5px;">Comparison table of the models</h5>
               <table id="score-table" style="margin: 0px">
                 <thead>
                   <tr>
                     <th>Version</th>
                     <th style="position: relative">Dense Layers <span class="tooltip-container">
                         <span class="info-icon">&#9432;</span>
-                        <span class="tooltiptext">Capas completamente conectadas, donde cada neurona está conectada a
-                          todas las neuronas de la capa anterior.</span>
+                        <span class="tooltiptext">Fully connected layers where each neuron is connected to all neurons
+                          in the previous layer.</span>
                       </span></th>
                     <th style="position: relative">Data <br>Augmentation <span class="tooltip-container">
                         <span class="info-icon">&#9432;</span>
-                        <span class="tooltiptext">Técnica para aumentar el tamaño del conjunto de datos mediante
-                          transformaciones como rotaciones, recortes, o espejado de imágenes.</span>
+                        <span class="tooltiptext">Technique to increase the dataset size by applying transformations
+                          such as rotations, cropping, or image flipping.</span>
                       </span></th>
                     <th style="position: relative; padding-right: 29px;">BatchNorm <span class="tooltip-container">
                         <span class="info-icon">&#9432;</span>
-                        <span class="tooltiptext">Normalización por lotes que acelera el entrenamiento y mejora la
-                          estabilidad de la red.</span>
+                        <span class="tooltiptext">Batch normalization, which speeds up training and improves network
+                          stability.</span>
                       </span></th>
                     <th style="position: relative; padding-right: 29px;">Dropout <span class="tooltip-container">
                         <span class="info-icon">&#9432;</span>
-                        <span class="tooltiptext">Técnica para prevenir sobreajuste eliminando aleatoriamente neuronas
-                          durante el entrenamiento.</span>
+                        <span class="tooltiptext">Technique to prevent overfitting by randomly dropping neurons during
+                          training.</span>
                       </span></th>
                     <th class="separator"></th>
                     <th style="position: relative; padding-right: 29px;">Accuracy <span class="tooltip-container">
                         <span class="info-icon">&#9432;</span>
-                        <span class="tooltiptext">Precisión del modelo, que indica la proporción de predicciones
-                          correctas.</span>
+                        <span class="tooltiptext">Model accuracy, indicating the proportion of correct
+                          predictions.</span>
                       </span></th>
                     <th style="position: relative">Loss <span class="tooltip-container">
                         <span class="info-icon">&#9432;</span>
-                        <span class="tooltiptext">Mide qué tan diferentes son las predicciones del modelo en comparación
-                          con los valores reales.</span>
+                        <span class="tooltiptext">Measures how different the model's predictions are compared to the
+                          actual values.</span>
                       </span></th>
                     <th style="position: relative">Val Accuracy <span class="tooltip-container">
                         <span class="info-icon">&#9432;</span>
-                        <span class="tooltiptext">Precisión del modelo en el conjunto de validación, que indica el
-                          rendimiento fuera del conjunto de entrenamiento.</span>
+                        <span class="tooltiptext">Model accuracy on the validation set, indicating performance outside
+                          the training set.</span>
                       </span></th>
                     <th style="position: relative">Val Loss <span class="tooltip-container">
                         <span class="info-icon">&#9432;</span>
-                        <span class="tooltiptext">Mide qué tan diferentes son las predicciones del modelo en el conjunto
-                          de validación para detectar sobreajuste.</span>
+                        <span class="tooltiptext">Measures how different the model's predictions are on the validation
+                          set to detect overfitting.</span>
                       </span></th>
+
+
                   </tr>
                 </thead>
                 <tbody>
@@ -1543,83 +1527,71 @@
                   <!-- Add more rows as needed -->
                 </tbody>
               </table>
-              <p style="margin-bottom: 0px; margin-top: 0px;"><i style="font-size: 14px">Todos los modelos utilizan
-                  inception-v3 y fueron
-                  entrenados con 20 epochs en el
-                  entrenamiento inicial y 15 en la etapa de
-                  fine-tunning</i></p>
+              <p style="margin-bottom: 0px; margin-top: 0px;"><i style="font-size: 14px">All models use Inception-v3 and
+                  were trained with 20 epochs in the initial training and 15 in the fine-tuning stage</i></p>
+
               </span>
             </div>
             <div class="extended">
-              <p> Analizando un poco estas estadísticas, podemos observar en los modelos v1.2 y v1.4 mejoras
-                sustanciales en
-                los valores de accuracy y loss, pero a la vez notamos valores de val_loss un poco peores, esto nos
-                indica overfitting, lo cual tiene sentido. La capa de data augmentation busca hacer que nuestro modelo
-                sea
-                más robusto, alterando las imágenes de varias formas, como rotaciones aleatorias, cambios en el
-                contraste
-                o brillo, zooms aleatorios, etc. A su vez, el objetivo principal de las capas dropout es prevenir el
-                overfitting, por lo que es entendible que empeore su performance.</p>
+              <p>Analyzing these statistics, we can observe substantial improvements in accuracy and loss values in
+                models v1.2 and v1.4, but at the same time, we notice slightly worse val_loss values, indicating
+                overfitting, which makes sense. The data augmentation layer aims to make our model more robust by
+                altering images in various ways, such as random rotations, changes in contrast or brightness, random
+                zooms, etc. Additionally, the primary goal of dropout layers is to prevent overfitting, so it is
+                understandable that performance worsens in some cases.</p>
 
-              <p>Por otra parte, observamos que el modelo v1.3, que carece de la capa BatchNormalization, tiene una
-                mejora
-                interesante en la performance. Si bien este tipo de capas son muy importantes y frecuentemente
-                utilizadas
-                en modelos de clasificación de imágenes, podemos atribuir esta baja en la performance al hecho de que se
-                está utilizando en la etapa final de clasificación del modelo. Quizás sería más útil en una etapa
-                intermedia de un modelo más complejo. </p>
+              <p>On the other hand, we see that model v1.3, which lacks the BatchNormalization layer, shows an
+                interesting improvement in performance. While these types of layers are very important and often used in
+                image classification models, we can attribute this drop in performance to the fact that it is being used
+                in the final classification stage of the model. It might be more useful in an intermediate stage of a
+                more complex model.</p>
 
-              <p>Otro hecho interesante que podemos observar de las estadísticas es la similitud de performances entre
-                modelos respecto al val_accuracy. Como podemos ver, todos los modelos tienen valores muy similares. Mi
-                teoría es que esto se debe a que varias imágenes utilizadas para la validación están simplemente mal
-                etiquetadas. Son casos similares a los de la categoría RUG, donde la primera imagen, además de contener
-                la
-                alfombra, también suele contener otros objetos como sillones, sillas, cuadros, etc.
+              <p>Another interesting observation from the statistics is the similarity in performance between models
+                regarding val_accuracy. As we can see, all models have very similar values. My theory is that this is
+                due to several validation images simply being mislabeled. These are similar cases to the RUG category,
+                where the first image not only contains the rug but also includes other objects like sofas, chairs,
+                paintings, etc.
 
-                Teniendo esto en cuenta, podemos suponer que el modelo nunca será capaz de superar cierta performance,
-                porque algunas imágenes están clasificadas bajo cierta categoría, pero contienen objetos de otra. Esto
-                es
-                un punto a estudiar y mejorar. </p>
+                Considering this, we can assume that the model will never be able to surpass a certain level of
+                performance because some images are classified under a specific category but contain objects from
+                another. This is an area worth studying and improving.</p>
 
-              <p>
-                Por último, observamos que aumentar la complejidad del modelo solo empeora la performance, lo cual es,
-                en
-                parte, sorprendente, pero por otro lado tiene sentido, ya que el modelo base Inception_v3 es muy bueno
-                haciendo su trabajo, y posiblemente el output del mismo no pueda ser mejorado, dejándonos con la única
-                tarea de clasificar las features en las x categorías de nuestro problema.
-              </p>
+              <p>Finally, we observe that increasing the complexity of the model only worsens the performance, which is
+                somewhat surprising, but on the other hand, it makes sense since the Inception_v3 base model is very
+                good at its job, and possibly its output cannot be improved. This leaves us with the sole task of
+                classifying the already well defined and detected features into the x categories of our problem.</p>
+
             </div>
 
             <div class="resumed">
-              <p>Al analizar las estadísticas, se observan mejoras en accuracy y loss en los modelos v1.2 y v1.4, pero
-                un aumento en val_loss sugiere overfitting, lo cual es comprensible debido al desuso de data
-                augmentation y
-                dropouts para prevenirlo. En el modelo v1.3, la ausencia de BatchNormalization mejoró la performance,
-                posiblemente porque esta capa es más útil en etapas intermedias de modelos complejos.
-              </p>
+              <p>When analyzing the statistics, improvements in accuracy and loss are observed in models v1.2 and v1.4,
+                but an increase in val_loss suggests overfitting, which is understandable due to the underuse of data
+                augmentation and dropouts to prevent it. In model v1.3, the absence of BatchNormalization improved
+                performance, possibly because this layer is more useful in intermediate stages of complex models.</p>
               <p>
-                Además, las similitudes en val_accuracy entre los modelos podrían deberse a errores de etiquetado en las
-                imágenes de validación, lo que limita el rendimiento máximo alcanzable. Finalmente, aumentar la
-                complejidad del modelo empeora su rendimiento, lo que refuerza la idea de que Inception_v3 ya realiza un
-                excelente trabajo detectando features, dejando poca mejora posible.</p>
+                Additionally, the similarities in val_accuracy across models could be due to mislabeled images in the
+                validation set, limiting the maximum achievable performance. Finally, increasing the complexity of the
+                model worsens its performance, reinforcing the idea that Inception_v3 already does an excellent job at
+                detecting features, leaving little room for improvement.</p>
             </div>
 
-            <h3 class="orange_title major">Estadísticas del modelo seleccionado</h3>
+            <h3 class="orange_title major">Selected Model Statistics</h3>
             <p style="margin-bottom: 20px">
-              El modelo ganador fue el v1.3. <a class="a-custom" target="_blank"
-                href="https://colab.research.google.com/drive/1uU5ySJ_FRQYYXtaBswYEyEkJcovputsj?usp=sharing">En el
-                Colab</a> se puede observar el código completo, explicado en detalle;
-              recomiendo darle una vichada. A continuación, se presentan algunas estadísticas del modelo:
+              The winning model was v1.3. You can check out the complete code, explained in detail, in this <a
+                class="a-custom" target="_blank"
+                href="https://colab.research.google.com/drive/1uU5ySJ_FRQYYXtaBswYEyEkJcovputsj?usp=sharing">Colab</a>;
+              I recommend giving it a look. Below are some statistics of the model:
             </p>
+
             <div class="gtr-uniform home-images" style="margin-bottom: 25px; background-color: #313345">
               <span class=" image fit" style="margin: 0px;">
-                <h5 style="margin: 0px; margin-left: 7px; margin-bottom: 15px;">Entrenamiento inicial</h5>
+                <h5 style="margin: 0px; margin-left: 7px; margin-bottom: 15px;">Initial training</h5>
                 <img src="images/ABO/train v1.3.png" alt="" />
                 <p style="margin-bottom: 0px; margin-top: 19px;">
-                  A diferencia de los otros modelos, para entrenar este se aumentó de 20 epochs a 40 para exprimir un
-                  poco
-                  mas de performance. El entrenamiento demoró 13 minutos aprox.
+                  Unlike the other models, the training for this one was increased from 20 epochs to 40 to squeeze out a
+                  bit more performance. The training took approximately 13 minutes.
                 </p>
+
               </span>
             </div>
             <div class="gtr-uniform home-images" style="margin-bottom: 50px; background-color: #313345">
@@ -1627,49 +1599,49 @@
                 <h5 style="margin: 0px; margin-left: 7px; margin-bottom: 15px;">Fine tunning</h5>
                 <img src="images/ABO/fine v1.3.png" alt="" />
                 <p style="margin-bottom: 0px; margin-top: 19px;">
-                  De igual forma, se aumentaron los epochs en la etapa de fine-tuning a 25, aunque, como se puede
-                  observar en el gráfico, a partir del epoch 10-15 se empiezan a notar signos de overfitting, con poca
-                  mejora en los valores de val_accuracy y val_loss, que son los que nos interesan. El entrenamiento
-                  demoró 30 minutos aprox.
+                  Similarly, the epochs in the fine-tuning stage were increased to 25, although, as seen in the graph,
+                  signs of overfitting start to appear around epoch 10-15, with little improvement in val_accuracy and
+                  val_loss, which are the metrics we are most interested in. The fine-tuning took approximately 30
+                  minutes.
                 </p>
+
               </span>
             </div>
             <div class="extended">
-              <h5>Estadísticas por categoría</h5>
-              <p>En la siguiente tabla se pueden observar los valores de Precision, Recall y F1
-                para cada categoria, donde
-                las primeras son las mas problemáticas</p>
+              <h5>Category Statistics</h5>
+              <p>In the following table, you can see the Precision, Recall, and F1 values for each category, where the
+                first ones are those with the worst performance.</p>
 
               <table id="score-table_2">
                 <thead>
                   <tr>
-                    <th>Category</th>
+                    <th>Category
+                    </th>
                     <th style="position: relative">Precision
                       <span class="tooltip-container">
                         <span class="info-icon">&#9432;</span>
-                        <span class="tooltiptext">Precision mide cuántas de las predicciones positivas son
-                          correctas.</span>
+                        <span class="tooltiptext">Precision measures how many of the positive predictions are
+                          correct.</span>
                       </span>
                     </th>
                     <th style="position: relative">Recall
                       <span class="tooltip-container">
                         <span class="info-icon">&#9432;</span>
-                        <span class="tooltiptext">Recall mide cuántos de los positivos reales fueron identificados
-                          correctamente.</span>
+                        <span class="tooltiptext">Recall measures how many of the actual positives were correctly
+                          identified.</span>
                       </span>
                     </th>
                     <th style="position: relative">F1-Score
                       <span class="tooltip-container">
                         <span class="info-icon">&#9432;</span>
-                        <span class="tooltiptext">F1 es la media armónica entre precisión y recall.</span>
+                        <span class="tooltiptext">F1 is the harmonic mean between precision and recall.</span>
                       </span>
                     </th>
                     <th style="position: relative">Support
                       <span class="tooltip-container">
                         <span class="info-icon">&#9432;</span>
-                        <span class="tooltiptext">Support es el número total de ocurrencias de una clase específica en
-                          el
-                          conjunto de datos.</span>
+                        <span class="tooltiptext">Support is the total number of occurrences of a specific class in the
+                          dataset.</span>
                       </span>
                     </th>
                   </tr>
@@ -2139,27 +2111,26 @@
 
 
               <button id="show-more-table-btn" onclick="showMoreStats()"
-                style="margin-top: -20px; margin-bottom: 60px">...expandir</button>
+                style="margin-top: -20px; margin-bottom: 60px">...expand</button>
             </div>
 
-            <h3 class="orange_title major">Modelo en acción</h3>
-            <p style="margin-bottom: 20px">Se creó un espacio en HuggingFace Spaces para tener el modelo activo
-              utilizando Gradio de forma constante, para poder ser utilizado en cualquier momento. Puedes usarlo aquí
-              abajo, ¡pruébalo con una foto propia!</p>
+            <h3 class="orange_title major">Model in Action</h3>
+            <p style="margin-bottom: 20px">A space was created on HuggingFace Spaces to keep the model active using
+              Gradio, allowing it to be used at any time. You can try it out below, test it with your own photo!</p>
+
 
             <div style="text-align: center;">
               <iframe allow="camera" src="https://nicolaspavon-amazon-classification.hf.space" frameborder="0"
                 class="gradio"></iframe>
             </div>
 
-            <p class="extended" style="margin-bottom: 20px; margin-top: 10px;">Aquí dejo las categorías más
-              frecuentemente accesibles (en
-              mi opinión), pero puedes fotografiar cualquier objeto de <a class="a-custom" href="#categorias">las 65
-                categorías</a> para probar el modelo.</p>
-            <p class="resumed" style="margin-bottom: 20px; margin-top: 10px;">Aquí dejo las categorías más
-              frecuentemente accesibles (en
-              mi opinión), pero puedes fotografiar cualquier objeto de las 65
-              categorías para probar el modelo.</p>
+            <p class="extended" style="margin-bottom: 20px; margin-top: 10px;">Here I list the most commonly accessible
+              categories (in my opinion), but you can photograph any object from <a class="a-custom"
+                href="#categorias">the 65 categories</a> to test the model.</p>
+            <p class="resumed" style="margin-bottom: 20px; margin-top: 10px;">Here I list the most commonly accessible
+              categories (in my opinion), but you can photograph any object from the 65 categories to test the model.
+            </p>
+
             <div class="category-group-2 extended" style="width: 100%;">
               <i class="variable_2">COFFEE</i>
               <i class="variable_2">TEA</i>
@@ -2181,7 +2152,7 @@
             </div>
             <div class="resumed">
               <h5 style="margin-bottom: 10px;">
-                Categorias finales:
+                Final categories:
               </h5>
               <div class="categories-container" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px;">
                 <!-- Categorías comunes diarias -->
@@ -2205,12 +2176,12 @@
                   <i class="variable_2">WALLET</i>
                 </div>
 
-                <button id="show-more-btn-2" onclick="showMoreCategories()" style="margin-top: -20px;">...ver
-                  más</button>
+                <button id="show-more-btn-2" onclick="showMoreCategories()" style="margin-top: -20px;">...see more
+                </button>
 
                 <!-- Comida y Salud -->
                 <div class="category-group" style="display: none; width: 100%;">
-                  <h5>Comida y Salud</h5>
+                  <h5>Food and health</h5>
                   <i class="variable_2">LEGUME</i>
                   <i class="variable_2">HERB</i>
                   <i class="variable_2">HEALTH_PERSONAL_CARE</i>
@@ -2223,7 +2194,7 @@
 
                 <!-- Muebles -->
                 <div class="category-group" style="display: none; width: 100%;">
-                  <h5>Muebles</h5>
+                  <h5>Furniture</h5>
                   <i class="variable_2">SHELF</i>
                   <i class="variable_2">CABINET</i>
                   <i class="variable_2">DESK</i>
@@ -2237,7 +2208,7 @@
 
                 <!-- Decoración y Ropa de Cama -->
                 <div class="category-group" style="display: none; width: 100%;">
-                  <h5>Decoración y Ropa de Cama</h5>
+                  <h5>Deco and bed</h5>
                   <i class="variable_2">RUG</i>
                   <i class="variable_2">FLAT_SHEET</i>
                   <i class="variable_2">FURNITURE_COVER</i>
@@ -2246,7 +2217,7 @@
 
                 <!-- Accesorios y Joyas -->
                 <div class="category-group" style="display: none; width: 100%;">
-                  <h5>Accesorios y Joyas</h5>
+                  <h5>Accessories and jewelry</h5>
                   <i class="variable_2">NECKLACE</i>
                   <i class="variable_2">EARRING</i>
                   <i class="variable_2">ACCESSORY</i>
@@ -2260,7 +2231,7 @@
 
                 <!-- Artículos de Oficina y Limpieza -->
                 <div class="category-group" style="display: none; width: 100%;">
-                  <h5>Artículos de Oficina y Limpieza</h5>
+                  <h5>Office and cleaning products </h5>
                   <i class="variable_2">OFFICE_PRODUCTS</i>
                   <i class="variable_2">STORAGE_BINDER</i>
                   <i class="variable_2">STORAGE_HOOK</i>
@@ -2270,7 +2241,7 @@
 
                 <!-- Otros -->
                 <div class="category-group" style="display: none; width: 100%;">
-                  <h5>Otros</h5>
+                  <h5>Other</h5>
                   <i class="variable_2">AUTO_ACCESSORY</i>
                   <i class="variable_2">TOOLS</i>
                   <i class="variable_2">SAFETY_SUPPLY</i>
@@ -2284,104 +2255,94 @@
             </div>
 
             <p>
-              En <a class="a-custom" href="https://colab.research.google.com/drive/1uU5ySJ_FRQYYXtaBswYEyEkJcovputsj#scrollTo=WKmy4s-RAc1K&line=4&uniqifier=1
-              ">el colab</a> se pueden observar las pruebas que se hicieron para validar el modelo. Por un lado se
-              probaron imágenes ya vistas por el modelo en el entrenamiento, y luego se probaron imágenes nuevas
-              extraidas de amazon manualmente.
+              In <a class="a-custom"
+                href="https://colab.research.google.com/drive/1uU5ySJ_FRQYYXtaBswYEyEkJcovputsj#scrollTo=WKmy4s-RAc1K&line=4&uniqifier=1">the
+                Colab</a>, you can see the tests that were conducted to validate the model. I used images already
+              seen by the model during training, and also new images manually extracted from Amazon.
             </p>
-            <p>En estas pruebas, se pueden observar los problemas previamente planteados. Las categorias <i
-                class="variable">SUITCASE</i> y <i class="variable">LUGGAGE</i> se suelen confundir, la categoria <i
-                class="variable">RUG</i> suele salir en fotos de sillones o mesas, entre otros.</p>
+            <p>
+              In these tests, the previously mentioned issues can be observed. The categories <i
+                class="variable">SUITCASE</i> and <i class="variable">LUGGAGE</i> are often confused, and the category
+              <i class="variable">RUG</i> frequently appears in photos of sofas or tables, among other issues.
+            </p>
+
           </section>
         </div>
       </div>
       <div class="wrapper alt style4">
         <div class="inner">
           <section>
-            <h3 class="orange_title major">Aspectos a mejorar</h3>
+            <h3 class="orange_title major">Things to improve</h3>
             <div>
-              <p>Como se observó en la etapa de análisis del dataset, una gran cantidad de imágenes de <i
-                  class="variable">RUG</i> contienen otros elementos como sillones, sillas, mesas, entre otros. Esto
-                perjudica a la red, provocando que imágenes de sillones, por ejemplo, sean clasificadas erróneamente
-                bajo
-                la categoría <i class="variable">RUG</i>. Quitar estas imágenes "genéricas" del dataset mejoraría
-                notablemente la performance.</p>
-              <p>En el dataset también hay muchas imágenes que muestran la textura o el color del objeto en venta, lo
-                cual
-                no aporta al entrenamiento de la red y probablemente sean la razon por la cual las estadisticas de loss
-                y val_loss dan tan mal.</p>
-              <p>La categoría <i class="variable">FURNITURE_COVER</i> es muy similar a categorías como <i
-                  class="variable">SOFA</i> o <i class="variable">CHAIR</i>, causando clasificaciones erróneas.</p>
-              <p>Como se comentó en la etapa de <a class="a-custom" href="#inspeccion">inspección del dataset</a>,
-                existen
-                varias categorías que son muy genéricas o confundibles. Como era de esperar, al probar el modelo con
-                objetos de <i class="variable">SUITCASE</i> y <i class="variable">LUGGAGE</i>, suele confundirse en la
-                clasificación. De igual forma ocurre con <i class="variable">NUTRITIONAL_SUPPLEMENT</i> ↔ <i
-                  class="variable">VITAMINS</i> ↔ <i class="variable">HEALTH_PERSONAL_CARE</i>, las cuales suelen ser
-                imágenes de frascos. En las <a class="a-custom" href="#score-table_2">estadísticas del modelo</a> se
-                puede
-                observar la mala performance que tienen estas categorías, debido a su similitud.</p>
-              <p>Eliminar o unificar algunas de estas categorías mejoraría la mayoría de los problemas que tiene el
-                modelo.</p>
-            </div>
-            <div class="extended">
-              <h3 class="orange_title major">Cosas que no funcionaron</h3>
-              <h5>Clustering de macro-categorias</h5>
-              <p>En un principio, se asoció la mala performance del modelo a la gran cantidad de categorías. Por esta
-                razón, se planteó la posibilidad de crear un modelo genérico encargado de clasificar dentro de 4-5
-                macro-categorías, y luego aplicar otro submodelo para cada macro-categoría, encargado de identificar la
-                categoría final. Para esto, incluso se utilizó una técnica de clustering similar a la utilizada en el
-                balanceo del dataset, que agrupó las categorías similares para luego, a partir de estos grupos, generar
-                las macro-categorías. A continuación, se puede observar el gráfico generado para la agrupación:
+              <p>As observed during the dataset analysis phase, a large number of <i class="variable">RUG</i> images
+                contain other elements like sofas, chairs, tables, among others. This hinders the network, causing
+                images of sofas, for example, to be incorrectly classified under the <i class="variable">RUG</i>
+                category. Removing these "generic" images from the dataset would significantly improve performance.</p>
+
+              <p>The dataset also contains many images that show the texture or color of the item for sale, which does
+                not contribute to the network's training and are probably affecting the loss and val_loss statistics.
               </p>
+
+              <p>The <i class="variable">FURNITURE_COVER</i> category is very similar to categories like <i
+                  class="variable">SOFA</i> or <i class="variable">CHAIR</i>, leading to incorrect classifications.</p>
+
+              <p>As mentioned in the <a class="a-custom" href="#inspeccion">dataset inspection</a> stage, there are
+                several categories that are very generic or easily confused. As expected, when testing the model with
+                objects from <i class="variable">SUITCASE</i> and <i class="variable">LUGGAGE</i>, it tends to
+                misclassify them. The same happens with <i class="variable">NUTRITIONAL_SUPPLEMENT</i> ↔ <i
+                  class="variable">VITAMINS</i> ↔ <i class="variable">HEALTH_PERSONAL_CARE</i>, which are often images
+                of bottles. In the <a class="a-custom" href="#score-table_2">model statistics</a>, you can see the poor
+                performance of these categories due to their similarity.</p>
+
+              <p>Removing or merging some of these categories would solve most of the model's issues.</p>
+            </div>
+
+            <div class="extended">
+              <h3 class="orange_title major">Things that didn't work</h3>
+              <h5>Clustering of Macro-Categories</h5>
+              <p>Initially, the model's poor performance was attributed to the large number of categories. For this
+                reason, the possibility of creating a generic model to classify within 4-5 macro-categories was
+                considered, followed by applying another sub-model for each macro-category to identify the final
+                category. To do this, a clustering technique similar to the one used in dataset balancing was employed,
+                grouping similar categories and then generating macro-categories from these groups. Below is the
+                generated graph for the grouping:</p>
               <div class="gtr-uniform home-images" style="margin-bottom: 10px">
-                <span class=" image fit" style="margin: 0px;"><img src="images/ABO/class clustering.png" alt="" />
-                  <p style="margin-bottom: 0px; margin-top: 10px;"><i>Agrupaciones de categorias por similitud</i></p>
+                <span class="image fit" style="margin: 0px;"><img src="images/ABO/class clustering.png" alt="" />
+                  <p style="margin-bottom: 0px; margin-top: 10px;"><i>Category groupings by similarity</i></p>
                 </span>
               </div>
-              <p>Como se puede observar, agrupó exitosamente categorías como <i class="variable">SOFA</i>, <i
-                  class="variable">RUG</i>, <i class="variable">CHAIR</i> y otras dentro de una posible macro-categoría
-                <i class="variable">FURNITURE</i> (rama verde). De igual forma, ocurre con otras categorías similares.
-              </p>
-              <p>Si bien esta idea parecía prometedora, se observó que el modelo era capaz de trabajar exitosamente con
-                las
-                65 categorías, por lo que esta idea quedó obsoleta.
-              </p>
-              <h5>Imágenes en blanco y negro</h5>
-              <p>Se intento pasar las imagenes a blanco y negro, ya que los colores no deberían hacer la diferencia
-                entre
-                una
-                categoria u otra. sin embargo no se notó mejora, aunque quizás fue por un error de implementación.</p>
+              <p>As seen, it successfully grouped categories like <i class="variable">SOFA</i>, <i
+                  class="variable">RUG</i>, <i class="variable">CHAIR</i>, and others into a possible macro-category <i
+                  class="variable">FURNITURE</i> (green branch). The same happened with other similar categories.</p>
+              <p>Although this idea seemed promising, it was observed that the model was able to work successfully with
+                all 65 categories, rendering this idea obsolete.</p>
+
+              <h5>Black and White Images</h5>
+              <p>We attempted to convert the images to black and white, as colors shouldn’t make a difference between
+                categories. However, no improvement was noticed, although it may have been due to an implementation
+                error.</p>
+
             </div>
           </section>
         </div>
       </div>
       <div id="conclusions" class="wrapper style2">
         <div class="inner">
-
           <section>
-
-            <h2 class="white-big major">Conclusiones</h2>
-            <p>En este proyecto logramos observar la eficiencia de las técnicas de transfer learning y
-              fine-tuning, y destacamos la importancia de un análisis exhaustivo del dataset, logrando un modelo
-              eficiente a pesar de
-              las limitaciones encontradas. Aunque hay áreas de mejora, los
-              resultados demuestran el valor de un enfoque incremental y constante experimentación para optimizar
-              modelos
-              de deep learning.</p>
+            <h2 class="white-big major">Conclusions</h2>
+            <p>In this project, we observed the efficiency of transfer learning and fine-tuning techniques, and
+              highlighted the importance of a thorough dataset analysis, achieving an efficient model despite the
+              limitations encountered. Although there are areas for improvement, the results demonstrate the value of an
+              incremental approach and constant experimentation to optimize deep learning models.</p>
             <p>
-              Gracias a Juan Kurucz por la orientación, y a mis compañeros de proyecto por la ayuda al inicio del mismo,
-              Tomás Rama,
-              Matías Cabrera,
-              Mauricio Gómez y
-              Agustín Lorenzo
-
+              Special thanks to Juan Kurucz for his guidance, and to my project teammates for their help at the
+              beginning of the project: Tomás Rama, Matías Cabrera, Mauricio Gómez, and Agustín Lorenzo.
             </p>
             <p>
-              Eso es todo, gracias por tu tiempo! Si tienes alguna duda o comentario déjamelo saber aquí abajo 🙏
+              That's all, thank you for your time! If you have any questions or comments, feel free to let me know below
+              🙏
             </p>
           </section>
-
         </div>
       </div>
     </section>
@@ -2397,8 +2358,8 @@
   <script src="assets/js/breakpoints.min.js"></script>
   <script src="assets/js/util.js"></script>
   <script src="assets/js/main.js"></script>
-  <script src="scripts/menu.js"></script>
-  <script src="scripts/footer.js"></script>
+  <script src="scripts/menuEng.js"></script>
+  <script src="scripts/footerEng.js"></script>
 
   <script>
     function applyColorToCell() {
